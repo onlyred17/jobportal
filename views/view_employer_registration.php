@@ -18,8 +18,6 @@
         background: linear-gradient(135deg, #EBE5C2, #F8F3D9);
         color: #2E3A47;
         font-family: 'Roboto', sans-serif;
-
-
     }
     
 .registration-container {
