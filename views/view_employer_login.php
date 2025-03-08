@@ -8,224 +8,221 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-    /* General Styles */
-    html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #EBE5C2, #F8F3D9);
-            color: #2E3A47;
-        }
+   /* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #C6E7FF, #D4F6FF); /* New gradient background */
+}
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 2rem;
-        }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem;
+}
 
-        .login-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4rem; /* Spacing between info panel and login card */
-            max-width: 1200px;
-            width: 100%;
-        }
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem; /* Spacing between info panel and login card */
+    max-width: 1200px;
+    width: 100%;
+}
 
-        /* Info Panel */
-        .info-panel {
-            background: rgba(255, 255, 255, 0.9); /* Glassmorphism effect */
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            width: 400px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+/* Info Panel */
+.info-panel {
+    background: #FBFBFB; /* Solid color from the palette */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        .info-content {
-            text-align: left;
-        }
+.info-content {
+    text-align: left;
+}
 
-        .info-panel h2 {
-            color: #2E3A47;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
+.info-panel h2 {
+    color: #2E3A47;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
 
-        .highlight {
-            color: #4A90E2;
-        }
+.highlight {
+    color: #4A90E2;
+}
 
-        .subtext {
-            color: #6C757D;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
+.subtext {
+    color: #6C757D;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
 
-        .benefits ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+.benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .benefits ul li {
-            color: #6C757D;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+.benefits ul li {
+    color: #6C757D;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 
-        .benefits ul li i {
-            color: #4A90E2;
-            font-size: 1.2rem;
-        }
+.benefits ul li i {
+    color: #4A90E2;
+    font-size: 1.2rem;
+}
 
-        .support p {
-            color: #6C757D;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
+.support p {
+    color: #6C757D;
+    font-size: 1rem;
+    line-height: 1.6;
+}
 
-        .support a {
-            color: #4A90E2;
-            text-decoration: none;
-            font-weight: 500;
-        }
+.support a {
+    color: #4A90E2;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-        .support a:hover {
-            text-decoration: underline;
-        }
+.support a:hover {
+    text-decoration: underline;
+}
 
-        /* Login Card */
-        .login-card {
-            background: rgba(255, 255, 255, 0.9); /* Glassmorphism effect */
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            width: 400px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+/* Login Card */
+.login-card {
+    background-image: url('../images/bg4.jpg'); /* Solid color from the palette */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        .login-card h2 {
-            color: #2E3A47;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
+.login-card h2 {
+    color:rgb(255, 255, 255);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
 
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
 
-        .form-control {
-            background: #F8F9FA;
-            border: 1px solid #E2E8F0;
-            color: #2E3A47;
-            font-family: 'Roboto', sans-serif;
-            font-size: 1rem;
-            padding: 1rem;
-            height: auto;
-            width: 100%;
-            border-radius: 8px;
-        }
+.form-control {
+    background: #F8F9FA;
+    border: 1px solid #E2E8F0;
+    color:rgb(0, 0, 0);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    padding: 1rem;
+    height: auto;
+    width: 100%;
+    border-radius: 8px;
+}
 
-        .form-label {
-            position: absolute;
-            top: 50%;
-            left: 1rem;
-            transform: translateY(-50%);
-            color: #6C757D;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            pointer-events: none;
-        }
+.form-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color:rgb(0, 8, 15);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
 
-        .form-control:focus + .form-label,
-        .form-control:not(:placeholder-shown) + .form-label {
-            top: 0.7rem;
-            font-size: 0.8rem;
-            color: #4A90E2;
-        }
+.form-control:focus + .form-label,
+.form-control:not(:placeholder-shown) + .form-label {
+    top: 0.7rem;
+    font-size: 0.8rem;
+    color: #4A90E2;
+}
 
-        .btn-primary {
-            background: #4A90E2;
-            border: none;
-            color: #FFFFFF;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-            padding: 0.75rem;
-            border-radius: 8px;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.btn-primary {
+    background: #4A90E2;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        .btn-primary:hover {
-            background: #357ABD;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+.btn-primary:hover {
+    background: #357ABD;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-        .forgot-password {
-            text-align: center;
-            margin-top: 1rem;
-        }
+.forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+}
 
-        .forgot-password a {
-            color: #4A90E2;
-            text-decoration: none;
-            font-weight: 500;
-        }
+.forgot-password a {
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 500;
+}
 
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
+.forgot-password a:hover {
+    text-decoration: underline;
+}
 
-        .sign-up-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.95rem;
-        }
+.sign-up-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+}
 
-        .sign-up-link a {
-            color: #4A90E2;
-            text-decoration: none;
-            font-weight: 500;
-        }
+.sign-up-link a {
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 500;
+}
 
-        .sign-up-link a:hover {
-            text-decoration: underline;
-        }
+.sign-up-link a:hover {
+    text-decoration: underline;
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .login-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem; /* Smaller gap for mobile */
-            }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem; /* Smaller gap for mobile */
+    }
 
-            .info-panel, .login-card {
-                width: 100%;
-                margin-bottom: 2rem;
-            }
-        }    
+    .info-panel, .login-card {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+}
         </style>
 </head>
 <body>
@@ -257,7 +254,7 @@
             <!-- Login Form -->
             <div class="login-card">
                 <h2><i class="fas fa-sign-in-alt"></i> Employer Login</h2>
-                <form id="loginForm">
+                <form id="loginForm" method="POST" action="../controllers/employer_login.php">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
                         <label for="email" class="form-label">Email</label>
@@ -271,7 +268,7 @@
                         <a href="#">Forgot Password?</a>
                     </div>
                     <div class="sign-up-link">
-                        Don't have an account? <a href="employer_registration.html">Sign Up</a>
+                        Don't have an account? <a href="view_employer_registration.php">Sign Up</a>
                     </div>
                 </form>
             </div>
@@ -337,7 +334,7 @@
 
                     // Redirect to dashboard after 2 seconds
                     setTimeout(() => {
-                        window.location.href = 'employer_dashboard.html';
+                        window.location.href = 'view_employer_dashboard.php';
                     }, 2000);
                 } else {
                     // Show error modal

@@ -20,6 +20,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Handle company logo upload
+    $company_logo = 'default_company_logo.jpg'; // Default logo
+    if (isset($_FILES['company_logo']) && $_FILES['company_logo']['error'] == UPLOAD_ERR_OK) {
+        $upload_dir = '../uploads/company_logos/'; // Directory to store uploaded logos
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0755, true); // Create the directory if it doesn't exist
+        }
+
+        $file_name = basename($_FILES['company_logo']['name']);
+        $file_path = $upload_dir . $file_name;
+
+        // Move the uploaded file to the desired directory
+        if (move_uploaded_file($_FILES['company_logo']['tmp_name'], $file_path)) {
+            $company_logo = $file_path; // Use the uploaded logo path
+        } else {
+            $response['message'] = "Failed to upload company logo.";
+            echo json_encode($response);
+            exit;
+        }
+    }
+
     try {
         $conn->beginTransaction();
 
@@ -45,19 +66,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':company_name' => $company_name,
                 ':location' => $location,
-                ':company_logo' => $company_logo,
+                ':company_logo' => $company_logo, // Use the dynamic logo path
                 ':company_description' => $company_description
             ]);
             $company_id = $conn->lastInsertId();
         }
 
-        // Insert employer
-        $stmt = $conn->prepare("INSERT INTO employers (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)");
+        // Insert employer with default profile picture
+        $default_profile_pic = '../images/default_profile.jpg'; // Default profile picture
+        $stmt = $conn->prepare("INSERT INTO employers (first_name, last_name, email, password, profile_pic) VALUES (:first_name, :last_name, :email, :password, :profile_pic)");
         $stmt->execute([
             ':first_name' => $first_name,
             ':last_name' => $last_name,
             ':email' => $email,
-            ':password' => $password
+            ':password' => $password,
+            ':profile_pic' => $default_profile_pic // Insert default profile picture
         ]);
         $employer_id = $conn->lastInsertId();
 

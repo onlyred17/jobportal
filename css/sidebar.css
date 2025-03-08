@@ -1,0 +1,93 @@
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #FBFBFB; /* Light background */
+    color: #2E3A47; /* Dark text */
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #D4F6FF; /* Light border */
+    background: #C6E7FF; /* Light blue background */
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #D4F6FF; /* Light border */
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2E3A47; /* Dark text */
+}
+
+.profile-role {
+    font-size: 0.85rem;
+    color: #6C757D; /* Gray text */
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #D4F6FF; /* Light border */
+}
+
+.sidebar-menu li a {
+    color: #2E3A47; /* Dark text */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-menu li a:hover {
+    color: #4A90E2; /* Blue text on hover */
+    background: #D4F6FF; /* Light blue background on hover */
+    border-radius: 8px;
+}
+
+.sidebar-menu li a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Active Menu Item */
+.sidebar-menu li a.active {
+    color: #4A90E2; /* Blue text for active item */
+    background: #D4F6FF; /* Light blue background for active item */
+    border-radius: 8px;
+}
+.profile-pic {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}

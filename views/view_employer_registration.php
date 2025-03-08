@@ -11,15 +11,15 @@
     <!-- Bootstrap JS (with Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-   html{
+  /* General Styles */
+html, body {
     height: 100%;
-   }
-    body {
-        background: linear-gradient(135deg, #EBE5C2, #F8F3D9);
-        color: #2E3A47;
-        font-family: 'Roboto', sans-serif;
-    }
-    
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #C6E7FF, #D4F6FF); /* New gradient background */
+    color: #2E3A47;
+}
+
 .registration-container {
     display: flex;
     align-items: flex-start; /* Align items to the top */
@@ -30,9 +30,8 @@
 
 /* Info Panel */
 .info-panel {
-    background: rgba(255, 255, 255, 0.8); /* Glassmorphism effect */
+    background: #FBFBFB; /* Solid color from the palette */
     border-radius: 20px;
-    backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     padding: 2.5rem;
     width: 400px;
@@ -62,13 +61,6 @@
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
-}
-
-.benefits h4, .support h4 {
-    color: #2E3A47;
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
 }
 
 .benefits ul {
@@ -106,8 +98,10 @@
 .support a:hover {
     text-decoration: underline;
 }
+
+/* Registration Card */
 .registration-card {
-    background: #FFFFFF;
+    background-image: url('../images/bg4.jpg'); /* Solid color from the palette */
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -174,7 +168,7 @@
     top: 50%;
     left: 1rem;
     transform: translateY(-50%);
-    color: #6C757D;
+    color: black;
     font-size: 0.9rem;
     transition: all 0.2s ease;
     pointer-events: none;
@@ -217,7 +211,7 @@
         left: 0;
     }
     h2 {
-        color: #2E3A47;
+        color:rgb(255, 255, 255);
         font-size: 1.5rem; /* Smaller font size for main heading */
         font-weight: 600; /* Slightly lighter weight */
         text-align: center;
@@ -225,7 +219,7 @@
         letter-spacing: -0.5px; /* Tighter letter spacing */
     }
     h4 {
-        color: #2E3A47;
+        color:rgb(255, 255, 255);
         font-size: 1.2rem; /* Smaller font size for subheadings */
         font-weight: 500; /* Medium weight */
         margin-bottom: 1.5rem;
@@ -251,16 +245,16 @@
     }
     .step-number.active {
         background: #4A90E2;
-       
+    
         color: #FFFFFF;
     }
     .terms {
         margin-top: 1rem;
         font-size: 0.9rem;
-        color: #6C757D;
+        color:rgb(255, 255, 255);
     }
     .terms a {
-        color: #4A90E2;
+        color:rgb(0, 0, 0);
         text-decoration: none;
     }
     .terms a:hover {
@@ -325,6 +319,32 @@
             background-color: #F8F9FA;
             transform: translateX(5px);
         }
+        .back-to-login {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color:rgb(255, 255, 255);
+}
+
+.back-to-login a {
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-to-login a:hover {
+    text-decoration: underline;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    overflow: hidden; /* Prevent scrolling */
+}
 </style>
 </head>
 <body>
@@ -448,7 +468,12 @@
                         </div>
                     </div>
                 </form>
+                  <!-- Add the "Back to Login" link here -->
+                  <div class="back-to-login">
+        <p>Already have an account? <a href="view_employer_login.php">Back to Login</a></p>
+    </div>
             </div>
+            
         </div>
     </div>
 
