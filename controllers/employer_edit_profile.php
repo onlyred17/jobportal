@@ -3,7 +3,7 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['employer_id'])) {
-    header('Location: ../employer_login.php');
+    header('Location: ../views/view_employer_login.php');
     exit;
 }
 

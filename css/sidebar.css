@@ -1,62 +1,74 @@
 /* Sidebar */
 .sidebar {
-    width: 250px;
+    width: 280px; /* Slightly wider */
     height: 100vh;
-    background: #FBFBFB; /* Light background */
+    background: linear-gradient(145deg, #ffffff, #f0f4f9); /* Gradient background */
     color: #2E3A47; /* Dark text */
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 8px 0 20px rgba(0, 0, 0, 0.1); /* Stronger shadow */
     transition: transform 0.3s ease;
+    z-index: 1000; /* Ensure it's above other content */
 }
 
 /* Sidebar Header */
 .sidebar-header {
     padding: 1.5rem;
-    border-bottom: 1px solid #D4F6FF; /* Light border */
-    background: #C6E7FF; /* Light blue background */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+    background: linear-gradient(145deg, #4A90E2, #50C878); /* Gradient background */
+    color: #fff; /* White text */
+    text-align: center;
 }
 
 .profile-info {
     display: flex;
     align-items: center;
     gap: 1rem;
+    justify-content: center;
 }
 
 .profile-pic {
-    width: 50px;
-    height: 50px;
+    width: 60px; /* Slightly larger */
+    height: 60px;
     border-radius: 50%;
-    border: 2px solid #D4F6FF; /* Light border */
+    border: 3px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
 }
 
 .profile-details {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .profile-name {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #2E3A47; /* Dark text */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff; /* White text */
+    margin-bottom: 0.25rem;
 }
 
 .profile-role {
-    font-size: 0.85rem;
-    color: #6C757D; /* Gray text */
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8); /* Semi-transparent white text */
 }
 
 /* Sidebar Menu */
 .sidebar-menu {
     list-style: none;
-    padding: 0;
+    padding: 1rem 0;
     margin: 0;
 }
 
 .sidebar-menu li {
     padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid #D4F6FF; /* Light border */
+    transition: background-color 0.3s ease;
 }
 
 .sidebar-menu li a {
@@ -66,28 +78,41 @@
     align-items: center;
     gap: 0.75rem;
     transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 12px; /* Rounded corners */
 }
 
 .sidebar-menu li a:hover {
     color: #4A90E2; /* Blue text on hover */
-    background: #D4F6FF; /* Light blue background on hover */
-    border-radius: 8px;
+    background: rgba(74, 144, 226, 0.1); /* Light blue background on hover */
+    transform: translateX(5px); /* Slight move on hover */
 }
 
 .sidebar-menu li a i {
-    width: 20px;
+    width: 24px; /* Slightly larger icons */
     text-align: center;
+    font-size: 1.1rem;
+    color: #4A90E2; /* Blue icons */
 }
 
 /* Active Menu Item */
 .sidebar-menu li a.active {
     color: #4A90E2; /* Blue text for active item */
-    background: #D4F6FF; /* Light blue background for active item */
-    border-radius: 8px;
+    background: rgba(74, 144, 226, 0.1); /* Light blue background for active item */
+    font-weight: 600;
 }
-.profile-pic {
-    width: 50px; /* Adjust the size as needed */
-    height: 50px; /* Adjust the size as needed */
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
+
+/* Main Content */
+.main-content {
+    margin-left: 280px; /* Adjusted for wider sidebar */
+    margin-top: 60px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+}
+
+/* Body */
+body {
+    color: black;
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa; /* Light background */
 }

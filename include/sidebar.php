@@ -29,7 +29,7 @@ $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : 'Last Name'
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
         <li><a href="../views/view_employer_dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
-        <li><a href="../views/view_job_posting.php"><i class="fas fa-briefcase"></i> Job Posting</a></li>
+        <li><a href="../views/view_employer_job_posting.php"><i class="fas fa-briefcase"></i> Job Posting</a></li>
         <li><a href="#edit-profile"><i class="fas fa-user-edit"></i> Edit Profile</a></li>
         <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
         <li><a href="../controllers/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
