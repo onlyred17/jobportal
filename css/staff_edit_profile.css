@@ -1,0 +1,147 @@
+.hidden {
+    display: none;
+}
+
+.staff-profile-card {
+    background: #ffffff; /* White card background */
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover effect */
+.staff-profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.15), -12px -12px 24px rgba(255, 255, 255, 0.8);
+}
+
+/* Header gradient bar */
+.staff-profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to right, #007bff, #00c6ff);
+}
+
+.staff-profile-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.staff-profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+}
+
+h2 {
+    color: #333; /* Dark gray */
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-success {
+    width: 100%;
+    margin-top: 10px;
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.3);
+}
+
+.btn-secondary {
+    background: #ccc;
+}
+
+.btn-secondary:hover {
+    background: #bbb;
+}
+
+.btn-success {
+    background: linear-gradient(to right, #28a745, #22d172);
+}
+
+.btn-success:hover {
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
+    transform: translateY(-3px);
+}
+
+.btn-danger {
+    background: linear-gradient(to right, #dc3545, #ff6b6b);
+}
+
+.btn-danger:hover {
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.3);
+    transform: translateY(-3px);
+}
+
+/* Form Styling */
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #ced4da;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    background-color: #fff;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.staff-profile-card {
+    animation: fadeIn 0.5s ease-out;
+}
+/* Main Content */
+.main-content {
+    margin-left: 280px; /* Adjusted for wider sidebar */
+    margin-top: 90px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+}

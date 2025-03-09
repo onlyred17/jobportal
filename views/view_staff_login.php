@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Login - PWD Portal</title>
+    <title>Staff Login - PWD Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -238,7 +238,7 @@ html, body {
                     </p>
                     <div class="benefits">
                         <ul>
-                            <li><i class="fas fa-users"></i> Access your employer dashboard</li>
+                            <li><i class="fas fa-users"></i> Access your staff dashboard</li>
                             <li><i class="fas fa-briefcase"></i> Manage job postings</li>
                             <li><i class="fas fa-chart-line"></i> Track application analytics</li>
                         </ul>
@@ -253,8 +253,8 @@ html, body {
 
             <!-- Login Form -->
             <div class="login-card">
-                <h2><i class="fas fa-sign-in-alt"></i> Employer Login</h2>
-                <form id="loginForm" method="POST" action="../controllers/employer_login.php">
+                <h2><i class="fas fa-sign-in-alt"></i> Staff Login</h2>
+                <form id="loginForm" method="POST" action="../controllers/staff_login.php">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
                         <label for="email" class="form-label">Email</label>
@@ -268,7 +268,7 @@ html, body {
                         <a href="#">Forgot Password?</a>
                     </div>
                     <div class="sign-up-link">
-                        Don't have an account? <a href="view_employer_registration.php">Sign Up</a>
+                        Don't have an account? <a href="view_staff_registration.php">Sign Up</a>
                     </div>
                 </form>
             </div>
@@ -321,7 +321,7 @@ html, body {
             const formData = new FormData(this);
 
             // Send AJAX request
-            fetch('../controllers/employer_login.php', {
+            fetch('../controllers/staff_login.php', {
                 method: 'POST',
                 body: formData
             })
@@ -334,7 +334,7 @@ html, body {
 
                     // Redirect to dashboard after 2 seconds
                     setTimeout(() => {
-                        window.location.href = 'view_employer_dashboard.php';
+                        window.location.href = 'view_staff_dashboard.php';
                     }, 2000);
                 } else {
                     // Show error modal

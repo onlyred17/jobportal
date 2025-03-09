@@ -13,31 +13,31 @@ if (empty($email) || empty($password)) {
 }
 
 try {
-    // Fetch employer details
-    $sql = "SELECT id, email, password, first_name, last_name, profile_pic FROM employers WHERE email = :email";
+    // Fetch staff details
+    $sql = "SELECT staff_id, email, password, first_name, last_name, profile_pic FROM staff WHERE email = :email";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':email', $email);
     $stmt->execute();
-    $employer = $stmt->fetch(PDO::FETCH_ASSOC);
+    $staff = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$employer) {
+    if (!$staff) {
         echo json_encode(['status' => 'error', 'message' => 'Email not found.']);
         exit;
     }
 
     // Verify password
-    if (!password_verify($password, $employer['password'])) {
+    if (!password_verify($password, $staff['password'])) {
         echo json_encode(['status' => 'error', 'message' => 'Incorrect password.']);
         exit;
     }
 
     // Login successful
     session_start();
-    $_SESSION['employer_id'] = $employer['id']; // Store employer ID in session
-    $_SESSION['email'] = $employer['email']; // Store employer email in session
-    $_SESSION['first_name'] = $employer['first_name']; // Store first name in session
-    $_SESSION['last_name'] = $employer['last_name']; // Store last name in session
-    $_SESSION['profile_pic'] = $employer['profile_pic']; // Store profile picture in session
+    $_SESSION['staff_id'] = $staff['staff_id']; // Correct column name
+    $_SESSION['email'] = $staff['email']; // Store staff email in session
+    $_SESSION['first_name'] = $staff['first_name']; // Store first name in session
+    $_SESSION['last_name'] = $staff['last_name']; // Store last name in session
+    $_SESSION['profile_pic'] = $staff['profile_pic']; // Store profile picture in session
 
     echo json_encode(['status' => 'success', 'message' => 'Login successful!']);
 } catch (PDOException $e) {

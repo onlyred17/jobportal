@@ -1,28 +1,18 @@
-/* Light Mode Variables */
-:root {
-    --primary-color: #4A90E2;
-    --secondary-color: #50C878;
-    --background-light: #f8f9fa;
-    --text-light: #333;
-    --card-bg-light: #fff;
-    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --input-border: #E2E8F0;
-    --input-focus-border: #4A90E2;
-    --gradient-primary: linear-gradient(135deg, #4A90E2, #50C878);
-}
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--card-bg-light);
+    background: #ffffff; /* White background */
     padding: 1.74rem 2rem;
-    box-shadow: var(--shadow-light);
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 280px; /* Adjust based on sidebar width */
     right: 0;
     z-index: 1000;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Navbar Left */
@@ -39,29 +29,6 @@
     gap: 1.5rem;
 }
 
-/* Dark Mode Toggle Button */
-.theme-toggle {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--background-light);
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.theme-toggle:hover {
-    background: #e0e0e0;
-    transform: scale(1.1);
-}
-
-.theme-toggle i {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-}
-
 /* Profile Section */
 .profile {
     display: flex;
@@ -73,7 +40,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid var(--input-border);
+    border: 2px solid #ddd; /* Light border */
     object-fit: cover;
     transition: transform 0.3s ease;
 }
@@ -85,23 +52,72 @@
 .profile-name {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--text-light);
+    color: #333; /* Dark gray for better visibility */
 }
 
-/* Dark Mode Styles */
-body.dark-mode .navbar {
-    background: var(--card-bg-dark);
-    box-shadow: var(--shadow-dark);
+/* Removed Dark Mode Styles */
+/* Notification Button */
+.notifications {
+    position: relative;
 }
 
-body.dark-mode .theme-toggle {
-    background: var(--card-bg-dark);
+.notification-btn {
+    background: transparent;
+    border: none;
+    position: relative;
+    font-size: 1.5rem;
+    color: #333;
 }
 
-body.dark-mode .theme-toggle i {
-    color: var(--text-dark);
+.notification-btn .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
 }
 
-body.dark-mode .profile-name {
-    color: var(--text-dark);
+/* Notification Dropdown */
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 1rem;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.notification-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-dropdown ul li {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.notification-dropdown ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.notification-dropdown ul li a:hover {
+    background-color: #f0f0f0;
+    padding: 0.2rem;
+    border-radius: 5px;
+}
+
+/* Show Dropdown on Hover */
+.notification-btn:hover + .notification-dropdown {
+    display: block;
 }
