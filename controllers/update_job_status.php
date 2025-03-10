@@ -1,38 +1,59 @@
 <?php
-// Include the database connection
-include '../include/db_conn.php';  // Make sure this path is correct
+session_start();
+include '../include/db_conn.php'; // Ensure database connection
 
-// Check if the 'id' and 'status' parameters are present
 if (isset($_GET['id']) && isset($_GET['status'])) {
     $jobId = $_GET['id'];
     $status = $_GET['status'];
 
-    // Validate the status to be either 'Open' or 'Closed'
-    if ($status !== 'Open' && $status !== 'Closed') {
-        die("Invalid status");
-    }
+    try {
+        // Fetch the job title before updating
+        $fetchQuery = "SELECT title FROM jobs WHERE id = :id";
+        $fetchStmt = $conn->prepare($fetchQuery);
+        $fetchStmt->bindParam(':id', $jobId, PDO::PARAM_INT);
+        $fetchStmt->execute();
+        $job = $fetchStmt->fetch(PDO::FETCH_ASSOC);
 
-    // Prepare the SQL query to update the job status
-    $query = "UPDATE jobs SET status = :status WHERE id = :id";
+        if ($job) {
+            $jobTitle = htmlspecialchars($job['title']); // Prevent XSS
 
-    // Prepare the statement
-    $stmt = $conn->prepare($query);  // Use $conn here instead of $pdo
+            // Update the job status
+            $updateQuery = "UPDATE jobs SET status = :status WHERE id = :id";
+            $updateStmt = $conn->prepare($updateQuery);
+            $updateStmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $updateStmt->bindParam(':id', $jobId, PDO::PARAM_INT);
 
-    // Bind the parameters
-    $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':id', $jobId);
-
-    // Execute the query
-    if ($stmt->execute()) {
-        // Redirect to the job listings page with a success message
-        header("Location: ../views/view_staff_jobs_table.php?status_update=success");
-    } else {
-        // Redirect with an error message
-        header("Location: ../views/view_staff_jobs_table.php?status_update=error");
+            if ($updateStmt->execute()) {
+                $_SESSION['message'] = [
+                    'type' => 'success',
+                    'text' => "Job '<strong>{$jobTitle}</strong>' status updated to <strong>{$status}</strong> successfully!"
+                ];
+            } else {
+                $_SESSION['message'] = [
+                    'type' => 'danger',
+                    'text' => "Error updating status for job '<strong>{$jobTitle}</strong>'. Please try again."
+                ];
+            }
+        } else {
+            $_SESSION['message'] = [
+                'type' => 'danger',
+                'text' => "Job not found. Please try again."
+            ];
+        }
+    } catch (PDOException $e) {
+        $_SESSION['message'] = [
+            'type' => 'danger',
+            'text' => 'Database error: ' . $e->getMessage()
+        ];
     }
 } else {
-    // Redirect if 'id' or 'status' parameters are not provided
-    header("Location: ../views/view_staff_jobs_table.php?status_update=missing_parameters");
+    $_SESSION['message'] = [
+        'type' => 'danger',
+        'text' => 'Invalid request. Please try again.'
+    ];
 }
+
+// Redirect back to job listings page
+header("Location: ../views/view_staff_jobs_table.php");
 exit();
 ?>

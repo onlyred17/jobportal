@@ -30,16 +30,18 @@ $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : 'Last Name'
             <ul class="sub-menu" id="job-table-menu">
                 <li><a href="../views/view_staff_jobs_table.php"><i class="fas fa-list"></i> Job Table</a></li>
                 <!-- You can add more sub-menu items if needed -->
+                <li><a href="../views/view_staff_company_table.php"><i class="fas fa-list"></i> Company Table</a></li>
+
             </ul>
+         
         </li>
 
         <!-- Settings Module -->
         <li class="module">
             <a href="#" onclick="toggleModule('settings-menu')">
-                <i class="fas fa-cog"></i> Settings
+                <i class="fas fa-cog"></i> Configuration Settings
             </a>
             <ul class="sub-menu" id="settings-menu">
-                <li><a href="../views/view_general_settings.php"><i class="fas fa-tools"></i> General Settings</a></li>
                 <li><a href="../views/view_staff_add_company.php"><i class="fas fa-plus"></i> Add Company</a></li>
             </ul>
         </li>

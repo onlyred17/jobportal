@@ -1,0 +1,485 @@
+/* Global Styles */
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header Styles */
+header {
+    background: #4A90E2;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header nav a {
+    color: white;
+    margin: 0 15px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #4A90E2, #357ABD);
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.hero-section .btn-primary {
+    background-color: #fff;
+    color: #4A90E2;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #4A90E2;
+}
+
+/* Job Cards Container */
+.job-cards {
+    display: flex;
+    justify-content: space-evenly; /* Distribute cards evenly */
+    flex-wrap: wrap; /* Allow wrapping if there's not enough space */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Job Card */
+.job-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px; /* Set a fixed width for uniformity */
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: row; /* Align items horizontally */
+    gap: 15px; /* Space between image and text */
+    justify-content: space-between; /* Space out the elements */
+}
+
+.job-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background-color: #f9f9f9;
+}
+
+/* Job Card - Company Logo */
+.job-card .company-logo {
+    width: 50px; /* Set logo size */
+    height: 50px;
+    border-radius: 50%; /* Optional: make the logo circular */
+    object-fit: cover; /* Ensure the logo fits well inside */
+}
+
+/* Job Card Content */
+.job-card .job-content {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Job Title */
+.job-card h3 {
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+.job-card h3:hover {
+    color: #4A90E2;
+}
+
+/* Job Description */
+.job-card p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Tags or Skills */
+.job-card .tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.job-card .tag {
+    background-color: #4A90E2;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Button Styles */
+.job-card .btn-apply {
+    background-color: #4A90E2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.job-card .btn-apply:hover {
+    background-color: #357ABD;
+}
+
+/* Job Footer */
+.job-card .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.job-card .job-footer span {
+    font-size: 14px;
+    color: #777;
+}
+
+.job-card .job-footer .job-time {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Dark Mode - Job Card */
+body.dark-mode .job-card {
+    background: #444;
+    color: #f5f7fa;
+}
+
+body.dark-mode .job-card:hover {
+    background-color: #555;
+}
+
+body.dark-mode .job-card h3 {
+    color: #f5f7fa;
+}
+
+body.dark-mode .job-card .btn-apply {
+    background-color: #4A90E2;
+    color: #f5f7fa;
+}
+
+body.dark-mode .job-card .btn-apply:hover {
+    background-color: #357ABD;
+}
+
+
+/* Footer Section */
+.footer {
+    background: #4A90E2;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Accessibility Controls */
+.accessibility-controls {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #FFFFFF;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    padding: 10px;
+    display: none;
+    z-index: 999;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: x-large;
+}
+
+.accessibility-controls.active {
+    display: block;
+}
+.font-size-controls, .brightness-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.font-size-controls button, .brightness-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.font-size-controls span, .brightness-controls span {
+    margin: 0 10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+
+.toggle-btn {
+    margin-right: 10px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.toggle-btn.active {
+    background: #4A90E2;
+    color: white;
+}
+
+.font-size-controls span, .brightness-controls span {
+    margin: 0 10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Accessibility Toggle Button Styles */
+.accessibility-toggle {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.accessibility-toggle:hover {
+    background-color: #357ABD;
+}
+
+.accessibility-toggle i {
+    font-size: 24px;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: #333;
+    color: #f5f7fa;
+}
+
+body.dark-mode header {
+    background: #333;
+    color: white;
+}
+
+body.dark-mode .hero-section {
+    background: #333;
+}
+
+body.dark-mode section {
+    background: #333;
+    color: #f5f7fa;
+}
+
+/* Dark Mode */
+body.dark-mode .job-card {
+    background: #444;
+    color: #f5f7fa; /* Light color for dark mode */
+}
+
+body.dark-mode .footer {
+    background: #333;
+}
+
+/* High Contrast Mode */
+body.high-contrast {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+body.high-contrast header {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+body.high-contrast .hero-section {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+body.high-contrast section {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+body.high-contrast .btn-primary {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+body.high-contrast .btn-primary:hover {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+body.high-contrast .footer {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+/* Button Styles */
+body.high-contrast .btn-custom {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+body.high-contrast .btn-custom:hover {
+    background: #FFFFFF;
+    color: #000000;
+}
+/* High Contrast Mode */
+body.high-contrast .job-card {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF; /* White border for contrast */
+}
+
+body.high-contrast .job-card .company-logo {
+    border: 2px solid #FFFFFF; /* White border around logo */
+}
+
+body.high-contrast .job-card .job-content h3 {
+    color: #FFFFFF;
+}
+
+body.high-contrast .job-card .job-content p {
+    color: #FFFFFF;
+}
+
+body.high-contrast .job-card .btn-apply {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+body.high-contrast .job-card .btn-apply:hover {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+/* Job Listings Section */
+#jobs {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Search and Filter Container */
+.search-filter-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 30px;
+    gap: 150px; /* Add space between search bar and filter */
+    width: 100%; /* Ensure the container takes the full width */
+}
+
+/* Search Bar */
+.search-bar input {
+    width: 150%; /* Increase width to 75% for a longer search bar */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+/* Filter Bar */
+.filter-bar select {
+    width: 100%; /* Adjust filter width to 35% */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+
+#pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#pagination button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

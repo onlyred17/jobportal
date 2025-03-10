@@ -113,7 +113,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    padding-left: 15px;
+    padding-left: 25px;
 }
 
 .sub-menu.active {
@@ -133,7 +133,7 @@
 }
 
 .sub-menu a {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding: 8px 10px;
     display: block;
     color: #888;

@@ -12,7 +12,6 @@ $profilePicture = $_SESSION['profile_pic'] ?? '../images/default-profile.jpg'; /
 
 // Concatenate first name and last name
 $employerName = trim("$firstName $lastName"); // Combine first and last name with a space
-include '../notification/fetch_jobs.php';
 
 ?>
 
@@ -39,26 +38,7 @@ include '../notification/fetch_jobs.php';
                 <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-pic">
                 <span class="profile-name"><?php echo $employerName; ?></span>
             </div>
-            <div class="notifications">
-                <button class="notification-btn" id="notificationBtn">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge" id="notificationBadge"><?php echo $newJobsCount; ?></span>
-                </button>
-                <div class="notification-dropdown" id="notificationDropdown">
-                    <?php if ($newJobsCount > 0): ?>
-                        <?php foreach ($newJobs as $job): ?>
-                            <div class="notification-item">
-                                <strong><?php echo htmlspecialchars($job['title']); ?></strong><br>
-                                <span><?php echo htmlspecialchars($job['description']); ?></span>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="notification-item">
-                            No new job postings.
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
+    
         </div>
     </div>
 

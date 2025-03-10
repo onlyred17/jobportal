@@ -1,10 +1,7 @@
 <?php
 session_start();
-
 // Get the current page/module name (without the .php extension)
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
-
-
 ?>
 
 <!DOCTYPE html>
@@ -51,34 +48,34 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             </form>
         </div>
     </div>
-
-    <!-- Modal for Success / Error -->
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-<?php echo isset($_SESSION['message']) ? ($_SESSION['message']['type'] == 'success' ? 'success' : 'danger') : ''; ?> text-white">
-                    <h5 class="modal-title">
-                        <?php
-                        if (isset($_SESSION['message'])) {
-                            echo $_SESSION['message']['type'] == 'success' ? 'Success' : 'Error';
-                        }
-                        ?>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+<!-- Modal for Success / Error -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
                     <?php
                     if (isset($_SESSION['message'])) {
-                        echo $_SESSION['message']['text'];
+                        echo $_SESSION['message']['type'] == 'success' ? 'Success' : 'Error';
                     }
                     ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php
+                if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message']['text'];
+                }
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
