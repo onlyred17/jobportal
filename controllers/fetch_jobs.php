@@ -21,7 +21,11 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
 
 // Build the query with optional filters
-$query = "SELECT * FROM jobs WHERE title LIKE :search";
+$query = "SELECT * FROM jobs WHERE 
+          (title LIKE :search OR 
+           location LIKE :search OR 
+           job_type LIKE :search OR 
+           company_name LIKE :search)";
 
 if ($job_type != '') {
     $query .= " AND job_type = :job_type";
@@ -33,7 +37,7 @@ $query .= " LIMIT :start, :limit";
 $stmt = $conn->prepare($query);
 
 // Bind parameters
-$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR); // Ensure search is bound properly
+$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR); // Bind search term for all fields
 if ($job_type != '') {
     $stmt->bindValue(':job_type', $job_type, PDO::PARAM_STR);
 }
@@ -45,13 +49,18 @@ $stmt->execute();
 $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the total number of jobs for pagination
-$totalQuery = "SELECT COUNT(*) FROM jobs WHERE title LIKE :search";
+$totalQuery = "SELECT COUNT(*) FROM jobs WHERE 
+               (title LIKE :search OR 
+                location LIKE :search OR 
+                job_type LIKE :search OR 
+                company_name LIKE :search)";
+
 if ($job_type != '') {
     $totalQuery .= " AND job_type = :job_type";
 }
 
 $totalStmt = $conn->prepare($totalQuery);
-$totalStmt->bindValue(':search', "%$search%", PDO::PARAM_STR); // Ensure search is bound properly
+$totalStmt->bindValue(':search', "%$search%", PDO::PARAM_STR); // Bind search term for all fields
 if ($job_type != '') {
     $totalStmt->bindValue(':job_type', $job_type, PDO::PARAM_STR);
 }

@@ -16,7 +16,7 @@
             <a href="#home">Home</a>
             <a href="#about">About Us</a>
             <a href="#jobs">Jobs</a>
-            <a href="#registration">Registration</a>
+            <a href="../views/pwd_registration.php">Registration</a>
         </nav>
     </header>
 
@@ -40,7 +40,7 @@
         <!-- Search and Filter Bar -->
         <div class="search-filter-container">
             <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search for jobs..." oninput="fetchJobs(1)">
+                <input type="text" id="search-input" placeholder="Search for jobs, location, job type..." oninput="fetchJobs(1)">
             </div>
             <div class="filter-bar">
                 <select id="job-type" onchange="fetchJobs(1)">
