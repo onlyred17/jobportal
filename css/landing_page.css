@@ -939,59 +939,112 @@ border-top: 2px solid #FFFFFF;
 }
 /* Modern About Us Section Styles */
 #about {
-padding: 100px 0;
-background-color: #fff;
+    padding: 100px 0;
+    background-color: #fff;
 }
 
 .about-container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all content horizontally */
 }
 
 #about h2 {
-font-size: 2.5rem;
-color: #6200EA;
-margin-bottom: 40px;
-text-align: center;
-position: relative;
-display: inline-block;
-left: 50%;
-transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: #6200EA;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    /* Removed the left/transform as it's not needed when parent is centered */
 }
 
 #about h2::after {
-content: '';
-position: absolute;
-width: 50px;
-height: 3px;
-background-color: #6200EA;
-bottom: -10px;
-left: 50%;
-transform: translateX(-50%);
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background-color: #6200EA;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .about-content {
-display: flex;
-flex-direction: column;
-gap: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%; /* Ensure it takes full width of container */
+    align-items: center; /* Center all content horizontally */
+}
+
+.about-text {
+    max-width: 800px; /* Control the width of the text for better readability */
 }
 
 .about-text p {
-font-size: 1.1rem;
-line-height: 1.8;
-color: #555;
-margin-bottom: 30px;
-text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .about-features {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-gap: 30px;
-margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+    width: 100%; /* Ensure it takes full width of container */
 }
 
+/* Adding styles for feature items (assuming you have these) */
+.feature-item {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(98, 0, 234, 0.1);
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    color: #6200EA;
+    margin-bottom: 15px;
+}
+
+.feature-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature-item p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #about {
+        padding: 60px 0;
+    }
+    
+    #about h2 {
+        font-size: 2rem;
+    }
+    
+    .about-text p {
+        font-size: 1rem;
+    }
+}
 .feature {
 background: #fff;
 padding: 30px;
@@ -1360,4 +1413,636 @@ justify-content: center;
     right: 15px;
     font-size: 25px;
     cursor: pointer;
+}
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: modalSlideIn 0.4s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+/* Color Palette */
+:root {
+    /* Primary Colors */
+    --primary-color: #3366cc;       /* Blue - primary brand color */
+    --primary-light: #e9f0fd;       /* Light blue - backgrounds, tags */
+    --primary-dark: #1a4fa0;        /* Dark blue - hover states, accents */
+    
+    /* Secondary Colors */
+    --secondary-color: #4CAF50;     /* Green - action buttons, success */
+    --secondary-light: #a5d6a7;     /* Light green - success backgrounds */
+    --secondary-dark: #3e8e41;      /* Dark green - hover states */
+    
+    /* Neutral Colors */
+    --neutral-100: #ffffff;         /* White */
+    --neutral-200: #f8f9fa;         /* Light gray - backgrounds */
+    --neutral-300: #f0f0f0;         /* Light gray - buttons, dividers */
+    --neutral-400: #e0e0e0;         /* Mid-light gray - hover states */
+    --neutral-500: #cccccc;         /* Mid gray - borders */
+    --neutral-600: #888888;         /* Mid-dark gray - secondary text */
+    --neutral-700: #555555;         /* Dark gray - main text */
+    --neutral-800: #444444;         /* Darker gray - headings */
+    --neutral-900: #2d2d2d;         /* Near black - dark mode background */
+    --neutral-950: #222222;         /* Black - dark mode surfaces */
+    
+    /* Accent Colors */
+    --accent-red: #e57373;          /* For warnings, expired jobs */
+    --accent-yellow: #FFD54F;       /* For featured jobs, highlights */
+    --accent-purple: #9575CD;       /* For premium jobs */
+    --accent-orange: #FFB74D;       /* For notifications, urgency */
+    
+    /* Status Colors */
+    --status-new: #bbdefb;          /* New jobs */
+    --status-featured: #fff9c4;     /* Featured jobs */
+    --status-closing: #ffccbc;      /* Soon closing applications */
+  }
+  
+  /* Modal Styles with New Color Palette */
+  .modal-body {
+    padding: 25px;
+    color: var(--neutral-700);
+  }
+  
+  .modal-company-info {
+    display: flex;
+    margin-bottom: 25px;
+    align-items: center;
+  }
+  
+  .modal-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 8px;
+    background-color: var(--neutral-200);
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .company-details {
+    flex: 1;
+  }
+  
+  .company-details h3 {
+    margin: 0 0 5px 0;
+    color: var(--neutral-800);
+  }
+  
+  .company-details p {
+    margin: 0;
+    color: var(--neutral-600);
+  }
+  
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .modal-tag {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .modal-tag:hover {
+    background-color: var(--primary-color);
+    color: var(--neutral-100);
+  }
+  
+  .modal-tag.job-type {
+    background-color: var(--status-new);
+    color: var(--primary-dark);
+  }
+  
+  .modal-tag.location {
+    background-color: var(--accent-purple);
+    color: var(--neutral-100);
+  }
+  
+  .modal-section {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--neutral-300);
+    padding-bottom: 20px;
+  }
+  
+  .modal-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .modal-section h3 {
+    color: var(--neutral-800);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .modal-section h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background-color: var(--primary-color);
+    margin-right: 10px;
+    border-radius: 2px;
+  }
+  
+  .modal-section ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+  
+  .modal-section li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    position: relative;
+  }
+  
+  .modal-section li::marker {
+    color: var(--primary-color);
+  }
+  
+  .modal-section p {
+    line-height: 1.6;
+    margin: 0 0 15px 0;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 25px;
+    background-color: var(--neutral-200);
+    border-top: 1px solid var(--neutral-300);
+    border-radius: 0 0 8px 8px;
+  }
+  
+  .btn-listen-modal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--neutral-300);
+    color: var(--neutral-700);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+  
+  .btn-listen-modal:hover {
+    background-color: var(--neutral-400);
+    transform: translateY(-1px);
+  }
+  
+  .btn-listen-modal i {
+    font-size: 1rem;
+  }
+  
+  .btn-apply {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .btn-apply:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  /* Dark mode support */
+  .dark-mode .modal-content {
+    background-color: var(--neutral-900);
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .modal-header,
+  .dark-mode .modal-footer {
+    background-color: var(--neutral-950);
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .modal-header h2 {
+    color: var(--neutral-100);
+  }
+  
+  .dark-mode .modal-section {
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .modal-section h3 {
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .close {
+    color: var(--neutral-400);
+  }
+  
+  .dark-mode .close:hover {
+    color: var(--neutral-100);
+  }
+  
+  .dark-mode .modal-tag {
+    background-color: var(--neutral-800);
+    color: var(--primary-light);
+  }
+  
+  .dark-mode .modal-tag.job-type {
+    background-color: rgba(187, 222, 251, 0.2);
+    color: var(--status-new);
+  }
+  
+  .dark-mode .modal-tag.location {
+    background-color: rgba(149, 117, 205, 0.2);
+    color: #b39ddb;
+  }
+  
+  .dark-mode .btn-listen-modal {
+    background-color: var(--neutral-800);
+    color: var(--neutral-300);
+  }
+  
+  .dark-mode .btn-listen-modal:hover {
+    background-color: var(--neutral-700);
+  }
+  
+  .dark-mode .btn-apply {
+    background-color: var(--secondary-color);
+  }
+  
+  .dark-mode .modal-logo {
+    background-color: var(--neutral-800);
+    border: 1px solid var(--neutral-700);
+  }
+  
+  /* High contrast mode support */
+  .high-contrast .modal-content {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .high-contrast .modal-header,
+  .high-contrast .modal-footer {
+    background-color: #000;
+    border-color: #fff;
+  }
+  
+  .high-contrast .btn-apply {
+    background-color: #ffff00;
+    color: #000;
+    font-weight: bold;
+    border: 2px solid #000;
+  }
+  
+  .high-contrast .btn-listen-modal {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+  
+  .high-contrast .modal-tag {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+  
+  .high-contrast .modal-section {
+    border-color: #fff;
+  }
+  
+  .high-contrast .modal-section h3::before {
+    background-color: #fff;
+  }
+  
+  /* Animation Effects */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+ 
+  /* Job Card Enhancements to Match Modal Styling */
+  .job-card {
+    border: 1px solid var(--neutral-300);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    background-color: var(--neutral-100);
+  }
+  
+  .job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: var(--primary-light);
+  }
+  
+  .job-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .company-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 6px;
+    background-color: var(--neutral-200);
+    padding: 5px;
+  }
+  
+  .job-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--neutral-800);
+  }
+  
+  .job-content p {
+    color: var(--neutral-700);
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .tag {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+  }
+  
+  .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--neutral-300);
+    padding-top: 15px;
+    margin-top: auto;
+  }
+  
+  .job-date {
+    color: var(--neutral-600);
+    font-size: 0.85rem;
+  }
+  
+  .btn-listen {
+    background-color: transparent;
+    color: var(--neutral-700);
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-listen:hover {
+    background-color: var(--neutral-300);
+    color: var(--primary-color);
+  }
+  
+  .btn-view-details {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-view-details:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  /* Dark mode for job cards */
+  .dark-mode .job-card {
+    background-color: var(--neutral-900);
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .job-header h3 {
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .job-content p {
+    color: var(--neutral-300);
+  }
+  
+  .dark-mode .job-footer {
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .tag {
+    background-color: var(--neutral-800);
+    color: var(--primary-light);
+  }
+  
+  .dark-mode .btn-view-details {
+    background-color: var(--primary-dark);
+  }
+  
+  .dark-mode .company-logo {
+    background-color: var(--neutral-800);
+  }
+  /* Modal Specific Colors */
+.modal-header {
+    background-color: var(--primary-color);
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--primary-dark);
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.close {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.close:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.modal-content {
+    background-color: var(--neutral-100);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    margin: 30px auto;
+    overflow: hidden;
+    border: 1px solid var(--neutral-300);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 25px;
+    background-color: var(--primary-light);
+    border-top: 1px solid var(--neutral-300);
+    border-radius: 0 0 8px 8px;
+}
+
+/* Button colors in modal */
+.btn-listen-modal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: var(--primary-dark);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.btn-listen-modal:hover {
+    background-color: white;
+    transform: translateY(-1px);
+}
+
+.btn-apply {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-apply:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Additional color accents for job details */
+.job-posted-date {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--neutral-600);
+    background-color: var(--neutral-200);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.company-name {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Dark mode adjustments for modal header and footer */
+.dark-mode .modal-header {
+    background-color: var(--primary-dark);
+    border-bottom-color: var(--neutral-800);
+}
+
+.dark-mode .modal-footer {
+    background-color: var(--neutral-950);
+    border-top-color: var(--neutral-800);
+}
+
+.dark-mode .btn-listen-modal {
+    background-color: var(--neutral-800);
+    color: var(--neutral-200);
+}
+
+.dark-mode .btn-listen-modal:hover {
+    background-color: var(--neutral-700);
+}
+
+.dark-mode .job-posted-date {
+    background-color: var(--neutral-800);
+    color: var(--neutral-400);
 }

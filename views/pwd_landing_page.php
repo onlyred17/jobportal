@@ -152,15 +152,41 @@
 <!-- Job Details Modal -->
 <div id="job-modal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 id="modal-title"></h2>
-        <p><strong>Company:</strong> <span id="modal-company"></span></p>
-        <p><strong>Job Type:</strong> <span id="modal-job-type"></span></p>
-        <p><strong>Location:</strong> <span id="modal-location"></span></p>
-        <p><strong>Description:</strong></p>
-        <p id="modal-description"></p>
-        <p><strong>Requirements:</strong></p>
-        <ul id="modal-requirements"></ul>
+        <div class="modal-header">
+            <h2 id="modal-title"></h2>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        
+        <div class="modal-body">
+            <div class="modal-company-info">
+                <img id="modal-company-logo" src="" alt="Company Logo" class="modal-logo">
+                <div class="company-details">
+                    <p><strong>Company:</strong> <span id="modal-company"></span></p>
+                    <div class="modal-tags">
+                        <span class="modal-tag" id="modal-job-type"></span>
+                        <span class="modal-tag" id="modal-location"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h3>Description</h3>
+                <p id="modal-description"></p>
+            </div>
+            
+            <div class="modal-section">
+                <h3>Requirements</h3>
+                <ul id="modal-requirements"></ul>
+            </div>
+            
+          
+        </div>
+        
+        <div class="modal-footer">
+            <button id="modal-listen" class="btn-listen-modal">
+                <i class="fas fa-volume-up"></i> Listen
+            </button>
+        </div>
     </div>
 </div>
 
@@ -214,8 +240,7 @@ function addTextToSpeech() {
         });
     });
 }
-// Function to open job details modal
-// Function to open job details modal
+// Function to open job details modal with updated UI
 function openModal(job) {
     // Parse the job data if it's a string
     if (typeof job === 'string') {
@@ -227,12 +252,22 @@ function openModal(job) {
         }
     }
     
+    // Populate modal content
     document.getElementById('modal-title').innerText = job.title;
     document.getElementById('modal-company').innerText = job.company_name;
     document.getElementById('modal-job-type').innerText = job.job_type;
     document.getElementById('modal-location').innerText = job.location;
     document.getElementById('modal-description').innerText = job.description;
-
+    
+    // Set company logo if available
+    const logoElement = document.getElementById('modal-company-logo');
+    if (job.company_logo) {
+        logoElement.src = job.company_logo;
+        logoElement.style.display = 'block';
+    } else {
+        logoElement.style.display = 'none';
+    }
+    
     // Clear and populate requirements list
     let requirementsList = document.getElementById('modal-requirements');
     requirementsList.innerHTML = '';
@@ -249,16 +284,116 @@ function openModal(job) {
         let li = document.createElement('li');
         li.innerText = job.requirements;
         requirementsList.appendChild(li);
+    } else {
+        // If no requirements provided
+        let li = document.createElement('li');
+        li.innerText = "Please contact the company for specific requirements.";
+        requirementsList.appendChild(li);
     }
 
-    // Make sure the modal is visible
+    // Make sure the modal is visible with animation
     const modal = document.getElementById('job-modal');
     modal.style.display = 'block';
+    
+    // Use setTimeout to ensure the display change has taken effect before adding the class
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+    
+    // Add Text-to-Speech functionality for the modal
+    document.getElementById('modal-listen').addEventListener('click', function() {
+        speakJobDetails(job);
+    });
+    
+    // Add Apply button functionality
+    document.getElementById('modal-apply').addEventListener('click', function() {
+        // You can implement application logic here
+        alert(`You are about to apply for the position of ${job.title} at ${job.company}. This feature will be implemented soon.`);
+    });
 }
 
-// Function to close the modal
+// Function to close the modal with animation
 function closeModal() {
-    document.getElementById('job-modal').style.display = 'none';
+    const modal = document.getElementById('job-modal');
+    modal.classList.remove('show');
+    
+    // Wait for the animation to complete before hiding the modal
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+    
+    // Remove event listeners to prevent duplicates on reopen
+    document.getElementById('modal-listen').removeEventListener('click', function() {});
+    document.getElementById('modal-apply').removeEventListener('click', function() {});
+}
+
+// Function to handle Text-to-Speech for job details in the modal
+function speakJobDetails(job) {
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+    
+    // Prepare the text to speak with proper pauses - removed the Apply Now button mention
+    const textToSpeak = `
+        Job Title: ${job.title}. 
+        Company: ${job.company_name}.
+        Job Type: ${job.job_type}.
+        Location: ${job.location}.
+        Description: ${job.description}.
+        
+        Requirements: ${getRequirementsText(job.requirements)}.
+    `;
+    
+    // Create speech utterance
+    const speech = new SpeechSynthesisUtterance(textToSpeak);
+    speech.lang = 'en-US';
+    speech.rate = 1;  // Normal speed
+    speech.pitch = 1; // Normal pitch
+    speech.volume = 1; // Full volume
+    
+    // Add visual indicator that speaking is in progress
+    const listenButton = document.getElementById('modal-listen');
+    const originalText = listenButton.innerHTML;
+    listenButton.innerHTML = '<i class="fas fa-pause"></i> Stop Reading';
+    
+    // Add event to track when speech has ended
+    speech.onend = function() {
+        listenButton.innerHTML = originalText;
+    };
+    
+    // Allow stopping the speech when button is clicked again
+    listenButton.onclick = function() {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            listenButton.innerHTML = originalText;
+            
+            // Reset the click handler
+            setTimeout(() => {
+                listenButton.onclick = function() {
+                    speakJobDetails(job);
+                };
+            }, 100);
+        }
+    };
+    
+    // Start speaking
+    window.speechSynthesis.speak(speech);
+}
+
+// Helper function to format requirements for speech
+function getRequirementsText(requirements) {
+    if (!requirements) {
+        return "Please contact the company for specific requirements";
+    }
+    
+    if (typeof requirements === 'string') {
+        return requirements;
+    }
+    
+    if (Array.isArray(requirements)) {
+        return requirements.join('. ');
+    }
+    
+    return "Please contact the company for specific requirements";
 }
 
 // Function to render job cards with proper event binding
@@ -273,18 +408,18 @@ function renderJobCards(jobs) {
             
             jobCard.innerHTML = `
                 <div class="job-header">
-                    <img src="${job.company_logo}" alt="Company Logo" class="company-logo">
+                    <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
                     <h3>${job.title}</h3>
                 </div>
                 <div class="job-content">
-                    <p>${job.description}</p>
+                    <p>${job.description.substring(0, 150)}${job.description.length > 150 ? '...' : ''}</p>
                     <div class="tags">
                         <span class="tag">${job.job_type}</span>
                         <span class="tag">${job.location}</span>
                     </div>
                     <div class="job-footer">
                         <span class="job-date">Posted ${formatDate(job.posted_date)}</span>
-                        <button class="btn-listen">🔊 Listen</button>
+                        <button class="btn-listen" aria-label="Listen to job description"><i class="fas fa-volume-up"></i></button>
                         <button class="btn-view-details" data-job-index="${index}">View Details</button>
                     </div>
                 </div>
@@ -296,21 +431,60 @@ function renderJobCards(jobs) {
         // Now add event listeners after all cards have been added to the DOM
         document.querySelectorAll('.btn-view-details').forEach((button, index) => {
             button.addEventListener('click', function() {
-                openModal(jobs[index]);
+                openModal(jobs[this.dataset.jobIndex]);
             });
         });
 
         // Add TTS functionality after rendering
-        addTextToSpeech();
+        addTextToSpeech(jobs);
     } else {
         jobCardsContainer.innerHTML = '<p>No jobs available.</p>';
     }
 }
+
+// Improved Text-to-Speech function with job data reference
+function addTextToSpeech(jobs) {
+    document.querySelectorAll('.btn-listen').forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent triggering other click events
+            const job = jobs[index];
+            
+            // Stop any current speech
+            window.speechSynthesis.cancel();
+            
+            const textToSpeak = `
+                Job Title: ${job.title}. 
+    Company: ${job.company_name}.
+                Brief Description: ${job.description.substring(0, 150)}. 
+                Job Type: ${job.job_type}. 
+                Location: ${job.location}.
+                Posted on: ${formatDate(job.posted_date)}.
+                For more details, click View Details.
+            `;
+
+            const speech = new SpeechSynthesisUtterance(textToSpeak);
+            speech.lang = 'en-US';
+            speech.rate = 1;
+            speech.pitch = 1;
+            speech.volume = 1;
+
+            // Visual indicator
+            this.innerHTML = '<i class="fas fa-pause"></i>';
+            
+            speech.onend = () => {
+                this.innerHTML = '<i class="fas fa-volume-up"></i>';
+            };
+            
+            window.speechSynthesis.speak(speech);
+        });
+    });
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('job-modal');
     if (event.target === modal) {
-        modal.style.display = 'none';
+        closeModal();
     }
 }
 
