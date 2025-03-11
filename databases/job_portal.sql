@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2025 at 06:43 PM
+-- Generation Time: Mar 11, 2025 at 06:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -72,27 +72,16 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `company_id`, `company_name`, `company_logo`, `title`, `description`, `status`, `posted_date`, `staff_id`, `requirements`, `salary`, `job_type`, `location`) VALUES
-(13, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'kargador', 'asd', 'Open', '2025-03-09 16:11:44', 1, 'magaling', 0.00, 'Full-time', 'taytay'),
-(14, 3, 'SM corp', '../uploads/1741529311_registration.png', 'asd', 'asd', 'Closed', '2025-03-09 16:11:51', 2, 'asd', 0.00, 'Full-time', 'binangonan'),
-(16, 4, 'Jabi', '../uploads/1741529387_steam.jpg', 'asdasd', 'asd', 'Open', '2025-03-09 17:53:40', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(17, 1, 'A', 'tech_logo.png', 'asasd', 'asd', 'Open', '2025-03-09 17:57:58', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(18, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'asd', 'asd', 'Open', '2025-03-09 18:02:45', 1, 'asd', 0.00, 'Contract', 'taytay'),
-(19, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'asasd', 'asd', 'Open', '2025-03-09 18:04:34', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(20, 1, 'A', 'tech_logo.png', 'as', 'asd', 'Closed', '2025-03-09 18:21:32', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(21, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'RED', 'RED', 'Open', '2025-03-09 18:23:14', 1, 'RED', 0.00, 'Full-time', 'taytay'),
-(22, 1, 'A', 'tech_logo.png', 'RED', 'RED@', 'Open', '2025-03-09 18:24:22', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(23, 3, 'SM corp', '../uploads/1741529311_registration.png', 'asd', 'asd', 'Open', '2025-03-09 18:25:36', 1, 'asd', 0.00, 'Part-time', 'taytay'),
-(24, 1, 'A', 'tech_logo.png', 'asaaaa', 'asd', 'Closed', '2025-03-09 18:29:02', 1, 'aa', 0.00, 'Full-time', 'taytay'),
-(25, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'as', 'as', 'Open', '2025-03-09 18:30:18', 1, 'a', 0.00, 'Part-time', ''),
-(26, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'RED2', 'RED@', 'Open', '2025-03-09 18:31:50', 1, 'asd', 0.00, 'Contract', ''),
-(27, 3, 'SM corp', '../uploads/1741529311_registration.png', 'A', 'A', 'Open', '2025-03-09 18:34:57', 1, 'A', 0.00, 'Part-time', ''),
-(28, 1, 'A', 'tech_logo.png', 'asd', 'asd', 'Open', '2025-03-09 18:35:43', 1, 'a', 0.00, 'Contract', ''),
-(29, 3, 'SM corp', '../uploads/1741529311_registration.png', 'as', 'a', 'Open', '2025-03-10 11:37:41', 1, 'a', 0.00, 'Part-time', ''),
-(30, 3, 'SM corp', '../uploads/1741529311_registration.png', 'as', 'a', 'Open', '2025-03-10 11:37:42', 1, 'a', 0.00, 'Part-time', ''),
-(31, 3, 'SM corp', '../uploads/1741529311_registration.png', 'as', 'a', 'Open', '2025-03-10 11:37:43', 1, 'a', 0.00, 'Part-time', ''),
-(32, 3, 'SM corp', '../uploads/1741529311_registration.png', 'as', 'a', 'Open', '2025-03-10 11:37:43', 1, 'a', 0.00, 'Part-time', ''),
-(33, 3, 'SM corp', '../uploads/1741529311_registration.png', 'as', 'a', 'Open', '2025-03-10 11:37:43', 1, 'a', 0.00, 'Part-time', ''),
-(34, 2, 'Concetrix', '../uploads/1741529217_cat.jpg', 'a', 'a', 'Open', '2025-03-10 11:38:08', 1, 'a', 0.00, 'Full-time', '');
+(1, 101, 'Inclusive Tech Solutions', 'inclusive_tech_logo.png', 'Software Developer', 'Develop and maintain web applications using PHP and MySQL. Ensure accessibility compliance.', 'Open', '2025-03-12 00:00:00', 201, 'Bachelor’s degree in IT or related field; Experience with PHP, MySQL, and JavaScript; Strong problem-solving skills', 50.00, 'Full-time', 'Makati, Philippines'),
+(2, 102, 'Empower Inc.', 'empower_inc_logo.png', 'Customer Support Representative', 'Provide excellent customer service via chat, email, and phone. Handle inquiries from customers with diverse needs.', 'Open', '2025-03-12 00:00:00', 202, 'High school diploma or equivalent; Strong communication skills; Experience in customer service is a plus', 25.00, 'Full-time', 'Quezon City, Philippines'),
+(3, 103, 'DiversityWorks', 'diversity_works_logo.png', 'Graphic Designer', 'Create visually appealing designs for marketing materials, social media, and website content.', 'Open', '2025-03-12 00:00:00', 203, 'Proficiency in Adobe Photoshop, Illustrator, and Canva; Portfolio of previous work required', 40.00, 'Part-time', 'Remote'),
+(4, 104, 'Accessible Solutions', 'accessible_solutions_logo.png', 'Data Entry Specialist', 'Accurately input and manage data into company databases, ensuring accessibility standards.', 'Open', '2025-03-12 00:00:00', 204, 'Strong typing skills; Attention to detail; Knowledge of MS Excel and Google Sheets', 22.00, 'Full-time', 'Cebu, Philippines'),
+(5, 105, 'FutureVision', 'futurevision_logo.png', 'Digital Marketing Specialist', 'Plan and execute digital marketing strategies, including SEO, PPC, and social media management.', 'Open', '2025-03-12 00:00:00', 205, 'Experience in digital marketing; Knowledge of SEO and Google Ads; Strong analytical skills', 45.00, 'Contract', 'Taguig, Philippines'),
+(6, 106, 'BrightPath Solutions', 'brightpath_logo.png', 'Administrative Assistant', 'Provide administrative support, schedule meetings, and manage documents efficiently.', 'Open', '2025-03-12 00:00:00', 206, 'High school diploma or equivalent; Proficiency in MS Office; Strong organizational skills', 28.00, 'Full-time', 'Pasig, Philippines'),
+(7, 107, 'Visionary Web', 'visionary_web_logo.png', 'Front-End Developer', 'Develop and maintain user-friendly websites with accessibility in mind.', 'Open', '2025-03-12 00:00:00', 207, 'Experience with HTML, CSS, JavaScript, and React; Understanding of accessibility best practices', 55.00, 'Full-time', 'Remote'),
+(8, 108, 'CareFirst', 'carefirst_logo.png', 'Medical Transcriptionist', 'Transcribe medical reports and patient records accurately.', 'Open', '2025-03-12 00:00:00', 208, 'Medical transcription certification preferred; Excellent listening and typing skills', 35.00, 'Part-time', 'Davao, Philippines'),
+(9, 109, 'EnableTech', 'enabletech_logo.png', 'IT Support Specialist', 'Provide technical assistance, troubleshoot system issues, and assist employees with IT-related concerns.', 'Open', '2025-03-12 00:00:00', 209, 'Degree in IT or related field; Experience with hardware/software troubleshooting', 40.00, 'Full-time', 'Mandaluyong, Philippines'),
+(10, 110, 'SmartReach', 'smartreach_logo.png', 'Social Media Manager', 'Develop and manage social media campaigns, create engaging content, and analyze engagement metrics.', 'Open', '2025-03-12 00:00:00', 210, 'Experience in social media marketing; Strong writing and analytical skills', 38.00, 'Contract', 'Remote');
 
 -- --------------------------------------------------------
 
