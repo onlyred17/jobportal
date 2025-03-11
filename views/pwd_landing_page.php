@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PWD Job Portal</title>
+    <title>DisabilityToAbility </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/landing_page.css">
@@ -15,7 +15,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <h1>PWD Job Portal</h1>
+            <h1>DisabilityToAbility</h1>
             <nav>
                 <a href="#home">Home</a>
                 <a href="#about">About Us</a>
@@ -28,7 +28,7 @@
     <!-- Hero Section -->
     <div id="home" class="hero-section">
         <div class="hero-content">
-            <h1>Welcome to the PWD Job Portal</h1>
+            <h1>Welcome to the DisabilityToAbility Portal</h1>
             <p>Find job opportunities tailored for Persons with Disabilities (PWD). Let's make a difference together.</p>
             <a href="#jobs" class="btn-primary">View Job Listings</a>
         </div>
@@ -38,7 +38,15 @@
     <section id="about">
         <div class="about-container">
             <h2>About Us</h2>
-            <p>We are dedicated to providing job opportunities for Persons with Disabilities (PWD), connecting employers with candidates who have unique abilities. Our mission is to create an inclusive environment for all individuals seeking meaningful employment.</p>
+            <p>We are dedicated to providing job opportunities for Persons with Disabilities (PWD), connecting employers with candidates who have unique abilities. Our mission is to create an inclusive environment for all individuals seeking meaningful employment.
+            At DisabilityToAbility, we believe that talent knows no boundaries. Our platform is dedicated to empowering Persons with Disabilities (PWDs) by connecting them with inclusive employers who recognize their skills, passion, and potential.
+
+We strive to bridge the gap between opportunity and accessibility, ensuring that PWD job seekers have a fair chance to build meaningful careers. Through our user-friendly job portal, we provide a space where employers can find dedicated professionals, fostering a workplace culture that values diversity and inclusion.
+
+Join us in turning disability into ability—because everyone deserves the opportunity to thrive.
+
+
+            </p>
         </div>
     </section>
 
@@ -106,7 +114,7 @@
     <div class="footer-container">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>PWD Job Portal</h3>
+                <h3>DisabilityToAbility</h3>
                 <p>Creating equal employment opportunities for all.</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
@@ -139,7 +147,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2025 PWD Job Portal. All rights reserved.</p>
+            <p>&copy; 2025 DisabilityToAbility. All rights reserved.</p>
             <div class="footer-links">
                 <a href="#">Terms of Service</a>
                 <a href="#">Privacy Policy</a>
@@ -347,7 +355,7 @@ function speakJobDetails(job) {
     const speech = new SpeechSynthesisUtterance(textToSpeak);
     speech.lang = 'en-US';
     speech.rate = 1;  // Normal speed
-    speech.pitch = 1; // Normal pitch
+    speech.pitch = 2; // Normal pitch
     speech.volume = 1; // Full volume
     
     // Add visual indicator that speaking is in progress
