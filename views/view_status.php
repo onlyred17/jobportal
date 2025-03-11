@@ -62,17 +62,6 @@
             color: #2E3A47; /* Error alert text color */
         }
 
-        /* Accessibility Controls Styles */
-        .accessibility-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-        }
 
         .accessibility-controls h5 {
             margin-bottom: 15px;
@@ -237,7 +226,218 @@ body.high-contrast .alert-danger {
     background-color: #FF0000; /* Red background for error alerts */
     color: #FFFFFF; /* White text color */
 }
+/* Enhanced Accessibility Controls Styles */
+.accessibility-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: 270px;
+    transition: all 0.3s ease;
+}
 
+.accessibility-controls h5 {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2E3A47;
+}
+
+.controls-section {
+    margin-bottom: 15px;
+}
+
+.mode-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.font-size-controls, .brightness-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.font-size-controls button, .brightness-controls button {
+    padding: 5px 10px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.font-size-controls button:hover, .brightness-controls button:hover {
+    background: #357ABD;
+}
+
+.font-size-controls span, .brightness-controls span {
+    margin: 0 5px;
+    min-width: 50px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Toggle buttons styling */
+.toggle-btn {
+    flex: 1;
+    padding: 8px 5px;
+    border: 1px solid #E2E8F0;
+    background-color: #F8F9FA;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    color: #2E3A47;
+    margin-right: 10px;
+}
+
+.toggle-btn:hover {
+    background-color: #E2E8F0;
+}
+
+.toggle-btn.active {
+    background: #4A90E2;
+    color: white;
+    border-color: #4A90E2;
+}
+
+/* Dark mode styles for the accessibility panel */
+body.dark-mode .accessibility-controls {
+    background: #2c2c2c;
+    border: 1px solid #4a4a4a;
+}
+
+body.dark-mode .accessibility-controls h5 {
+    color: #f0f0f0;
+}
+
+body.dark-mode .toggle-btn {
+    background-color: #3a3a3a;
+    border-color: #4a4a4a;
+    color: #f0f0f0;
+}
+
+body.dark-mode .toggle-btn:hover {
+    background-color: #4a4a4a;
+}
+
+body.dark-mode .toggle-btn.active {
+    background: #6BB0FF;
+    color: #1a1a1a;
+}
+
+body.dark-mode .font-size-controls span, 
+body.dark-mode .brightness-controls span {
+    color: #f0f0f0;
+}
+
+body.dark-mode .font-size-controls button, 
+body.dark-mode .brightness-controls button {
+    background: #4A90E2;
+}
+
+body.dark-mode .font-size-controls button:hover, 
+body.dark-mode .brightness-controls button:hover {
+    background: #357ABD;
+}
+
+/* High contrast styles for the accessibility panel */
+body.high-contrast .accessibility-controls {
+    background: #000000;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+body.high-contrast .accessibility-controls h5 {
+    color: #FFFFFF;
+}
+
+body.high-contrast .toggle-btn {
+    background-color: #000000;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+body.high-contrast .toggle-btn:hover {
+    background-color: #333333;
+}
+
+body.high-contrast .toggle-btn.active {
+    background: #FFFFFF;
+    color: #000000;
+    border-color: #FFFFFF;
+}
+
+body.high-contrast .font-size-controls button, 
+body.high-contrast .brightness-controls button {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+body.high-contrast .font-size-controls button:hover, 
+body.high-contrast .brightness-controls button:hover {
+    background: #333333;
+}
+
+body.high-contrast .font-size-controls span, 
+body.high-contrast .brightness-controls span {
+    color: #FFFFFF;
+}
+
+/* Make the panel responsive on smaller screens */
+@media (max-width: 768px) {
+    .accessibility-controls {
+        width: 180px;
+        padding: 10px;
+    }
+    
+    .toggle-btn, 
+    .font-size-controls button, 
+    .brightness-controls button {
+        padding: 5px;
+        font-size: 0.8rem;
+    }
+    
+    .font-size-controls span, 
+    .brightness-controls span {
+        min-width: 40px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Ensure the accessibility panel itself is accessible in all modes */
+body.dark-mode .btn-primary,
+body.dark-mode .btn-custom {
+    background: #4A90E2;
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-custom:hover {
+    background: #357ABD;
+}
+
+/* Fix for form elements in high contrast mode */
+body.high-contrast .btn-primary {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+body.high-contrast .btn-primary:hover {
+    background: #333333;
+    color: #FFFFFF;
+}
     </style>
 </head>
 <body id="body-element">

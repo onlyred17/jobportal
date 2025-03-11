@@ -1410,7 +1410,7 @@ justify-content: center;
 
 .close {
     position: absolute;
-    right: 15px;
+    right: 35px;
     font-size: 25px;
     cursor: pointer;
 }
@@ -1531,6 +1531,7 @@ justify-content: center;
   .company-details p {
     margin: 0;
     color: var(--neutral-600);
+    font-weight: bold;
   }
   
   .modal-tags {
@@ -1615,6 +1616,7 @@ justify-content: center;
   .modal-section p {
     line-height: 1.6;
     margin: 0 0 15px 0;
+    font-weight: bold;
   }
   
   .modal-footer {
@@ -1667,110 +1669,7 @@ justify-content: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
   
-  /* Dark mode support */
-  .dark-mode .modal-content {
-    background-color: var(--neutral-900);
-    color: var(--neutral-200);
-  }
   
-  .dark-mode .modal-header,
-  .dark-mode .modal-footer {
-    background-color: var(--neutral-950);
-    border-color: var(--neutral-800);
-  }
-  
-  .dark-mode .modal-header h2 {
-    color: var(--neutral-100);
-  }
-  
-  .dark-mode .modal-section {
-    border-color: var(--neutral-800);
-  }
-  
-  .dark-mode .modal-section h3 {
-    color: var(--neutral-200);
-  }
-  
-  .dark-mode .close {
-    color: var(--neutral-400);
-  }
-  
-  .dark-mode .close:hover {
-    color: var(--neutral-100);
-  }
-  
-  .dark-mode .modal-tag {
-    background-color: var(--neutral-800);
-    color: var(--primary-light);
-  }
-  
-  .dark-mode .modal-tag.job-type {
-    background-color: rgba(187, 222, 251, 0.2);
-    color: var(--status-new);
-  }
-  
-  .dark-mode .modal-tag.location {
-    background-color: rgba(149, 117, 205, 0.2);
-    color: #b39ddb;
-  }
-  
-  .dark-mode .btn-listen-modal {
-    background-color: var(--neutral-800);
-    color: var(--neutral-300);
-  }
-  
-  .dark-mode .btn-listen-modal:hover {
-    background-color: var(--neutral-700);
-  }
-  
-  .dark-mode .btn-apply {
-    background-color: var(--secondary-color);
-  }
-  
-  .dark-mode .modal-logo {
-    background-color: var(--neutral-800);
-    border: 1px solid var(--neutral-700);
-  }
-  
-  /* High contrast mode support */
-  .high-contrast .modal-content {
-    background-color: #000;
-    color: #fff;
-    border: 2px solid #fff;
-  }
-  
-  .high-contrast .modal-header,
-  .high-contrast .modal-footer {
-    background-color: #000;
-    border-color: #fff;
-  }
-  
-  .high-contrast .btn-apply {
-    background-color: #ffff00;
-    color: #000;
-    font-weight: bold;
-    border: 2px solid #000;
-  }
-  
-  .high-contrast .btn-listen-modal {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #000;
-  }
-  
-  .high-contrast .modal-tag {
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #000;
-  }
-  
-  .high-contrast .modal-section {
-    border-color: #fff;
-  }
-  
-  .high-contrast .modal-section h3::before {
-    background-color: #fff;
-  }
   
   /* Animation Effects */
   @keyframes fadeIn {
@@ -2022,27 +1921,200 @@ justify-content: center;
     font-weight: 600;
 }
 
-/* Dark mode adjustments for modal header and footer */
-.dark-mode .modal-header {
-    background-color: var(--primary-dark);
-    border-bottom-color: var(--neutral-800);
-}
-
-.dark-mode .modal-footer {
-    background-color: var(--neutral-950);
-    border-top-color: var(--neutral-800);
-}
-
-.dark-mode .btn-listen-modal {
-    background-color: var(--neutral-800);
+/* Dark mode support */
+.dark-mode .modal-content {
+    background-color: var(--neutral-900);
     color: var(--neutral-200);
-}
-
-.dark-mode .btn-listen-modal:hover {
-    background-color: var(--neutral-700);
-}
-
-.dark-mode .job-posted-date {
-    background-color: var(--neutral-800);
+  }
+  
+  .dark-mode .modal-header,
+  .dark-mode .modal-footer {
+    background-color: var(--neutral-950);
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .modal-header h2 {
+    color: var(--neutral-100);
+  }
+  
+  .dark-mode .modal-section {
+    border-color: var(--neutral-800);
+  }
+  
+  .dark-mode .modal-section h3 {
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .close {
     color: var(--neutral-400);
-}
+  }
+  
+  .dark-mode .close:hover {
+    color: var(--neutral-100);
+  }
+  
+  .dark-mode .modal-tag {
+    background-color: var(--neutral-800);
+    color: var(--primary-light);
+  }
+  
+  .dark-mode .modal-tag.job-type {
+    background-color: rgba(187, 222, 251, 0.2);
+    color: var(--status-new);
+  }
+  
+  .dark-mode .modal-tag.location {
+    background-color: rgba(149, 117, 205, 0.2);
+    color: #b39ddb;
+  }
+  
+  .dark-mode .btn-listen-modal {
+    background-color: var(--neutral-800);
+    color: var(--neutral-300);
+  }
+  
+  .dark-mode .btn-listen-modal:hover {
+    background-color: var(--neutral-700);
+  }
+  
+  .dark-mode .btn-apply {
+    background-color: var(--secondary-color);
+  }
+  
+  .dark-mode .modal-logo {
+    background-color: var(--neutral-800);
+    border: 1px solid var(--neutral-700);
+  }
+  
+  /* Additional text element styling for dark mode */
+  .dark-mode .modal-content p {
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .modal-content li {
+    color: var(--neutral-200);
+  }
+  
+  .dark-mode .modal-content ul li::marker,
+  .dark-mode .modal-content ol li::marker {
+    color: var(--primary-light);
+  }
+  
+  .dark-mode .modal-content a {
+    color: var(--primary-light);
+    text-decoration: underline;
+  }
+  
+  .dark-mode .modal-content strong,
+  .dark-mode .modal-content b {
+    color: var(--neutral-100);
+    font-weight: bold;
+  }
+  
+  .dark-mode .modal-content em,
+  .dark-mode .modal-content i {
+    color: var(--neutral-100);
+  }
+  
+  .dark-mode .modal-content blockquote {
+    border-left: 3px solid var(--neutral-700);
+    background-color: var(--neutral-950);
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+  }
+  
+  /* High contrast mode support */
+  .high-contrast .modal-content {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .high-contrast .modal-header,
+  .high-contrast .modal-footer {
+    background-color: #000;
+    border-color: #fff;
+  }
+  
+  .high-contrast .btn-apply {
+    background-color: #ffff00;
+    color: #000;
+    font-weight: bold;
+    border: 2px solid #000;
+  }
+  
+  .high-contrast .btn-listen-modal {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+  
+  .high-contrast .modal-tag {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+  
+  .high-contrast .modal-section {
+    border-color: #fff;
+  }
+  
+  .high-contrast .modal-section h3::before {
+    background-color: #fff;
+  }
+  
+  /* Additional text element styling for high contrast mode */
+  .high-contrast .modal-content p {
+    color: #fff;
+  }
+  
+  .high-contrast .modal-content h1,
+  .high-contrast .modal-content h2,
+  .high-contrast .modal-content h3,
+  .high-contrast .modal-content h4,
+  .high-contrast .modal-content h5,
+  .high-contrast .modal-content h6 {
+    color: #fff;
+  }
+  
+  .high-contrast .modal-content ul,
+  .high-contrast .modal-content ol {
+    padding-left: 2rem;
+  }
+  
+  .high-contrast .modal-content li {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .high-contrast .modal-content li::marker {
+    color: #ffff00;
+  }
+  
+  .high-contrast .modal-content a {
+    color: #ffff00;
+    text-decoration: underline;
+    border-bottom: 1px solid #ffff00;
+  }
+  
+  .high-contrast .modal-content strong,
+  .high-contrast .modal-content b {
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .high-contrast .modal-content blockquote {
+    border-left: 3px solid #fff;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+  }
+  
+  /* Focus states for accessibility */
+  .high-contrast .modal-content a:focus,
+  .high-contrast .modal-content button:focus,
+  .high-contrast .modal-content input:focus,
+  .high-contrast .modal-content select:focus,
+  .high-contrast .modal-content textarea:focus {
+    outline: 3px solid #ffff00;
+    outline-offset: 2px;
+  }

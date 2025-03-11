@@ -169,7 +169,7 @@ Join us in turning disability into ability—because everyone deserves the oppor
             <div class="modal-company-info">
                 <img id="modal-company-logo" src="" alt="Company Logo" class="modal-logo">
                 <div class="company-details">
-                    <p><strong>Company:</strong> <span id="modal-company"></span></p>
+                <p style="font-weight: 900;"><strong>Company: <span id="modal-company"></span></strong></p>
                     <div class="modal-tags">
                         <span class="modal-tag" id="modal-job-type"></span>
                         <span class="modal-tag" id="modal-location"></span>
