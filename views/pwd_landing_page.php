@@ -6,6 +6,8 @@
     <title>DisabilityToAbility </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <link rel="stylesheet" href="../css/landing_page.css">
     <style>
         
@@ -201,28 +203,34 @@ Join us in turning disability into ability—because everyone deserves the oppor
     <!-- Script to Fetch Jobs Data with Pagination, Search, and Filter -->
     <script>
         let currentPage = 1;
-        let totalPages = 1;
+        let totalPages = 5;
 
-        // Fetch jobs data with pagination, search, and job type filter
         function fetchJobs(page = 1) {
-            const search = document.getElementById('search-input').value;
-            const jobType = document.getElementById('job-type').value;
+    const search = document.getElementById('search-input').value;
+    const jobType = document.getElementById('job-type').value;
 
-            if (page < 1 || page > totalPages) return;
+    if (page < 1) return;
 
+    const url = `../controllers/fetch_jobs.php?page=${page}&search=${encodeURIComponent(search)}&job_type=${encodeURIComponent(jobType)}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || !data.data || !data.totalPages) {
+                console.error("Invalid response format", data);
+                return;
+            }
+            totalPages = data.totalPages;
             currentPage = page;
-            const url = `../controllers/fetch_jobs.php?page=${currentPage}&search=${encodeURIComponent(search)}&job_type=${encodeURIComponent(jobType)}`;
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    totalPages = data.totalPages;
-                    document.getElementById('page-number').textContent = `Page ${currentPage}`;
-                    renderJobCards(data.data);
-                    togglePaginationButtons();
-                })
-                .catch(error => console.error('Error fetching jobs:', error));
-        }
+            document.getElementById('page-number').textContent = `Page ${currentPage} of ${totalPages}`;
+            renderJobCards(data.data); 
+            togglePaginationButtons();
+        })
+        .catch(error => console.error('Error fetching jobs:', error));
+}
+
+    
 
     // Function to add TTS to each job listing
 function addTextToSpeech() {
@@ -347,7 +355,7 @@ function speakJobDetails(job) {
         Job Type: ${job.job_type}.
         Location: ${job.location}.
         Description: ${job.description}.
-        
+        Description: ${job.status}.
         Requirements: ${getRequirementsText(job.requirements)}.
     `;
     
@@ -404,51 +412,59 @@ function getRequirementsText(requirements) {
     return "Please contact the company for specific requirements";
 }
 
-// Function to render job cards with proper event binding
 function renderJobCards(jobs) {
     const jobCardsContainer = document.getElementById('job-cards-container');
-    jobCardsContainer.innerHTML = ''; // Clear current job cards
+    jobCardsContainer.innerHTML = ''; 
+    const openJobs = jobs.filter(job => job.status.toLowerCase() === "open");
 
-    if (jobs.length > 0) {
-        jobs.forEach((job, index) => {
-            const jobCard = document.createElement('div');
-            jobCard.classList.add('job-card');
-            
-            jobCard.innerHTML = `
-                <div class="job-header">
-                    <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
-                    <h3>${job.title}</h3>
-                </div>
-                <div class="job-content">
-                    <p>${job.description.substring(0, 150)}${job.description.length > 150 ? '...' : ''}</p>
-                    <div class="tags">
-                        <span class="tag">${job.job_type}</span>
-                        <span class="tag">${job.location}</span>
-                    </div>
-                    <div class="job-footer">
-                        <span class="job-date">Posted ${formatDate(job.posted_date)}</span>
-                        <button class="btn-listen" aria-label="Listen to job description"><i class="fas fa-volume-up"></i></button>
-                        <button class="btn-view-details" data-job-index="${index}">View Details</button>
-                    </div>
-                </div>
-            `;
-            
-            jobCardsContainer.appendChild(jobCard);
-        });
-        
-        // Now add event listeners after all cards have been added to the DOM
-        document.querySelectorAll('.btn-view-details').forEach((button, index) => {
-            button.addEventListener('click', function() {
-                openModal(jobs[this.dataset.jobIndex]);
-            });
-        });
-
-        // Add TTS functionality after rendering
-        addTextToSpeech(jobs);
-    } else {
+    if (!jobs.length) {
         jobCardsContainer.innerHTML = '<p>No jobs available.</p>';
+        return;
     }
+
+    jobs.forEach((job, index) => {
+        const jobCard = document.createElement('div');
+        jobCard.classList.add('job-card');
+
+        let statusIcon = job.status.toLowerCase() === "open"
+            ? '<i class="fas fa-check-circle" style="color: green;"></i>'
+            : '<i class="fas fa-times-circle" style="color: red;"></i>';
+
+        jobCard.innerHTML = `
+            <div class="job-header">
+                <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
+                <div class="job-title-container">
+                    <h3>${job.title}</h3>
+                    <p class="company-name">${job.company_name}</p>
+                </div>
+            </div>
+            <div class="job-content">
+                <p>${job.description.substring(0, 150)}${job.description.length > 150 ? '...' : ''}</p>
+                <div class="tags">
+                    <span class="tag"><i class="fas fa-briefcase"></i> ${job.job_type}</span>
+                    <span class="tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                    <span class="tag">${statusIcon} ${job.status}</span>
+                </div>
+                <div class="job-footer">
+                    <span class="job-date"><i class="fas fa-calendar-alt"></i> Posted ${formatDate(job.posted_date)}</span>
+                    <button class="btn-listen" aria-label="Listen to job description"><i class="fas fa-volume-up"></i></button>
+                    <button class="btn-view-details" data-job-index="${index}">View Details</button>
+                </div>
+            </div>
+        `;
+
+        jobCardsContainer.appendChild(jobCard);
+    });
+
+    document.querySelectorAll('.btn-view-details').forEach(button => {
+        button.addEventListener('click', function () {
+            openModal(jobs[this.dataset.jobIndex]);
+        });
+    });
+
+    addTextToSpeech(jobs);
 }
+
 
 // Improved Text-to-Speech function with job data reference
 function addTextToSpeech(jobs) {
@@ -466,8 +482,9 @@ function addTextToSpeech(jobs) {
                 Brief Description: ${job.description.substring(0, 150)}. 
                 Job Type: ${job.job_type}. 
                 Location: ${job.location}.
+                Status: ${job.status}.
                 Posted on: ${formatDate(job.posted_date)}.
-                For more details, click View Details.
+                For more info, click the view details.
             `;
 
             const speech = new SpeechSynthesisUtterance(textToSpeak);

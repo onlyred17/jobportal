@@ -1,0 +1,187 @@
+/* Metrics */
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ensures uniform size */
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.metric-card {
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: "Gill Sans", sans-serif;
+    min-height: 140px; /* Ensures uniform height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #ffffff; /* Ensures text is readable on colored backgrounds */
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Different Background Colors for Each Metric */
+.metric-card:nth-child(1) {
+    background: #6366F1; /* Indigo */
+}
+
+.metric-card:nth-child(2) {
+    background: #10B981; /* Green */
+}
+
+.metric-card:nth-child(3) {
+    background: #F59E0B; /* Amber */
+}
+
+.metric-card:nth-child(4) {
+    background: #EF4444; /* Red */
+}
+
+.metric-card:nth-child(5) {
+    background: #3B82F6; /* Blue */
+}
+
+.metric-card h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-card p {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.metric-card .change {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.metric-card .change.positive {
+    color: #D1FAE5; /* Light green */
+}
+
+.metric-card .change.negative {
+    color: #FECACA; /* Light red */
+}
+
+.metric-card .icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    height: 42px;
+    width: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+/* Graphs */
+.graphs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Same width as metric cards */
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.graph-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 240px; /* Ensures graph containers are the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.graph-container h3 {
+    font-size: 18px;
+    margin-bottom: 24px;
+    color: #1e293b;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.graph-container h3 .period {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.graph-container canvas {
+    max-height: 200px;
+    width: 100%;
+}
+
+.graph-container .legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    justify-content: center;
+}
+
+.graph-container .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.graph-container .legend-item .color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 280px;
+    margin-top: 90px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .graphs {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .main-content {
+        padding: 24px 16px;
+    }
+}

@@ -1,12 +1,26 @@
 <?php
-// Start the session to access session variables
 session_start();
 
-// Destroy all session data
-session_unset(); // Unsets all session variables
-session_destroy(); // Destroys the session
+if (!isset($_SESSION['usertype'])) {
+    // Redirect to a default login page if usertype is not set
+    header("Location: ../views/view_staff_login.php");
+    exit;
+}
 
-// Redirect the user to the login page after logging out
-header("Location: ../views/view_staff_login.php");
+// Get user type
+$usertype = $_SESSION['usertype'];
+
+// Destroy session
+session_unset();
+session_destroy();
+
+// Redirect based on user type
+if ($usertype === 'admin') {
+    header("Location: ../views/view_admin_login.php");
+} elseif ($usertype === 'employer') {
+    header("Location: ../views/view_employer_login.php");
+} else {
+    header("Location: ../views/view_staff_login.php"); // Default login page
+}
 exit;
 ?>

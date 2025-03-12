@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2025 at 06:53 PM
+-- Generation Time: Mar 12, 2025 at 05:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -24,6 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `contact_number` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profile_pic` varchar(255) DEFAULT '../images/default_profile.jpg',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `usertype` varchar(50) NOT NULL DEFAULT 'admin'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `first_name`, `last_name`, `email`, `contact_number`, `password`, `profile_pic`, `created_at`, `updated_at`, `usertype`) VALUES
+(1, 'Admin', 'User', 'admin1@gmail.com', '1234567890', '$2y$10$EG8XipZeHWhtQEKU8hwGAOyfkPVvBByP3wX269RLRKVmf6oowK6iK', '../images/default_profile.jpg', '2025-03-12 13:47:23', '2025-03-12 15:12:53', 'admin'),
+(2, 'Admin', 'Two', 'admin2@gmail.com', '', '$2y$10$fPJBvzUVJvhFCvVKPFzJfeCWlI0rhTQs3TNvjDCyZ8OAzEPeQawW6', '../uploads/1741528292_my_profile.jpg', '2025-03-12 14:01:32', '2025-03-12 14:38:22', 'admin');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company`
 --
 
@@ -33,17 +60,20 @@ CREATE TABLE `company` (
   `logo` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`id`, `name`, `logo`, `location`, `description`, `created_at`) VALUES
-(3, 'SM corp', '../uploads/1741529311_registration.png', 'Taytay', 'asd', '2025-03-09 15:08:31'),
-(4, 'Jabi', '../uploads/1741529387_steam.jpg', 'asd', 'asd', '2025-03-09 15:09:47'),
-(13, 'a', '../uploads/1741603135_415484664_6416179271817304_1103546640539258061_n.jpg', 'a', 'a', '2025-03-10 11:38:55');
+INSERT INTO `company` (`id`, `name`, `logo`, `location`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Tech Solutions Inc.', 'tech_solutions_logo.png', 'Makati City, Philippines', 'A leading software development company specializing in web and mobile applications.', '2025-03-13 00:51:32', '2025-03-12 16:51:32'),
+(2, 'Innovate IT Hub', 'innovate_logo.png', 'Cebu City, Philippines', 'Providing cutting-edge IT solutions for businesses.', '2025-03-13 00:51:32', '2025-03-12 16:51:32'),
+(3, 'CloudSync Corp.', 'cloudsync_logo.png', 'Taguig City, Philippines', 'Experts in cloud computing and cybersecurity.', '2025-03-13 00:51:32', '2025-03-12 16:51:32'),
+(4, 'AI Pioneers', 'aipioneers_logo.png', 'Quezon City, Philippines', 'Advancing AI technology for automation and business intelligence.', '2025-03-13 00:51:32', '2025-03-12 16:51:32'),
+(5, 'DevWorks PH', 'devworks_logo.png', 'Davao City, Philippines', 'A software firm specializing in enterprise applications and system integrations.', '2025-03-13 00:51:32', '2025-03-12 16:51:32');
 
 -- --------------------------------------------------------
 
@@ -72,16 +102,17 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `company_id`, `company_name`, `company_logo`, `title`, `description`, `status`, `posted_date`, `staff_id`, `requirements`, `salary`, `job_type`, `location`) VALUES
-(1, 101, 'Inclusive Tech Solutions', 'inclusive_tech_logo.png', 'Software Developer', 'Develop and maintain web applications using PHP and MySQL. Ensure accessibility compliance.', 'Open', '2025-03-12 00:00:00', 201, 'Bachelor’s degree in IT or related field; Experience with PHP, MySQL, and JavaScript; Strong problem-solving skills', 50.00, 'Full-time', 'Makati, Philippines'),
-(2, 102, 'Empower Inc.', 'empower_inc_logo.png', 'Customer Support Representative', 'Provide excellent customer service via chat, email, and phone. Handle inquiries from customers with diverse needs.', 'Open', '2025-03-12 00:00:00', 202, 'High school diploma or equivalent; Strong communication skills; Experience in customer service is a plus', 25.00, 'Full-time', 'Quezon City, Philippines'),
-(3, 103, 'DiversityWorks', 'diversity_works_logo.png', 'Graphic Designer', 'Create visually appealing designs for marketing materials, social media, and website content.', 'Open', '2025-03-12 00:00:00', 203, 'Proficiency in Adobe Photoshop, Illustrator, and Canva; Portfolio of previous work required', 40.00, 'Part-time', 'Remote'),
-(4, 104, 'Accessible Solutions', 'accessible_solutions_logo.png', 'Data Entry Specialist', 'Accurately input and manage data into company databases, ensuring accessibility standards.', 'Open', '2025-03-12 00:00:00', 204, 'Strong typing skills; Attention to detail; Knowledge of MS Excel and Google Sheets', 22.00, 'Full-time', 'Cebu, Philippines'),
-(5, 105, 'FutureVision', 'futurevision_logo.png', 'Digital Marketing Specialist', 'Plan and execute digital marketing strategies, including SEO, PPC, and social media management.', 'Open', '2025-03-12 00:00:00', 205, 'Experience in digital marketing; Knowledge of SEO and Google Ads; Strong analytical skills', 45.00, 'Contract', 'Taguig, Philippines'),
-(6, 106, 'BrightPath Solutions', 'brightpath_logo.png', 'Administrative Assistant', 'Provide administrative support, schedule meetings, and manage documents efficiently.', 'Open', '2025-03-12 00:00:00', 206, 'High school diploma or equivalent; Proficiency in MS Office; Strong organizational skills', 28.00, 'Full-time', 'Pasig, Philippines'),
-(7, 107, 'Visionary Web', 'visionary_web_logo.png', 'Front-End Developer', 'Develop and maintain user-friendly websites with accessibility in mind.', 'Open', '2025-03-12 00:00:00', 207, 'Experience with HTML, CSS, JavaScript, and React; Understanding of accessibility best practices', 55.00, 'Full-time', 'Remote'),
-(8, 108, 'CareFirst', 'carefirst_logo.png', 'Medical Transcriptionist', 'Transcribe medical reports and patient records accurately.', 'Open', '2025-03-12 00:00:00', 208, 'Medical transcription certification preferred; Excellent listening and typing skills', 35.00, 'Part-time', 'Davao, Philippines'),
-(9, 109, 'EnableTech', 'enabletech_logo.png', 'IT Support Specialist', 'Provide technical assistance, troubleshoot system issues, and assist employees with IT-related concerns.', 'Open', '2025-03-12 00:00:00', 209, 'Degree in IT or related field; Experience with hardware/software troubleshooting', 40.00, 'Full-time', 'Mandaluyong, Philippines'),
-(10, 110, 'SmartReach', 'smartreach_logo.png', 'Social Media Manager', 'Develop and manage social media campaigns, create engaging content, and analyze engagement metrics.', 'Open', '2025-03-12 00:00:00', 210, 'Experience in social media marketing; Strong writing and analytical skills', 38.00, 'Contract', 'Remote');
+(1, 101, 'Inclusive Tech Solutions', 'inclusive_tech_logo.png', 'Software Developer', 'Develop and maintain web applications using PHP and MySQL. Ensure accessibility compliance.', 'Closed', '2025-03-20 06:00:00', 1, 'Bachelor’s degree in IT or related field; Experience with PHP, MySQL, and JavaScript; Strong problem-solving skills', 50.00, 'Full-time', 'Makati, Philippines'),
+(2, 102, 'Empower Inc.', 'empower_inc_logo.png', 'Customer Support Representative', 'Provide excellent customer service via chat, email, and phone. Handle inquiries from customers with diverse needs.', 'Open', '2025-03-20 00:00:00', 1, 'High school diploma or equivalent; Strong communication skills; Experience in customer service is a plus', 25.00, 'Full-time', 'Quezon City, Philippines'),
+(3, 103, 'DiversityWorks', 'diversity_works_logo.png', 'Graphic Designer', 'Create visually appealing designs for marketing materials, social media, and website content.', 'Open', '2025-03-20 00:00:00', 1, 'Proficiency in Adobe Photoshop, Illustrator, and Canva; Portfolio of previous work required', 40.00, 'Part-time', 'Remote'),
+(4, 104, 'Accessible Solutions', 'accessible_solutions_logo.png', 'Data Entry Specialist', 'Accurately input and manage data into company databases, ensuring accessibility standards.', 'Closed', '2025-03-12 00:00:00', 1, 'Strong typing skills; Attention to detail; Knowledge of MS Excel and Google Sheets', 22.00, 'Full-time', 'Cebu, Philippines'),
+(5, 105, 'FutureVision', 'futurevision_logo.png', 'Digital Marketing Specialist', 'Plan and execute digital marketing strategies, including SEO, PPC, and social media management.', 'Open', '2025-03-12 00:00:00', 1, 'Experience in digital marketing; Knowledge of SEO and Google Ads; Strong analytical skills', 45.00, 'Contract', 'Taguig, Philippines'),
+(6, 106, 'BrightPath Solutions', 'brightpath_logo.png', 'Administrative Assistant', 'Provide administrative support, schedule meetings, and manage documents efficiently.', 'Open', '2025-03-12 00:00:00', 1, 'High school diploma or equivalent; Proficiency in MS Office; Strong organizational skills', 28.00, 'Full-time', 'Pasig, Philippines'),
+(7, 107, 'Visionary Web', 'visionary_web_logo.png', 'Front-End Developer', 'Develop and maintain user-friendly websites with accessibility in mind.', 'Open', '2025-03-12 00:00:00', 1, 'Experience with HTML, CSS, JavaScript, and React; Understanding of accessibility best practices', 55.00, 'Full-time', 'Remote'),
+(8, 108, 'CareFirst', 'carefirst_logo.png', 'Medical Transcriptionist', 'Transcribe medical reports and patient records accurately.', 'Open', '2025-03-12 00:00:00', 2, 'Medical transcription certification preferred; Excellent listening and typing skills', 35.00, 'Part-time', 'Davao, Philippines'),
+(9, 109, 'EnableTech', 'enabletech_logo.png', 'IT Support Specialist', 'Provide technical assistance, troubleshoot system issues, and assist employees with IT-related concerns.', 'Open', '2025-03-12 00:00:00', 2, 'Degree in IT or related field; Experience with hardware/software troubleshooting', 40.00, 'Full-time', 'Mandaluyong, Philippines'),
+(10, 110, 'SmartReach', 'smartreach_logo.png', 'Social Media Manager', 'Develop and manage social media campaigns, create engaging content, and analyze engagement metrics.', 'Open', '2025-03-12 00:00:00', 122, 'Experience in social media marketing; Strong writing and analytical skills', 38.00, 'Contract', 'Remote'),
+(35, 3, 'SM corp', '../uploads/1741529311_registration.png', 'Software Engineer', 'We are looking for a skilled Software Engineer to design, develop, test, and maintain high-quality software solutions. The ideal candidate will collaborate with cross-functional teams to create efficient and scalable applications.', 'Open', '2025-03-12 17:46:54', 1, '✔️ Bachelor\'s degree in Computer Science, IT, or related field.\r\n✔️ Proficiency in programming languages (e.g., PHP, JavaScript, Python).\r\n✔️ Experience with databases (e.g., MySQL, PostgreSQL).\r\n✔️ Knowledge of software development methodologies (Agile, Scrum).\r\n✔️ Strong problem-solving and analytical skills.', 0.00, 'Full-time', '');
 
 -- --------------------------------------------------------
 
@@ -128,20 +159,28 @@ CREATE TABLE `staff` (
   `contact_number` varchar(15) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `profile_pic` varchar(255) DEFAULT NULL
+  `profile_pic` varchar(255) DEFAULT '../images/default_profile.jpg',
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
+  `usertype` varchar(50) NOT NULL DEFAULT 'staff'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`staff_id`, `first_name`, `last_name`, `email`, `contact_number`, `password`, `created_at`, `profile_pic`) VALUES
-(1, 'Jared Son', 'Vicentes', 'cas@gmail.com', '09071559721', '$2y$10$w4QoVCa5U.68CFv69EJBq.zr2TgQ8cvHletHp99futJ6N.ol7WxyS', '2025-03-08 07:56:54', '../uploads/1741528292_my_profile.jpg'),
-(2, 'Jared Son', 'Vicentes', 'red@gmail.com', '09071559721', '$2y$10$w4QoVCa5U.68CFv69EJBq.zr2TgQ8cvHletHp99futJ...', '2025-03-08 07:56:54', '../uploads/1741528292_my_profile.jpg');
+INSERT INTO `staff` (`staff_id`, `first_name`, `last_name`, `email`, `contact_number`, `password`, `created_at`, `profile_pic`, `status`, `usertype`) VALUES
+(1, 'Staff', 'One', 'staff1@gmail.com', '09123456789', '$2y$10$CRi9UxRk3s47QVKG5xMXHurx.fNWQDmn/dI1JMBhl5Y2jwlNWvUBe', '2025-03-12 16:32:02', '../images/default_profile.jpg', 'active', 'staff');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `company`
@@ -175,6 +214,12 @@ ALTER TABLE `staff`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
@@ -184,7 +229,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `pwd_registration`
@@ -196,7 +241,7 @@ ALTER TABLE `pwd_registration`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

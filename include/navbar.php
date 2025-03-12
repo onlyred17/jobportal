@@ -1,12 +1,7 @@
 <?php
-// Check if the user is logged in
-if (!isset($_SESSION['staff_id'])) {
-    header('Location: ../views/view_staff_login.php'); // Redirect to login if not logged in
-    exit;
-}
 
 // Fetch employer details from the session or database
-$firstName = $_SESSION['first_name'] ?? 'Staff'; // Default to "Employer" if first name is not set
+$firstName = $_SESSION['first_name'] ?? ''; // Default to "Employer" if first name is not set
 $lastName = $_SESSION['last_name'] ?? ''; // Default to empty if last name is not set
 $profilePicture = $_SESSION['profile_pic'] ?? '../images/default-profile.jpg'; // Default profile picture
 

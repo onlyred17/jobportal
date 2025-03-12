@@ -12,50 +12,8 @@ include '../controllers/staff_dashboard.php';
     <link href="../css/sidebar.css" rel="stylesheet">
     <link href="../css/employer_dashboard.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/staff_dashboard.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .main-content {
-            padding: 20px;
-        }
-        .metrics {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .metric-card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 23%;
-            text-align: center;
-        }
-        .metric-card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .metric-card p {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-        .graphs {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .graph-container {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 32%;
-        }
-        .graph-container h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <!-- Sidebar -->
@@ -66,53 +24,88 @@ include '../controllers/staff_dashboard.php';
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2>Dashboard Overview</h2>
+        <div class="dashboard-container">
+            <!-- Left Content (Metrics and Charts) -->
+            <div class="dashboard-main">
+                <h2>Dashboard Overview</h2>
 
-        <!-- Key Metrics -->
-        <div class="metrics">
-            <div class="metric-card">
-                <h3>Total Jobs Posted</h3>
-                <p><?php echo isset($job_stats['total_jobs']) ? $job_stats['total_jobs'] : 0; ?></p>
-            </div>
-            <div class="metric-card">
-                <h3>Active Jobs</h3>
-                <p><?php echo isset($job_stats['active_jobs']) ? $job_stats['active_jobs'] : 0; ?></p>
-            </div>
-            <div class="metric-card">
-                <h3>Closed Jobs</h3>
-                <p><?php echo isset($job_stats['closed_jobs']) ? $job_stats['closed_jobs'] : 0; ?></p>
-            </div>
-            <div class="metric-card">
-                <h3>Jobs Posted by You</h3>
-                <p><?php echo isset($staff_jobs) ? count($staff_jobs) : 0; ?></p>
-            </div>
-        </div>
+                <!-- Key Metrics -->
+                <div class="metrics">
+                    <div class="metric-card">
+                        <h3>Total Jobs Posted</h3>
+                        <p><?php echo isset($job_stats['total_jobs']) ? $job_stats['total_jobs'] : 0; ?></p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Active Jobs</h3>
+                        <p><?php echo isset($job_stats['active_jobs']) ? $job_stats['active_jobs'] : 0; ?></p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Closed Jobs</h3>
+                        <p><?php echo isset($job_stats['closed_jobs']) ? $job_stats['closed_jobs'] : 0; ?></p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Jobs Posted by You</h3>
+                        <p><?php echo isset($staff_jobs) ? count($staff_jobs) : 0; ?></p>
+                    </div>
+                </div>
 
-        <!-- Comparison Graphs -->
-        <div class="graphs">
-            <div class="graph-container">
-                <h3>Jobs Posted Comparison</h3>
-                <canvas id="jobsComparisonChart"></canvas>
-            </div>
-            <div class="graph-container">
-                <h3>Job Status</h3>
-                <canvas id="activeVsClosedChart"></canvas>
-            </div>
-            <div class="graph-container">
-                <h3>Jobs Posted (Monthly)</h3>
-                <canvas id="monthlyJobsChart"></canvas>
-            </div>
-        </div>
+                <!-- Comparison Graphs -->
+                <div class="graphs">
+                    <div class="graph-container">
+                        <h3>Jobs Posted</h3>
+                        <canvas id="jobsComparisonChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <h3>Job Status</h3>
+                        <canvas id="activeVsClosedChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <h3>Jobs Posted (Monthly)</h3>
+                        <canvas id="monthlyJobsChart"></canvas>
+                    </div>
+                </div>
 
-        <!-- Additional Graphs -->
-        <div class="graphs">
-            <div class="graph-container">
-                <h3>Jobs Posted (Weekly)</h3>
-                <canvas id="weeklyJobsChart"></canvas>
+                <!-- Additional Graphs -->
+                <div class="graphs">
+                    <div class="graph-container">
+                        <h3>Jobs Posted (Weekly)</h3>
+                        <canvas id="weeklyJobsChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <h3>Jobs Posted (Daily)</h3>
+                        <canvas id="dailyJobsChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="graph-container">
-                <h3>Jobs Posted (Daily)</h3>
-                <canvas id="dailyJobsChart"></canvas>
+            
+            <!-- Right Sidebar (Recent Posts) -->
+            <div class="dashboard-sidebar">
+                <div class="recent-posts-container">
+                    <h3><i class="fas fa-clipboard-list"></i> Your Recent Job Posts</h3>
+                    
+                    <?php if (isset($recent_jobs) && !empty($recent_jobs)): ?>
+                        <div class="recent-posts-list">
+                            <?php foreach ($recent_jobs as $job): ?>
+                                <div class="recent-post-item">
+                                    <h4><?php echo $job['title']; ?></h4>
+                                    <div class="post-meta">
+                                        <span class="company"><i class="fas fa-building"></i> <?php echo $job['company_name']; ?></span>
+                                        <span class="date"><i class="fas fa-calendar-alt"></i> <?php echo date('M d, Y', strtotime($job['posted_date'])); ?></span>
+                                        </div>
+                                    <div class="post-status <?php echo strtolower($job['status']); ?>">
+                                        <i class="fas fa-circle"></i> <?php echo $job['status']; ?>
+                                    </div>
+                                    <p class="post-excerpt"><?php echo substr($job['description'], 0, 100) . '...'; ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="no-posts">
+                            <i class="fas fa-info-circle"></i>
+                            <p>No recent job posts available.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
@@ -123,7 +116,7 @@ include '../controllers/staff_dashboard.php';
         const jobsComparisonChart = new Chart(document.getElementById('jobsComparisonChart'), {
             type: 'bar',
             data: {
-                labels: ['Total Jobs', 'Jobs Posted by You', 'Jobs Posted by Others'],
+                labels: ['Total Jobs', 'Posted by You', 'Posted by Others'],
                 datasets: [{
                     label: 'Jobs',
                     data: [
@@ -154,7 +147,7 @@ include '../controllers/staff_dashboard.php';
         const activeVsClosedChart = new Chart(document.getElementById('activeVsClosedChart'), {
             type: 'pie',
             data: {
-                labels: ['Active Jobs', 'Closed Jobs'],
+                labels: ['Open Jobs', 'Closed Jobs'],
                 datasets: [{
                     label: 'Jobs',
                     data: [<?php echo $job_stats['active_jobs']; ?>, <?php echo $job_stats['closed_jobs']; ?>],
@@ -196,51 +189,50 @@ include '../controllers/staff_dashboard.php';
         });
 
         // Weekly Jobs Chart
-const weeklyJobsChart = new Chart(document.getElementById('weeklyJobsChart'), {
-    type: 'line',
-    data: {
-        labels: <?php echo json_encode($weeks); ?>, // Weeks
-        datasets: [{
-            label: 'Jobs Posted',
-            data: <?php echo json_encode(array_values($jobsPostedWeekly)); ?>, // Job counts
-            borderColor: '#F39C12',
-            fill: false,
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
+        const weeklyJobsChart = new Chart(document.getElementById('weeklyJobsChart'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($weeks); ?>, // Weeks
+                datasets: [{
+                    label: 'Jobs Posted',
+                    data: <?php echo json_encode(array_values($jobsPostedWeekly)); ?>, // Job counts
+                    borderColor: '#F39C12',
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                }
             }
-        }
-    }
-});
+        });
 
-// Daily Jobs Chart
-const dailyJobsChart = new Chart(document.getElementById('dailyJobsChart'), {
-    type: 'line',
-    data: {
-        labels: <?php echo json_encode($days); ?>, // Days
-        datasets: [{
-            label: 'Jobs Posted',
-            data: <?php echo json_encode(array_values($jobsPostedDaily)); ?>, // Job counts
-            borderColor: '#E74C3C',
-            fill: false,
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
+        // Daily Jobs Chart
+        const dailyJobsChart = new Chart(document.getElementById('dailyJobsChart'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($days); ?>, // Days
+                datasets: [{
+                    label: 'Jobs Posted',
+                    data: <?php echo json_encode(array_values($jobsPostedDaily)); ?>, // Job counts
+                    borderColor: '#E74C3C',
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                }
             }
-        }
-    }
-});
-
+        });
     </script>
 </body>
 </html>
