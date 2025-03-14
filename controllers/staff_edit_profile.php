@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['first_name'] = $first_name;
         $_SESSION['last_name'] = $last_name;
         $_SESSION['profile_pic'] = $profile_pic_path;
-        $_SESSION['message'] = ['type' => 'success', 'text' => 'Profile updated successfully!'];
+        $_SESSION['message1'] = ['type' => 'success', 'text' => 'Profile updated successfully!'];
 
         // Audit Log: What was edited
         $user_id = $_SESSION['staff_id'];
