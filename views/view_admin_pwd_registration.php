@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 // Include the database connection
@@ -71,13 +72,28 @@ if (isset($_SESSION['message'])) {
                             <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#proofModal<?php echo $pwd['id']; ?>">View Proof</button>
                         </td>
                         <td>
-                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#validIdModal<?php echo $pwd['id']; ?>">View Valid ID</button>
+                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#validIdModal<?php echo $pwd['id']; ?>">View Valid ID</button>
                         </td>
 
                         <td class="action-btns">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStatusModal<?php echo $pwd['id']; ?>">Update</button>
                         </td>
                     </tr>
+
+                 <!-- Valid ID Modal -->
+<div class="modal" id="validIdModal<?php echo $pwd['id']; ?>" tabindex="-1" aria-labelledby="validIdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="validIdModalLabel">Valid ID</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe src="<?php echo htmlspecialchars($pwd['valid_id']); ?>" width="100%" height="500px"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <!-- Proof of PWD Modal -->
                     <div class="modal" id="proofModal<?php echo $pwd['id']; ?>" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
@@ -88,22 +104,7 @@ if (isset($_SESSION['message'])) {
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <img src="<?php echo htmlspecialchars($pwd['proof_of_pwd']); ?>" class="img-fluid" alt="Proof of PWD">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Valid ID Modal -->
-                    <div class="modal" id="validIdModal<?php echo $pwd['id']; ?>" tabindex="-1" aria-labelledby="validIdModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="validIdModalLabel">Valid ID</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img src="<?php echo htmlspecialchars($pwd['valid_id']); ?>" class="img-fluid" alt="Valid ID">
+                                    <iframe src="<?php echo htmlspecialchars($pwd['proof_of_pwd']); ?>" width="100%" height="500px"></iframe>
                                 </div>
                             </div>
                         </div>

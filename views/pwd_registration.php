@@ -515,7 +515,7 @@ body.high-contrast .brightness-controls span {
 
                         <!-- Valid ID Upload -->
                         <div class="mb-3">
-                            <label for="valid_id" class="form-label">Upload Valid ID (Combined the images front and back if neccesary)</label>
+                            <label for="valid_id" class="form-label">Upload Valid ID (Image or PDF)</label>
                             <input type="file" name="valid_id" class="form-control" id="valid_id" accept=".jpg, .jpeg, .png, .pdf" required>
                         </div>
 
