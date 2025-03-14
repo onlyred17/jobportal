@@ -158,7 +158,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Released PWD Registrations</h6>
+                <h6 class="m-0 font-weight-bold text-primary">PWD List</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
