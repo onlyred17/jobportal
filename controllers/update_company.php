@@ -11,6 +11,15 @@ if (isset($_POST['name'], $_POST['location'], $_POST['description'], $_GET['id']
     $location = $_POST['location'];
     $description = $_POST['description'];
 
+    // Fetch company name before updating
+    $query = "SELECT name FROM company WHERE id = :id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $company = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $companyName = $company ? $company['name'] : 'Unknown';
+
     // Handle file upload if a new logo is provided
     $logoPath = null;
     if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
@@ -22,7 +31,10 @@ if (isset($_POST['name'], $_POST['location'], $_POST['description'], $_GET['id']
         if (move_uploaded_file($_FILES["logo"]["tmp_name"], $targetFile)) {
             $logoPath = $targetFile;
         } else {
-            $_SESSION['message'] = "Error uploading the logo.";
+            $_SESSION['message'] = [
+                'type' => 'danger',
+                'text' => "Error uploading the logo."
+            ];
             header('Location: ../views/view_staff_company_table.php');
             exit();
         }
@@ -46,12 +58,12 @@ if (isset($_POST['name'], $_POST['location'], $_POST['description'], $_GET['id']
     if ($stmt->execute()) {
         $_SESSION['message'] = [
             'type' => 'success',
-            'text' => "Company updated successfully!"
+            'text' => "Company '{$companyName}' updated successfully!"
         ];
     } else {
         $_SESSION['message'] = [
-            'type' => 'error',
-            'text' => "Error updating company."
+            'type' => 'danger',
+            'text' => "Error updating company '{$companyName}'."
         ];
     }
 
@@ -59,4 +71,3 @@ if (isset($_POST['name'], $_POST['location'], $_POST['description'], $_GET['id']
     header('Location: ../views/view_staff_company_table.php');
     exit();
 }
-?>

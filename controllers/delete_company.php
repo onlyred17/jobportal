@@ -24,16 +24,24 @@ if (isset($_GET['id'])) {
 
         // Execute the query and check if successful
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Company '{$companyName}' deleted successfully!";
+            $_SESSION['message'] = [
+                'type' => 'success',
+                'text' => "Company '{$companyName}' deleted successfully!"
+            ];
         } else {
-            $_SESSION['message'] = "Error deleting company '{$companyName}'.";
+            $_SESSION['message'] = [
+                'type' => 'danger',
+                'text' => "Error deleting company '{$companyName}'."
+            ];
         }
     } else {
-        $_SESSION['message'] = "Company not found.";
+        $_SESSION['message'] = [
+            'type' => 'warning',
+            'text' => "Company not found."
+        ];
     }
 
     // Redirect back to the company list page
     header('Location: ../views/view_staff_company_table.php');
     exit();
 }
-?>

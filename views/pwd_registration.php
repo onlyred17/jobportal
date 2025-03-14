@@ -465,13 +465,13 @@ body.high-contrast .brightness-controls span {
             <div class="card shadow-lg">
                 <div class="card-body p-4">
                     <h2 class="text-center title mb-4">PWD ID Registration</h2>
-                    
+
                     <!-- Success/Error Message -->
                     <div class="mb-3 text-center">
                         <?php
-                            if (isset($_GET['message'])) {
-                                echo '<div class="alert alert-info">' . htmlspecialchars($_GET['message']) . '</div>';
-                            }
+                        if (isset($_GET['message'])) {
+                            echo '<div class="alert alert-info">' . htmlspecialchars($_GET['message']) . '</div>';
+                        }
                         ?>
                     </div>
 
@@ -481,7 +481,7 @@ body.high-contrast .brightness-controls span {
                             <label for="full_name" class="form-label">Full Name</label>
                             <input type="text" name="full_name" class="form-control" id="full_name" required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="birthdate" class="form-label">Birthdate</label>
                             <input type="date" name="birthdate" class="form-control" id="birthdate" required>
@@ -507,9 +507,16 @@ body.high-contrast .brightness-controls span {
                             <input type="email" name="email" class="form-control" id="email" required>
                         </div>
 
+                        <!-- Proof of PWD -->
                         <div class="mb-3">
                             <label for="proof_of_pwd" class="form-label">Upload Proof of PWD (Image or PDF)</label>
                             <input type="file" name="proof_of_pwd" class="form-control" id="proof_of_pwd" accept=".jpg, .jpeg, .png, .pdf" required>
+                        </div>
+
+                        <!-- Valid ID Upload -->
+                        <div class="mb-3">
+                            <label for="valid_id" class="form-label">Upload Valid ID (Combined the images front and back if neccesary)</label>
+                            <input type="file" name="valid_id" class="form-control" id="valid_id" accept=".jpg, .jpeg, .png, .pdf" required>
                         </div>
 
                         <div class="d-grid gap-2">
@@ -521,6 +528,7 @@ body.high-contrast .brightness-controls span {
                 </div>
             </div>
         </div>
+
 
         <div class="col-md-6">
             <!-- Info Panel (Right side) -->

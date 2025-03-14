@@ -39,7 +39,6 @@ $lastName = $_SESSION['last_name'] ?? 'Last Name';
 $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
 ?>
 
-
 <div class="sidebar">
     <div class="sidebar-header">
         <div class="profile-info">
@@ -52,40 +51,42 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
     </div>
 
     <ul class="sidebar-menu">
-
         <?php if ($userType == 'staff'): ?>
             <li><a href="../views/view_staff_dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
-
             <li><a href="../views/view_staff_job_posting.php"><i class="fas fa-briefcase"></i> Job Posting</a></li>
             <li><a href="../views/view_staff_edit_profile.php"><i class="fas fa-user-edit"></i> Profile</a></li>
             <li class="module">
                 <a href="#" onclick="toggleModule('job-table-menu')">
-                    <i class="fas fa-table"></i> Table
+                    <i class="fas fa-table"></i> Data Management
                 </a>
                 <ul class="sub-menu" id="job-table-menu">
-                    <li><a href="../views/view_staff_jobs_table.php"><i class="fas fa-list"></i> Job Table</a></li>
-                    <li><a href="../views/view_staff_company_table.php"><i class="fas fa-list"></i> Company Table</a></li>
+                    <li><a href="../views/view_staff_jobs_table.php"><i class="fas fa-list"></i>Manage Job</a></li>
+                    <li><a href="../views/view_staff_company_table.php"><i class="fas fa-list"></i>Manage Company</a></li>
                 </ul>
             </li>
             <li class="module">
                 <a href="#" onclick="toggleModule('settings-menu')">
-                    <i class="fas fa-cog"></i> Configuration Settings
+                    <i class="fas fa-cog"></i> Configuration
                 </a>
                 <ul class="sub-menu" id="settings-menu">
                     <li><a href="../views/view_staff_add_company.php"><i class="fas fa-plus"></i> Add Company</a></li>
                 </ul>
             </li>        
             <li><a href="../controllers/logout_controllers.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-
         <?php elseif ($userType == 'admin'): ?>
             <li><a href="../views/view_admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
-
-            <li><a href="../views/view_admin_users.php"><i class="fas fa-users"></i> Manage Users</a></li>
+            <li class="module">
+                <a href="#" onclick="toggleModule('manage-users-menu')">
+                    <i class="fas fa-users"></i> Manage Users
+                </a>
+                <ul class="sub-menu" id="manage-users-menu">
+                    <li><a href="../views/view_admin_pwd_registration.php"><i class="fas fa-user-plus"></i> Manage Registration</a></li>
+                    <li><a href="../views/view_admin_manage_pwd.php"><i class="fas fa-wheelchair"></i> Manage PWD</a></li>
+                </ul>
+            </li>
             <li><a href="../views/view_admin_settings.php"><i class="fas fa-cogs"></i> System Settings</a></li>
             <li><a href="../controllers/logout_controllers.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-
         <?php endif; ?>
-
     </ul>
 </div>
 
