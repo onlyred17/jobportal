@@ -68,6 +68,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['last_name'] = $last_name;
         $_SESSION['profile_pic'] = $profile_pic_path;
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Profile updated successfully!'];
+
+        // Audit Log: What was edited
+        $user_id = $_SESSION['staff_id'];
+        $full_name = $first_name . ' ' . $last_name;
+        $ip_address = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
+        $action = 'Update'; // Action type
+        $description_log = "Staff profile updated: ";
+
+        // Specify what fields were updated
+        $editedFields = [];
+        if ($first_name !== $staff['first_name']) {
+            $editedFields[] = "First Name";
+        }
+        if ($last_name !== $staff['last_name']) {
+            $editedFields[] = "Last Name";
+        }
+        if ($contact_number !== $staff['contact_number']) {
+            $editedFields[] = "Contact Number";
+        }
+        if ($profile_pic_path !== $staff['profile_pic']) {
+            $editedFields[] = "Profile Picture";
+        }
+
+        // Append the edited fields to the description
+        $description_log .= implode(', ', $editedFields);
+
+        $usertype = 'staff'; // User type (staff)
+
+        // Insert the audit log
+        $audit_sql = "INSERT INTO audit_log (user_id, full_name, action, description, ip_address, usertype) 
+                      VALUES (:user_id, :full_name, :action, :description, :ip_address, :usertype)";
+        $audit_stmt = $conn->prepare($audit_sql);
+        $audit_stmt->bindParam(':user_id', $user_id);
+        $audit_stmt->bindParam(':full_name', $full_name);
+        $audit_stmt->bindParam(':action', $action);
+        $audit_stmt->bindParam(':description', $description_log);
+        $audit_stmt->bindParam(':ip_address', $ip_address);
+        $audit_stmt->bindParam(':usertype', $usertype); // Bind the usertype
+        $audit_stmt->execute();
+
     } catch (PDOException $e) {
         $_SESSION['message'] = ['type' => 'error', 'text' => 'Database error: ' . $e->getMessage()];
     }

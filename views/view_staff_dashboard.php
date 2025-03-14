@@ -29,25 +29,38 @@ include '../controllers/staff_dashboard.php';
             <div class="dashboard-main">
                 <h2>Dashboard Overview</h2>
 
-                <!-- Key Metrics -->
-                <div class="metrics">
-                    <div class="metric-card">
-                        <h3>Total Jobs Posted</h3>
-                        <p><?php echo isset($job_stats['total_jobs']) ? $job_stats['total_jobs'] : 0; ?></p>
-                    </div>
-                    <div class="metric-card">
-                        <h3>Active Jobs</h3>
-                        <p><?php echo isset($job_stats['active_jobs']) ? $job_stats['active_jobs'] : 0; ?></p>
-                    </div>
-                    <div class="metric-card">
-                        <h3>Closed Jobs</h3>
-                        <p><?php echo isset($job_stats['closed_jobs']) ? $job_stats['closed_jobs'] : 0; ?></p>
-                    </div>
-                    <div class="metric-card">
-                        <h3>Jobs Posted by You</h3>
-                        <p><?php echo isset($staff_jobs) ? count($staff_jobs) : 0; ?></p>
-                    </div>
-                </div>
+              <!-- Key Metrics -->
+<div class="metrics">
+    <div class="metric-card">
+        <h3>Total Jobs Posted</h3>
+        <p><?php echo isset($job_stats['total_jobs']) ? $job_stats['total_jobs'] : 0; ?></p>
+        <div class="icon">
+            <i class="fas fa-briefcase"></i> <!-- FontAwesome Icon -->
+        </div>
+    </div>
+    <div class="metric-card">
+        <h3>Active Jobs</h3>
+        <p><?php echo isset($job_stats['active_jobs']) ? $job_stats['active_jobs'] : 0; ?></p>
+        <div class="icon">
+            <i class="fas fa-play-circle"></i>
+        </div>
+    </div>
+    <div class="metric-card">
+        <h3>Closed Jobs</h3>
+        <p><?php echo isset($job_stats['closed_jobs']) ? $job_stats['closed_jobs'] : 0; ?></p>
+        <div class="icon">
+            <i class="fas fa-times-circle"></i>
+        </div>
+    </div>
+    <div class="metric-card">
+        <h3>Jobs Posted by You</h3>
+        <p><?php echo isset($staff_jobs) ? count($staff_jobs) : 0; ?></p>
+        <div class="icon">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+</div>
+
 
                 <!-- Comparison Graphs -->
                 <div class="graphs">

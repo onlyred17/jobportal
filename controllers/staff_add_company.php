@@ -65,6 +65,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Company added successfully!'];
+
+        // Insert into audit log for company creation
+        $user_id = isset($_SESSION['staff_id']) ? $_SESSION['staff_id'] : (isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null);
+        $full_name = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : 'Unknown';
+        $ip_address = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
+        $action = 'Create'; // Action type
+        $description_log = "Company '{$name}' created"; // Description of the action
+
+        // Check the user type (staff or admin)
+        $usertype = isset($_SESSION['staff_id']) ? 'staff' : (isset($_SESSION['admin_id']) ? 'admin' : 'unknown');
+
+        // Insert the audit log
+        $audit_sql = "INSERT INTO audit_log (user_id, full_name, action, description, ip_address, usertype) 
+                      VALUES (:user_id, :full_name, :action, :description, :ip_address, :usertype)";
+        $audit_stmt = $conn->prepare($audit_sql);
+        $audit_stmt->bindParam(':user_id', $user_id);
+        $audit_stmt->bindParam(':full_name', $full_name);
+        $audit_stmt->bindParam(':action', $action);
+        $audit_stmt->bindParam(':description', $description_log);
+        $audit_stmt->bindParam(':ip_address', $ip_address);
+        $audit_stmt->bindParam(':usertype', $usertype); // Bind the usertype
+        $audit_stmt->execute();
+
     } catch (PDOException $e) {
         $_SESSION['message'] = ['type' => 'error', 'text' => 'Database error: ' . $e->getMessage()];
     }
@@ -73,4 +96,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ../views/view_staff_add_company.php');
     exit;
 }
-?>

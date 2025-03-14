@@ -71,6 +71,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $newJobsCount = $stmt->fetchColumn();  // Get the number of new jobs
 
+        // Insert into audit log
+        $jobTitleForLog = $jobTitle;
+        $staffFullName = $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; // Full name from session
+        $ipAddress = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
+        $action = 'Job Posting'; // Action type
+        $descriptionLog = "Job posted: " . $jobTitleForLog . " by " . $staffFullName; // Description of the action
+        $usertype = 'staff'; // User type (staff)
+
+        // Insert the audit log
+        $auditSql = "INSERT INTO audit_log (user_id, action, description, ip_address, usertype, full_name)
+                     VALUES (:user_id, :action, :description, :ip_address, :usertype, :full_name)";
+        $auditStmt = $conn->prepare($auditSql);
+        $auditStmt->bindParam(':user_id', $staffId);
+        $auditStmt->bindParam(':action', $action);
+        $auditStmt->bindParam(':description', $descriptionLog);
+        $auditStmt->bindParam(':ip_address', $ipAddress);
+        $auditStmt->bindParam(':usertype', $usertype);
+        $auditStmt->bindParam(':full_name', $staffFullName);
+        $auditStmt->execute();
+
         // Send the new job count back in the response
         echo json_encode(['status' => 'success', 'message' => 'Job posted successfully!', 'newJobsCount' => $newJobsCount]);
         exit;

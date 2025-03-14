@@ -15,7 +15,7 @@ try {
 
 // Get parameters from the request
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1
-$limit = 6; // Limit of jobs per page
+$limit = 10; // Limit of jobs per page
 $start = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';

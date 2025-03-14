@@ -56,11 +56,33 @@ if (isset($_POST['name'], $_POST['location'], $_POST['description'], $_GET['id']
 
     // Execute the query and check if successful
     if ($stmt->execute()) {
+        // Insert into audit log
+        $staffId = $_SESSION['staff_id']; // Assuming staff ID is stored in session
+        $staffFullName = $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; // Staff's full name
+        $ipAddress = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
+        $action = 'Update Company'; // Action type
+        $descriptionLog = "Updated company: {$companyName}"; // Description of the action
+        $usertype = 'staff'; // User type (staff)
+
+        // Insert the audit log
+        $auditSql = "INSERT INTO audit_log (user_id, action, description, ip_address, usertype, full_name)
+                     VALUES (:user_id, :action, :description, :ip_address, :usertype, :full_name)";
+        $auditStmt = $conn->prepare($auditSql);
+        $auditStmt->bindParam(':user_id', $staffId);
+        $auditStmt->bindParam(':action', $action);
+        $auditStmt->bindParam(':description', $descriptionLog);
+        $auditStmt->bindParam(':ip_address', $ipAddress);
+        $auditStmt->bindParam(':usertype', $usertype);
+        $auditStmt->bindParam(':full_name', $staffFullName);
+        $auditStmt->execute();
+
+        // Set success message
         $_SESSION['message'] = [
             'type' => 'success',
             'text' => "Company '{$companyName}' updated successfully!"
         ];
     } else {
+        // Set error message
         $_SESSION['message'] = [
             'type' => 'danger',
             'text' => "Error updating company '{$companyName}'."
