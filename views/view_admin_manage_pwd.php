@@ -82,10 +82,12 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .disability-badge {
             background-color: rgba(54, 185, 204, 0.1);
             color: var(--info-color);
-            font-size: 0.75rem;
+            font-size: 0.95rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-weight: 600;
+            text-transform: uppercase;
+
         }
         
         .detail-field {

@@ -192,15 +192,15 @@
     border-radius: 3px;
 }
 
-/* Main Content */
-.main-content {
-    margin-left: 280px;
-    margin-top: 90px;
-    padding: 2rem;
-    transition: margin-left 0.3s;
-    background: #f8f9fa;
-    min-height: 100vh;
-}
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 90px;
+            padding: 2rem;
+            transition: margin-left 0.3s;
+            min-height: 100vh;
+        }
+            
 
 /* Recent Activities Section */
 .recent-posts-container {

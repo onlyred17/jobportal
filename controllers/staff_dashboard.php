@@ -53,7 +53,7 @@ if ($conn) {
                           LEFT JOIN staff s ON j.staff_id = s.staff_id 
                           WHERE j.staff_id = :staff_id 
                           ORDER BY j.posted_date DESC 
-                          LIMIT 4";
+                          LIMIT 10";
     $recent_jobs_result = $conn->prepare($recent_jobs_query);
     $recent_jobs_result->bindParam(':staff_id', $staff_id);
     $recent_jobs_result->execute();

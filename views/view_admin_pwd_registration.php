@@ -66,12 +66,15 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
         
-        .main-content {
-            margin-left: 280px;
-            margin-top: 90px;
-            padding: 2rem;
-            transition: 0.3s;
-        }
+              /* Main Content */
+.main-content {
+    margin-left: 280px;
+    margin-top: 90px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+    min-height: 100vh;
+}
+    
         
         @media (max-width: 768px) {
             .main-content {
@@ -97,8 +100,10 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .status-badge {
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
-            font-size: 0.75rem;
+            font-size: .85rem;
             font-weight: 600;
+            text-transform: uppercase;
+
         }
         
         .status-pending {
