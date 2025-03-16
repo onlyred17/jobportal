@@ -1,0 +1,40 @@
+/* Modern Modal Styling */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: none;
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+/* Header Styling */
+.modal-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 15px;
+}
+
+/* Close Button Styling */
+.btn-close {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+.btn-close:hover {
+    opacity: 1;
+}
+
+/* Error Icon Styling */
+.modal-body i {
+    display: block;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
