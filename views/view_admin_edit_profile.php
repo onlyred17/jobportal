@@ -192,7 +192,7 @@ include '../controllers/admin_edit_profile.php';
         
         /* Modal styles */
         .modal-content {
-            border-radius: 16px;
+            border-radius: 16px;s
             border: none;
         }
         
