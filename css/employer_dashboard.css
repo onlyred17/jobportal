@@ -189,6 +189,7 @@
     min-height: 150px; /* Ensures it doesn't become too small */
     max-height: 120vh; /* Prevents it from stretching too much on small screens */
     height: auto; /* Adjusts dynamically based on content */
+    margin-top: 20px;
 }
 
 

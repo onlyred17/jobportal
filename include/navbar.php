@@ -28,72 +28,46 @@ $employerName = trim("$firstName $lastName"); // Combine first and last name wit
             <!-- Add any left-aligned content here -->
         </div>
         <div class="navbar-right">
-            <!-- Profile Section -->
-            <div class="profile">
-                <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-pic">
-                <span class="profile-name"><?php echo $employerName; ?></span>
-            </div>
-    
+    <!-- Profile Section -->
+    <div class="profile-dropdown">
+        <div class="profile" id="profileMenu">
+            <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-pic">
+            <span class="profile-name"><?php echo $employerName; ?></span>
         </div>
+
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="../views/view_change_password.php"><i class="fas fa-key"></i> Change Password</a></li>
+            <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
     </div>
 
     <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var badge = document.getElementById("notificationBadge");
-    var notificationBtn = document.getElementById("notificationBtn");
+    const profileMenu = document.getElementById("profileMenu");
+    const dropdownMenu = document.getElementById("dropdownMenu");
 
-    // Fetch the new job count from PHP
-    var newJobsCount = <?php echo $newJobsCount; ?>;
-
-    // Check if notification state is saved in sessionStorage
-    var savedState = sessionStorage.getItem("notificationState");
-
-    // If clicked previously, hide the badge
-    if (savedState === "clicked") {
-        badge.style.display = "none";
-    } else {
-        // Show the badge if new jobs exist
-        if (newJobsCount > 0) {
-            badge.style.display = "block";
-            badge.textContent = newJobsCount;
+    profileMenu.addEventListener("click", function () {
+        if (dropdownMenu.classList.contains("show")) {
+            dropdownMenu.classList.remove("show");
         } else {
-            badge.style.display = "none";
+            dropdownMenu.classList.add("show");
         }
-    }
-
-    // Handle clicking the notification button (hide badge)
-    notificationBtn.addEventListener("click", function () {
-        sessionStorage.setItem("notificationState", "clicked");
-        badge.style.display = "none";
     });
 
-    // Handle posting a new job
-    document.getElementById("postJobForm").addEventListener("submit", function (event) {
-        event.preventDefault();  // Prevent form submission
-
-        var formData = new FormData(this);
-
-        fetch("post_job.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                // Update the job count in the notification badge
-                newJobsCount = data.newJobsCount;  // Update with new count from backend
-                badge.textContent = newJobsCount;
-                badge.style.display = "block";  // Show the badge with updated count
-                alert(data.message);  // Show success message
-            } else {
-                alert(data.message);  // Show error message if any
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!profileMenu.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("show");
+        }
     });
 });
+
 
     </script>
 

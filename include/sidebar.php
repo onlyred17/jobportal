@@ -86,6 +86,8 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
 
                 </ul>
             </li>
+            <li><a href="../views/view_admin_edit_profile.php"><i class="fas fa-user-edit"></i> Profile</a></li>
+
             <li class="module">
     <a href="#" onclick="toggleModule('admin-settings-menu')">
         <i class="fas fa-cogs"></i> Configuration
