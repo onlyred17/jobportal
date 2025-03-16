@@ -11,20 +11,32 @@ if (!isset($_SESSION['staff_id'])) {
     exit;
 }
 
-// Get start and end dates
+// Get filter inputs
 $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
 $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+$statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
+
+
+// Prepare query with optional filters
+$query = "SELECT * FROM jobs WHERE 1=1";
+$params = [];
+
+if (!empty($startDate) && !empty($endDate)) {
+    $query .= " AND posted_date BETWEEN :start_date AND :end_date";
+    $params[':start_date'] = $startDate;
+    $params[':end_date'] = $endDate;
+}
+
+if (!empty($statusFilter)) {
+    $query .= " AND status = :status";
+    $params[':status'] = $statusFilter;
+}
+
+$query .= " ORDER BY posted_date DESC";
 
 try {
-    if (!empty($startDate) && !empty($endDate)) {
-        $stmt = $conn->prepare("SELECT * FROM jobs WHERE posted_date BETWEEN :start_date AND :end_date ORDER BY posted_date DESC");
-        $stmt->bindParam(':start_date', $startDate);
-        $stmt->bindParam(':end_date', $endDate);
-    } else {
-        $stmt = $conn->prepare("SELECT * FROM jobs ORDER BY posted_date DESC");
-    }
-
-    $stmt->execute();
+    $stmt = $conn->prepare($query);
+    $stmt->execute($params);
     $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // 🚀 Debugging: Ensure $jobs is an array

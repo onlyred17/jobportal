@@ -187,20 +187,36 @@ include '../include/sidebar.php';
                 <h6 class="m-0 font-weight-bold text-primary">Filter Options</h6>
             </div>
             <div class="card-body">
-                <form method="GET" action="" class="date-filter-form">
-                    <div class="filter-container">
-                        <div class="date-input">
+            <form method="GET" action="">
+                    <div class="row g-3">
+                        <div class="col-md-4">
                             <label for="start_date" class="form-label">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo $startDate; ?>" />
+                            <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo htmlspecialchars($startDate); ?>" />
                         </div>
-                        <div class="date-input">
+                        <div class="col-md-4">
                             <label for="end_date" class="form-label">End Date</label>
-                            <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo $endDate; ?>" />
+                            <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo htmlspecialchars($endDate); ?>" />
                         </div>
+                        <div class="col-md-4">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select">
+                                <option value="" <?php echo $statusFilter === '' ? 'selected' : ''; ?>>All</option>
+                                <option value="Open" <?php echo $statusFilter === 'Open' ? 'selected' : ''; ?>>Open</option>
+                                <option value="Closed" <?php echo $statusFilter === 'Closed' ? 'selected' : ''; ?>>Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-filter me-1"></i> Apply Filter
                         </button>
+                        <a href="../controllers/generate_jobs_report.php?start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>&status=<?php echo $statusFilter; ?>&search=" 
+   id="generateReportBtn" class="btn btn-danger" target="_blank">
+   <i class="fas fa-file-pdf"></i> Generate Report
+</a>
+
                     </div>
+                    
                 </form>
             </div>
         </div>
@@ -289,7 +305,7 @@ include '../include/sidebar.php';
             responsive: true,
             language: {
                 search: "<i class='fas fa-search'></i> _INPUT_",
-                searchPlaceholder: "Search jobs...",
+                searchPlaceholder: "Search...",
                 lengthMenu: "Show _MENU_ entries",
                 info: "Showing _START_ to _END_ of _TOTAL_ jobs",
                 infoEmpty: "Showing 0 to 0 of 0 jobs",
@@ -299,7 +315,8 @@ include '../include/sidebar.php';
                     next: "<i class='fas fa-angle-right'></i>",
                     last: "<i class='fas fa-angle-double-right'></i>"
                 }
-            }
+            },
+            
         });
 
         // Handle modal opening and setting up the confirmation link
@@ -326,8 +343,17 @@ include '../include/sidebar.php';
             
             confirmButton.href = `../controllers/update_job_status.php?id=${jobId}&status=${status}`;
         });
+          // Update the Generate Report button with the current search term
+    const generateReportBtn = document.getElementById('generateReportBtn');
+    jobsTable.on('search.dt', function() {
+        const searchTerm = jobsTable.search();
+        generateReportBtn.href = `../controllers/generate_jobs_report.php?start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>&status=<?php echo $statusFilter; ?>&search=${searchTerm}`;
     });
+});
+
+    
 </script>
 
 </body>
 </html>
+

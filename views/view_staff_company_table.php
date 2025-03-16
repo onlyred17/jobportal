@@ -173,6 +173,10 @@ include '../include/sidebar.php';
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Companies</h6>
+                <a href="../controllers/generate_company_report.php?search=" 
+   id="generateReportBtn" class="btn btn-danger">
+   <i class="fas fa-file-pdf me-1"></i> Generate Report
+</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -320,7 +324,17 @@ include '../include/sidebar.php';
                 }
             }
         });
+          // Update the Generate Report button with the current search term
+    const generateReportBtn = document.getElementById('generateReportBtn');
+    companiesTable.on('search.dt', function() {
+        const searchTerm = companiesTable.search();
+        generateReportBtn.href = `../controllers/generate_company_report.php?search=${encodeURIComponent(searchTerm)}`;
     });
+
+    // Trigger the search event initially to set the correct href
+    companiesTable.search();
+});
+ 
 
     // Function to preview logo before upload
     function previewLogo(input, previewId) {
@@ -340,6 +354,8 @@ include '../include/sidebar.php';
     tooltipTriggerList.forEach(function(tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl);
     });
+  
+
 </script>
 
 </body>

@@ -232,8 +232,12 @@ include '../include/sidebar.php';
                     <div class="ms-auto">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-filter me-1"></i> Apply Filter
+                            
                         </button>
-                        
+                        <a href="../controllers/generate_pwd_report.php?date_from=<?php echo $date_from; ?>&date_to=<?php echo $date_to; ?>&search=" 
+       id="generateReportBtn" class="btn btn-danger" target="_blank">
+       <i class="fas fa-file-pdf me-1"></i> Generate Report
+    </a>
                         <?php if (!empty($date_from) || !empty($date_to)): ?>
                         <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="btn btn-secondary ms-2">
                             <i class="fas fa-times me-1"></i> Clear Filter
@@ -412,52 +416,82 @@ include '../include/sidebar.php';
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        // Initialize DataTable with advanced options
-        $('#pwdTable').DataTable({
-            responsive: true,
-            language: {
-                search: "<i class='fas fa-search'></i> _INPUT_",
-                searchPlaceholder: "Search registrations...",
-                lengthMenu: "Show _MENU_ entries",
-                info: "Showing _START_ to _END_ of _TOTAL_ registrations",
-                infoEmpty: "Showing 0 to 0 of 0 registrations",
-                paginate: {
-                    first: "<i class='fas fa-angle-double-left'></i>",
-                    previous: "<i class='fas fa-angle-left'></i>",
-                    next: "<i class='fas fa-angle-right'></i>",
-                    last: "<i class='fas fa-angle-double-right'></i>"
-                }
-            },
-            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            // Save state so user preferences are remembered
-            stateSave: true
-        });
-        
-        // Date validation to ensure "to" date is not before "from" date
-        $("#dateTo").on("change", function() {
-            const dateFrom = $("#dateFrom").val();
-            const dateTo = $(this).val();
-            
-            if (dateFrom && dateTo && dateFrom > dateTo) {
-                alert("'To' date cannot be earlier than 'From' date!");
-                $(this).val('');
+ $(document).ready(function() {
+    // Initialize DataTable with advanced options
+    const pwdTable = $('#pwdTable').DataTable({
+        responsive: true,
+        language: {
+            search: "<i class='fas fa-search'></i> _INPUT_",
+            searchPlaceholder: "Search registrations...",
+            lengthMenu: "Show _MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ registrations",
+            infoEmpty: "Showing 0 to 0 of 0 registrations",
+            paginate: {
+                first: "<i class='fas fa-angle-double-left'></i>",
+                previous: "<i class='fas fa-angle-left'></i>",
+                next: "<i class='fas fa-angle-right'></i>",
+                last: "<i class='fas fa-angle-double-right'></i>"
             }
-        });
-        
-        // Date validation for "from" date when "to" date is already set
-        $("#dateFrom").on("change", function() {
-            const dateFrom = $(this).val();
-            const dateTo = $("#dateTo").val();
-            
-            if (dateFrom && dateTo && dateFrom > dateTo) {
-                alert("'From' date cannot be later than 'To' date!");
-                $(this).val('');
-            }
-        });
+        },
+        dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+             "<'row'<'col-sm-12'tr>>" +
+             "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        // Save state so user preferences are remembered
+        stateSave: true
     });
+
+    // Get the Generate Report button
+    const generateReportBtn = document.getElementById('generateReportBtn');
+
+    // Get the date filter inputs
+    const dateFromInput = document.getElementById('dateFrom');
+    const dateToInput = document.getElementById('dateTo');
+
+    // Function to update the Generate Report button's URL
+    function updateGenerateReportUrl() {
+        // Get the current search term from the DataTable
+        const searchTerm = $('#pwdTable_filter input').val() || '';
+        const dateFrom = dateFromInput.value || ''; // Get the "From" date
+        const dateTo = dateToInput.value || ''; // Get the "To" date
+
+        // Build the URL with filters and search term
+        generateReportBtn.href = `../controllers/generate_pwd_report.php?date_from=${dateFrom}&date_to=${dateTo}&search=${encodeURIComponent(searchTerm)}`;
+    }
+
+    // Update the URL when the search term changes
+    $('#pwdTable_filter input').on('keyup', function() {
+        updateGenerateReportUrl();
+    });
+
+    // Update the URL when the date filters change
+    dateFromInput.addEventListener('change', updateGenerateReportUrl);
+    dateToInput.addEventListener('change', updateGenerateReportUrl);
+
+    // Trigger the update initially to set the correct URL
+    updateGenerateReportUrl();
+
+    // Date validation to ensure "to" date is not before "from" date
+    $("#dateTo").on("change", function() {
+        const dateFrom = $("#dateFrom").val();
+        const dateTo = $(this).val();
+        
+        if (dateFrom && dateTo && dateFrom > dateTo) {
+            alert("'To' date cannot be earlier than 'From' date!");
+            $(this).val('');
+        }
+    });
+    
+    // Date validation for "from" date when "to" date is already set
+    $("#dateFrom").on("change", function() {
+        const dateFrom = $(this).val();
+        const dateTo = $("#dateTo").val();
+        
+        if (dateFrom && dateTo && dateFrom > dateTo) {
+            alert("'From' date cannot be later than 'To' date!");
+            $(this).val('');
+        }
+    });
+});
 </script>
 </body>
 </html>
