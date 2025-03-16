@@ -15,7 +15,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PWD Registration List</title>
+    <title>Manage PWD</title>
     <!-- Modern UI Framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables with Bootstrap 5 styling -->
@@ -140,10 +140,8 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-fluid px-4">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">PWD Registration List</h1>
-            <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fas fa-download fa-sm text-white-50 me-1"></i> Generate Report
-            </button>
+            <h1 class="h3 mb-0 text-gray-800">Manage PWD</h1>
+      
         </div>
         
         <?php 
@@ -161,6 +159,10 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">PWD List</h6>
+                <a href="../controllers/generate_manage_pwd_report.php" 
+       id="generateReportBtn" class="btn btn-danger" target="_blank">
+       <i class="fas fa-file-pdf me-1"></i> Generate Report
+    </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -239,7 +241,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="viewModalLabel">
-                    <i class="fas fa-id-card me-2"></i> PWD Registration Details
+                    <i class="fas fa-id-card me-2"></i> Manage PWD
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -350,6 +352,22 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
             alert('Print functionality will be implemented here.');
             // In a real implementation, you would use window.print() or generate a PDF
         });
+          // Get the Generate Report button
+    const generateReportBtn = document.getElementById('generateReportBtn');
+
+// Function to update the Generate Report button's URL
+function updateGenerateReportUrl() {
+    const searchTerm = pwdTable.search(); // Get the current search term
+    generateReportBtn.href = `../controllers/generate_manage_pwd_report.php?search=${encodeURIComponent(searchTerm)}`;
+}
+
+// Update the URL when the search term changes
+pwdTable.on('search.dt', function() {
+    updateGenerateReportUrl();
+});
+
+// Trigger the update initially to set the correct URL
+updateGenerateReportUrl();
     });
 </script>
 
