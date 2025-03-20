@@ -1,17 +1,7 @@
 <?php
 // Database connection details
-$host = 'localhost';
-$dbname = 'job_portal';
-$username = 'root';
-$password = '';
+include '..//include/db_conn.php'; // Include the database connection file
 
-try {
-    // Establish the PDO connection
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
 
 // Get parameters from the request
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1

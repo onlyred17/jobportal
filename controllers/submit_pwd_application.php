@@ -1,15 +1,6 @@
 <?php
-$host = 'localhost';
-$dbname = 'job_portal';
-$username = 'root';
-$password = '';
+include '..//include/db_conn.php'; // Include the database connection file
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
 
 // Function to generate a random unique Application ID
 function generateApplicationID($conn) {
