@@ -8,7 +8,6 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-
 try {
     // Fetch admin details
     $sql = "SELECT first_name, last_name, contact_number, profile_pic FROM admin WHERE admin_id = :admin_id";
@@ -18,7 +17,7 @@ try {
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$admin) {
-        die("admin member not found.");
+        die("Admin not found.");
     }
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
@@ -75,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $full_name = $first_name . ' ' . $last_name;
         $ip_address = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
         $action = 'Update'; // Action type
-        $description_log = "admin profile updated: ";
+        $description_log = "Admin profile updated: ";
 
         // Specify what fields were updated
         $editedFields = [];
@@ -106,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $audit_stmt->bindParam(':action', $action);
         $audit_stmt->bindParam(':description', $description_log);
         $audit_stmt->bindParam(':ip_address', $ip_address);
-        $audit_stmt->bindParam(':usertype', $usertype); // Bind the usertype
+        $audit_stmt->bindParam(':usertype', $usertype);
         $audit_stmt->execute();
 
     } catch (PDOException $e) {
