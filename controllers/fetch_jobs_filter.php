@@ -15,24 +15,22 @@ try {
 
 // Get parameters from the request
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1
-$limit = 6; // Limit of jobs per page
+$limit = 4; // Limit of jobs per page
 $start = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
 
-// Build the query with optional filters (no ordering)
+// Build the query with optional filters
 $query = "SELECT * FROM jobs WHERE 
           (title LIKE :search OR 
            location LIKE :search OR 
            job_type LIKE :search OR 
            company_name LIKE :search)";
 
-// Apply job type filter if specified
 if ($job_type != '') {
     $query .= " AND job_type = :job_type";
 }
 
-// Add pagination using LIMIT and OFFSET (pagination logic)
 $query .= " LIMIT :start, :limit";
 
 // Prepare and execute the query for fetching jobs

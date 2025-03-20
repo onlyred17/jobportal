@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DisabilityToAbility </title>
+    <title>DisabilityToAbility</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<link rel="stylesheet" href="../css/landing_page.css">
+    <link rel="stylesheet" href="../css/landing_page.css">
     <style>
+        /* Add custom styles for section visibility */
+        .page-section {
+            display: none; /* Hide all sections by default */
+        }
         
+        .page-section.active {
+            display: block; /* Show only active section */
+        }
+        
+        /* Make sure header and footer are always visible */
+        header, footer {
+            display: block;
+        }
+        
+        /* Navigation active state */
+        nav a.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body id="body-element">
@@ -19,43 +36,79 @@
         <div class="header-container">
             <h1>DisabilityToAbility</h1>
             <nav>
-                <a href="#home">Home</a>
-                <a href="#about">About Us</a>
-                <a href="#jobs">Jobs</a>
-                <a href="../views/pwd_registration.php">Registration</a>
-            </nav>
+    <a href="#home" class="nav-link" data-section="home">Home</a>
+    <a href="#about" class="nav-link" data-section="about">About Us</a>
+    <a href="#jobs" class="nav-link" data-section="jobs">Job Wall</a>
+    <a href="../views/pwd_registration.php">PWD Registration</a>
+</nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <div id="home" class="hero-section">
-        <div class="hero-content">
-            <h1>Welcome to the DisabilityToAbility Portal</h1>
-            <p>Find job opportunities tailored for Persons with Disabilities (PWD). Let's make a difference together.</p>
-            <a href="#jobs" class="btn-primary">View Job Listings</a>
+ <!-- Hero Section -->
+<div id="home" class="hero-section page-section">
+    <div class="hero-content">
+        <h1>Welcome to the DisabilityToAbility Portal</h1>
+        <p>Find job opportunities tailored for Persons with Disabilities (PWD). Let's make a difference together.</p>
+        <a href="#jobs" class="btn-primary section-link" data-section="jobs">View Job Wall</a>
+
+        <div class="recent-jobs-container">
+        <h2>Recent Jobs</h2>
+        
+        <!-- Recent Job Cards -->
+        <div class="recent-job-cards" id="recent-job-cards-container">
+            <!-- Recent job cards will be dynamically populated here by JavaScript -->
         </div>
+        
+
+    </div>
     </div>
 
+
+    
+
+</div>
+
+</div>
+
+    </div>
+   
+<style>
+   
+</style>
     <!-- About Us Section -->
-    <section id="about">
+    <section id="about" class="page-section">
         <div class="about-container">
-            <h2>About Us</h2>
-            <p>We are dedicated to providing job opportunities for Persons with Disabilities (PWD), connecting employers with candidates who have unique abilities. Our mission is to create an inclusive environment for all individuals seeking meaningful employment.
-            At DisabilityToAbility, we believe that talent knows no boundaries. Our platform is dedicated to empowering Persons with Disabilities (PWDs) by connecting them with inclusive employers who recognize their skills, passion, and potential.
+        <h2>About Us</h2>
+    <p>At DisabilityToAbility, we are dedicated to creating equal employment opportunities for Persons with Disabilities (PWD). Our platform connects qualified candidates with employers who are committed to diversity and inclusion. We believe that every individual, regardless of their abilities, deserves the opportunity to thrive in the workforce.</p>
+    <p>Our mission is to break barriers and provide meaningful employment for all. Join us in our journey to make a positive impact on the lives of PWD individuals by offering job opportunities and fostering an inclusive work environment.</p>
+    
+    <div class="about-image">
+        <img src="path-to-your-image.jpg" alt="Inclusive Workplace" />
+    </div>
 
-We strive to bridge the gap between opportunity and accessibility, ensuring that PWD job seekers have a fair chance to build meaningful careers. Through our user-friendly job portal, we provide a space where employers can find dedicated professionals, fostering a workplace culture that values diversity and inclusion.
+    <p>We understand the unique challenges faced by PWD individuals in finding employment, and we are committed to providing tailored resources and support throughout their career journey. Our platform not only facilitates job matching but also offers training, mentorship, and networking opportunities to ensure long-term success.</p>
+    
+    <p>By partnering with employers who share our values, we aim to create a more inclusive workforce where diversity is celebrated and every individual is given the chance to reach their full potential. Together, we can break down the barriers to employment and build a more equitable future for all.</p>
+    
+    <div class="testimonial">
+        <h3>What Our Partners Say</h3>
+        <blockquote>
+            "DisabilityToAbility has allowed us to find truly talented individuals who bring unique perspectives to our team. We are proud to be part of a platform that fosters diversity and inclusion in the workplace."
+        </blockquote>
+        <cite>- Employer Partner</cite>
+    </div>
 
-Join us in turning disability into ability—because everyone deserves the opportunity to thrive.
-
-
-            </p>
+    <div class="cta">
+        <p>Ready to make a difference? Whether you’re an employer or a job seeker, join us today and be part of a movement that’s changing the world for the better.</p>
+        <a href="signup-link" class="btn">Join Us Now</a>
+    </div>
         </div>
     </section>
 
     <!-- Jobs Section -->
-    <section id="jobs">
+    <section id="jobs" class="page-section">
         <div class="jobs-container">
-            <h2>Job Listings</h2>
+            <h2>Job Wall</h2>
 
             <!-- Search and Filter Bar -->
             <div class="search-filter-container">
@@ -90,347 +143,303 @@ Join us in turning disability into ability—because everyone deserves the oppor
     <button class="accessibility-toggle" id="accessibility-toggle">
         <i class="fas fa-universal-access"></i>
     </button>
-
-    <!-- Accessibility Control Panel -->
     <div class="accessibility-controls" id="accessibility-controls">
         <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
         <div class="controls-section">
             <div class="font-size-controls">
-                <button id="decrease-font" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
-                <span id="font-size-value">100%</span>
-                <button id="increase-font" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
+                <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
+                <span id="font-size-value-panel">100%</span>
+                <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
             </div>
         </div>
         <div class="controls-section">
             <div class="brightness-mode">
-                <button id="normal-mode" class="toggle-btn active">Normal</button>
-                <button id="dark-mode" class="toggle-btn">Dark</button>
-                <button id="high-contrast" class="toggle-btn">High Contrast</button>
+                <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
+                <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+                <button id="high-contrast-panel" class="toggle-btn">High Contrast</button>
             </div>
         </div>
-        <button id="reset-all">Reset All</button>
+        <button id="tts-toggle-panel">Enable TTS on Hover</button>
+        <button id="reset-all-panel">Reset All</button>
     </div>
 
     <!-- Enhanced Footer Section -->
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>DisabilityToAbility</h3>
-                <p>Creating equal employment opportunities for all.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#jobs">Job Listings</a></li>
-                    <li><a href="../views/pwd_registration.php">Registration</a></li>
-                </ul>
-            </div>
-            
-           
-            
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Employment Ave., Manila</li>
-                    <li><i class="fas fa-phone"></i> (02) 8123-4567</li>
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:info@pwdjobportal.com">info@pwdjobportal.com</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 DisabilityToAbility. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Accessibility Statement</a>
-            </div>
-        </div>
-    </div>
-    
-</footer>
-<!-- Job Details Modal -->
-<div id="job-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="modal-title"></h2>
-            <span class="close" onclick="closeModal()">&times;</span>
-        </div>
-        
-        <div class="modal-body">
-            <div class="modal-company-info">
-                <img id="modal-company-logo" src="" alt="Company Logo" class="modal-logo">
-                <div class="company-details">
-                <p style="font-weight: 900;"><strong>Company: <span id="modal-company"></span></strong></p>
-                    <div class="modal-tags">
-                        <span class="modal-tag" id="modal-job-type"></span>
-                        <span class="modal-tag" id="modal-location"></span>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DisabilityToAbility</h3>
+                    <p>Creating equal employment opportunities for all.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home" class="section-link" data-section="home">Home</a></li>
+                        <li><a href="#about" class="section-link" data-section="about">About Us</a></li>
+                        <li><a href="#jobs" class="section-link" data-section="jobs">Job Listings</a></li>
+                        <li><a href="../views/pwd_registration.php">Registration</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Employment Ave., Manila</li>
+                        <li><i class="fas fa-phone"></i> (02) 8123-4567</li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@pwdjobportal.com">info@pwdjobportal.com</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="modal-section">
-                <h3>Description</h3>
-                <p id="modal-description"></p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DisabilityToAbility. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Accessibility Statement</a>
+                </div>
             </div>
-            
-            <div class="modal-section">
-                <h3>Requirements</h3>
-                <ul id="modal-requirements"></ul>
-            </div>
-            
-          
         </div>
-        
-        <div class="modal-footer">
-            <button id="modal-listen" class="btn-listen-modal">
-                <i class="fas fa-volume-up"></i> Listen
-            </button>
+    </footer>
+
+    <!-- Job Details Modal -->
+    <div id="job-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-company-info">
+                    <img id="modal-company-logo" src="" alt="Company Logo" class="modal-logo">
+                    <div class="company-details">
+                        <p style="font-weight: 900;"><strong>Company: <span id="modal-company"></span></strong></p>
+                        <div class="modal-tags">
+                            <span class="modal-tag" id="modal-job-type"></span>
+                            <span class="modal-tag" id="modal-location"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Description</h3>
+                    <p id="modal-description"></p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Requirements</h3>
+                    <ul id="modal-requirements"></ul>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+               
+            </div>
         </div>
     </div>
-</div>
 
-    <!-- Script to Fetch Jobs Data with Pagination, Search, and Filter -->
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="settings-modal">
+        <div class="settings-modal-content">
+            <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
+            <div class="controls-section">
+                <div class="font-size-controls">
+                    <button id="decrease-font-modal" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
+                    <span id="font-size-value-modal">100%</span>
+                    <button id="increase-font-modal" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="controls-section">
+                <div class="brightness-mode">
+                    <button id="normal-mode-modal" class="toggle-btn active">Normal</button>
+                    <button id="dark-mode-modal" class="toggle-btn">Dark</button>
+                    <button id="high-contrast-modal" class="toggle-btn">High Contrast</button>
+                </div>
+            </div>
+            <button id="tts-toggle-modal">Enable TTS on Hover</button>
+            <button id="reset-all-modal">Reset All</button>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <!-- JavaScript for section display control -->
     <script>
-        let currentPage = 1;
-        let totalPages = 5;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to show a specific section
+            function showSection(sectionId) {
+                // Hide all sections
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show requested section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Update active state in navigation
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Handle navigation clicks
+            const navLinks = document.querySelectorAll('.nav-link, .section-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                    
+                    // Update URL hash
+                    window.location.hash = sectionId;
+                });
+            });
+            
+            // Check for hash in URL on page load
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showSection(hash);
+            } else {
+                // Default to home section if no hash or invalid hash
+                showSection('home');
+            }
+        });
+        document.addEventListener('DOMContentLoaded', () => {
 
-        function fetchJobs(page = 1) {
-    const search = document.getElementById('search-input').value;
-    const jobType = document.getElementById('job-type').value;
+// Save font size preference
+function saveFontSize(fontSize) {
+    localStorage.setItem('fontSize', fontSize);
+}
 
-    if (page < 1) return;
+// Save theme preference (Normal, Dark, High Contrast)
+function saveTheme(theme) {
+    localStorage.setItem('theme', theme);
+}
 
-    const url = `../controllers/fetch_jobs.php?page=${page}&search=${encodeURIComponent(search)}&job_type=${encodeURIComponent(jobType)}`;
+// Save TTS preference (Enabled or Disabled)
+function saveTTS(state) {
+    localStorage.setItem('ttsEnabled', state);
+}
 
+// Font Size Change
+document.getElementById('increase-font-panel').addEventListener('click', function () {
+    let fontSize = parseInt(localStorage.getItem('fontSize') || '100') + 10;
+    if (fontSize <= 150) {
+        document.documentElement.style.fontSize = fontSize + '%';
+        saveFontSize(fontSize);
+    }
+});
+
+document.getElementById('decrease-font-panel').addEventListener('click', function () {
+    let fontSize = parseInt(localStorage.getItem('fontSize') || '100') - 10;
+    if (fontSize >= 70) {
+        document.documentElement.style.fontSize = fontSize + '%';
+        saveFontSize(fontSize);
+    }
+});
+
+// Theme Change
+document.getElementById('normal-mode-panel').addEventListener('click', function () {
+    document.body.classList.remove('dark-mode', 'high-contrast');
+    saveTheme('normal');
+});
+
+document.getElementById('dark-mode-panel').addEventListener('click', function () {
+    document.body.classList.add('dark-mode');
+    saveTheme('dark');
+});
+
+document.getElementById('high-contrast-panel').addEventListener('click', function () {
+    document.body.classList.add('high-contrast');
+    saveTheme('high-contrast');
+});
+
+// TTS Toggle
+document.getElementById('tts-toggle-panel').addEventListener('click', function () {
+    let ttsEnabled = localStorage.getItem('ttsEnabled') === 'true' ? 'false' : 'true';
+    localStorage.setItem('ttsEnabled', ttsEnabled);
+    this.textContent = ttsEnabled === 'true' ? 'Disable TTS on Hover' : 'Enable TTS on Hover';
+});
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved font size
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+        document.documentElement.style.fontSize = savedFontSize + '%';
+    }
+
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    } else if (savedTheme === 'high-contrast') {
+        document.body.classList.add('high-contrast');
+    }
+
+    // Apply TTS setting
+    const ttsEnabled = localStorage.getItem('ttsEnabled');
+    if (ttsEnabled === 'true') {
+        document.getElementById('tts-toggle-panel').textContent = 'Disable TTS on Hover';
+    } else {
+        document.getElementById('tts-toggle-panel').textContent = 'Enable TTS on Hover';
+    }
+});
+// Function to fetch recent jobs
+function fetchRecentJobs() {
+    const url = '../controllers/fetch_jobs_filter.php';
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            if (!data || !data.data || !data.totalPages) {
+            if (!data || !data.data) {
                 console.error("Invalid response format", data);
                 return;
             }
-            totalPages = data.totalPages;
-            currentPage = page;
-
-            document.getElementById('page-number').textContent = `Page ${currentPage} of ${totalPages}`;
-            renderJobCards(data.data); 
-            togglePaginationButtons();
+            renderRecentJobCards(data.data);
         })
-        .catch(error => console.error('Error fetching jobs:', error));
+        .catch(error => console.error('Error fetching recent jobs:', error));
 }
 
+// Function to render recent job cards
+function renderRecentJobCards(jobs) {
+    const recentJobsContainer = document.getElementById('recent-job-cards-container');
+    recentJobsContainer.innerHTML = '';
     
-
-    // Function to add TTS to each job listing
-function addTextToSpeech() {
-    document.querySelectorAll('.btn-listen').forEach(button => {
-        button.addEventListener('click', function() {
-            const jobCard = this.closest('.job-card');
-            if (!jobCard) return;
-
-            const jobTitle = jobCard.querySelector('.job-header h3').innerText;
-            const jobDescription = jobCard.querySelector('.job-content p').innerText;
-            const jobType = jobCard.querySelector('.tag:first-child').innerText;
-            const jobLocation = jobCard.querySelector('.tag:last-child').innerText;
-
-            const textToSpeak = `Job Title: ${jobTitle}. Description: ${jobDescription}. Job Type: ${jobType}. Location: ${jobLocation}.`;
-
-            const speech = new SpeechSynthesisUtterance(textToSpeak);
-            speech.lang = 'en-US';
-            speech.rate = 1;  // Normal speed
-            speech.pitch = 1; // Normal pitch
-            speech.volume = 1; // Full volume
-
-            window.speechSynthesis.speak(speech);
-        });
-    });
-}
-// Function to open job details modal with updated UI
-function openModal(job) {
-    // Parse the job data if it's a string
-    if (typeof job === 'string') {
-        try {
-            job = JSON.parse(job);
-        } catch (e) {
-            console.error('Error parsing job data:', e);
-            return;
-        }
-    }
+    // Display only the most recent 4 jobs
+    const recentJobs = jobs.slice(0, 4);
     
-    // Populate modal content
-    document.getElementById('modal-title').innerText = job.title;
-    document.getElementById('modal-company').innerText = job.company_name;
-    document.getElementById('modal-job-type').innerText = job.job_type;
-    document.getElementById('modal-location').innerText = job.location;
-    document.getElementById('modal-description').innerText = job.description;
-    
-    // Set company logo if available
-    const logoElement = document.getElementById('modal-company-logo');
-    if (job.company_logo) {
-        logoElement.src = job.company_logo;
-        logoElement.style.display = 'block';
-    } else {
-        logoElement.style.display = 'none';
-    }
-    
-    // Clear and populate requirements list
-    let requirementsList = document.getElementById('modal-requirements');
-    requirementsList.innerHTML = '';
-    
-    // Check if requirements exist and is an array
-    if (job.requirements && Array.isArray(job.requirements)) {
-        job.requirements.forEach(req => {
-            let li = document.createElement('li');
-            li.innerText = req;
-            requirementsList.appendChild(li);
-        });
-    } else if (job.requirements && typeof job.requirements === 'string') {
-        // If requirements is a string, add it as a single item
-        let li = document.createElement('li');
-        li.innerText = job.requirements;
-        requirementsList.appendChild(li);
-    } else {
-        // If no requirements provided
-        let li = document.createElement('li');
-        li.innerText = "Please contact the company for specific requirements.";
-        requirementsList.appendChild(li);
-    }
-
-    // Make sure the modal is visible with animation
-    const modal = document.getElementById('job-modal');
-    modal.style.display = 'block';
-    
-    // Use setTimeout to ensure the display change has taken effect before adding the class
-    setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
-    
-    // Add Text-to-Speech functionality for the modal
-    document.getElementById('modal-listen').addEventListener('click', function() {
-        speakJobDetails(job);
-    });
-    
-    // Add Apply button functionality
-    document.getElementById('modal-apply').addEventListener('click', function() {
-        // You can implement application logic here
-        alert(`You are about to apply for the position of ${job.title} at ${job.company}. This feature will be implemented soon.`);
-    });
-}
-
-// Function to close the modal with animation
-function closeModal() {
-    const modal = document.getElementById('job-modal');
-    modal.classList.remove('show');
-    
-    // Wait for the animation to complete before hiding the modal
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 300);
-    
-    // Remove event listeners to prevent duplicates on reopen
-    document.getElementById('modal-listen').removeEventListener('click', function() {});
-    document.getElementById('modal-apply').removeEventListener('click', function() {});
-}
-
-// Function to handle Text-to-Speech for job details in the modal
-function speakJobDetails(job) {
-    // Stop any current speech
-    window.speechSynthesis.cancel();
-    
-    // Prepare the text to speak with proper pauses - removed the Apply Now button mention
-    const textToSpeak = `
-        Job Title: ${job.title}. 
-        Company: ${job.company_name}.
-        Job Type: ${job.job_type}.
-        Location: ${job.location}.
-        Description: ${job.description}.
-        Description: ${job.status}.
-        Requirements: ${getRequirementsText(job.requirements)}.
-    `;
-    
-    // Create speech utterance
-    const speech = new SpeechSynthesisUtterance(textToSpeak);
-    speech.lang = 'en-US';
-    speech.rate = 1;  // Normal speed
-    speech.pitch = 2; // Normal pitch
-    speech.volume = 1; // Full volume
-    
-    // Add visual indicator that speaking is in progress
-    const listenButton = document.getElementById('modal-listen');
-    const originalText = listenButton.innerHTML;
-    listenButton.innerHTML = '<i class="fas fa-pause"></i> Stop Reading';
-    
-    // Add event to track when speech has ended
-    speech.onend = function() {
-        listenButton.innerHTML = originalText;
-    };
-    
-    // Allow stopping the speech when button is clicked again
-    listenButton.onclick = function() {
-        if (window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-            listenButton.innerHTML = originalText;
-            
-            // Reset the click handler
-            setTimeout(() => {
-                listenButton.onclick = function() {
-                    speakJobDetails(job);
-                };
-            }, 100);
-        }
-    };
-    
-    // Start speaking
-    window.speechSynthesis.speak(speech);
-}
-
-// Helper function to format requirements for speech
-function getRequirementsText(requirements) {
-    if (!requirements) {
-        return "Please contact the company for specific requirements";
-    }
-    
-    if (typeof requirements === 'string') {
-        return requirements;
-    }
-    
-    if (Array.isArray(requirements)) {
-        return requirements.join('. ');
-    }
-    
-    return "Please contact the company for specific requirements";
-}
-
-function renderJobCards(jobs) {
-    const jobCardsContainer = document.getElementById('job-cards-container');
-    jobCardsContainer.innerHTML = ''; 
-    const openJobs = jobs.filter(job => job.status.toLowerCase() === "open");
-
-    if (!jobs.length) {
-        jobCardsContainer.innerHTML = '<p>No jobs available.</p>';
+    if (!recentJobs.length) {
+        recentJobsContainer.innerHTML = '<p>No recent jobs available.</p>';
         return;
     }
-
-    jobs.forEach((job, index) => {
+    
+    recentJobs.forEach((job, index) => {
         const jobCard = document.createElement('div');
-        jobCard.classList.add('job-card');
-
-        let statusIcon = job.status.toLowerCase() === "open"
-            ? '<i class="fas fa-check-circle" style="color: green;"></i>'
-            : '<i class="fas fa-times-circle" style="color: red;"></i>';
-
+        jobCard.classList.add('recent-job-card');
+        
+        // Calculate days ago
+        const postedDate = new Date(job.posted_date);
+        const today = new Date();
+        const diffTime = Math.abs(today - postedDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
         jobCard.innerHTML = `
+            <span class="recent-tag">New</span>
             <div class="job-header">
                 <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
                 <div class="job-title-container">
@@ -439,156 +448,40 @@ function renderJobCards(jobs) {
                 </div>
             </div>
             <div class="job-content">
-                <p>${job.description.substring(0, 150)}${job.description.length > 150 ? '...' : ''}</p>
+                <p>${job.description.substring(0, 100)}${job.description.length > 100 ? '...' : ''}</p>
                 <div class="tags">
                     <span class="tag"><i class="fas fa-briefcase"></i> ${job.job_type}</span>
                     <span class="tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
-                    <span class="tag">${statusIcon} ${job.status}</span>
                 </div>
                 <div class="job-footer">
-                    <span class="job-date"><i class="fas fa-calendar-alt"></i> Posted ${formatDate(job.posted_date)}</span>
-                    <button class="btn-listen" aria-label="Listen to job description"><i class="fas fa-volume-up"></i></button>
+                    <span class="job-date"><i class="fas fa-calendar-alt"></i> ${diffDays} days ago</span>
                     <button class="btn-view-details" data-job-index="${index}">View Details</button>
                 </div>
             </div>
         `;
-
-        jobCardsContainer.appendChild(jobCard);
-    });
-
-    document.querySelectorAll('.btn-view-details').forEach(button => {
-        button.addEventListener('click', function () {
-            openModal(jobs[this.dataset.jobIndex]);
-        });
-    });
-
-    addTextToSpeech(jobs);
-}
-
-
-// Improved Text-to-Speech function with job data reference
-function addTextToSpeech(jobs) {
-    document.querySelectorAll('.btn-listen').forEach((button, index) => {
-        button.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent triggering other click events
-            const job = jobs[index];
-            
-            // Stop any current speech
-            window.speechSynthesis.cancel();
-            
-            const textToSpeak = `
-                Job Title: ${job.title}. 
-    Company: ${job.company_name}.
-                Brief Description: ${job.description.substring(0, 150)}. 
-                Job Type: ${job.job_type}. 
-                Location: ${job.location}.
-                Status: ${job.status}.
-                Posted on: ${formatDate(job.posted_date)}.
-                For more info, click the view details.
-            `;
-
-            const speech = new SpeechSynthesisUtterance(textToSpeak);
-            speech.lang = 'en-US';
-            speech.rate = 1;
-            speech.pitch = 1;
-            speech.volume = 1;
-
-            // Visual indicator
-            this.innerHTML = '<i class="fas fa-pause"></i>';
-            
-            speech.onend = () => {
-                this.innerHTML = '<i class="fas fa-volume-up"></i>';
-            };
-            
-            window.speechSynthesis.speak(speech);
-        });
-    });
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('job-modal');
-    if (event.target === modal) {
-        closeModal();
-    }
-}
-
-
-        // Function to format the date
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
-        }
-
-        // Toggle visibility of pagination buttons based on current page
-        function togglePaginationButtons() {
-            document.getElementById('prev-btn').style.display = currentPage > 1 ? 'inline-block' : 'none';
-            document.getElementById('next-btn').style.display = currentPage < totalPages ? 'inline-block' : 'none';
-        }
-
-        // Initial fetch when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchJobs(1); // Fetch first page on load
-        });
-
-        // Accessibility Controls Toggle
-        document.getElementById('accessibility-toggle').addEventListener('click', function() {
-            document.getElementById('accessibility-controls').classList.toggle('active');
-        });
-
-        // Font Size Controls
-        let fontSize = 100;
-        document.getElementById('increase-font').addEventListener('click', function() {
-            if (fontSize < 150) {
-                fontSize += 10;
-                document.getElementById('font-size-value').textContent = fontSize + '%';
-                document.documentElement.style.fontSize = fontSize + '%';
-            }
-        });
-
-        document.getElementById('decrease-font').addEventListener('click', function() {
-            if (fontSize > 70) {
-                fontSize -= 10;
-                document.getElementById('font-size-value').textContent = fontSize + '%';
-                document.documentElement.style.fontSize = fontSize + '%';
-            }
-        });
-
-        // Mode Controls
-        document.getElementById('normal-mode').addEventListener('click', function() {
-            document.body.classList.remove('dark-mode', 'high-contrast');
-            setActiveButton(this);
-        });
-
-        document.getElementById('dark-mode').addEventListener('click', function() {
-            document.body.classList.remove('high-contrast');
-            document.body.classList.add('dark-mode');
-            setActiveButton(this);
-        });
-
-        document.getElementById('high-contrast').addEventListener('click', function() {
-            document.body.classList.remove('dark-mode');
-            document.body.classList.add('high-contrast');
-            setActiveButton(this);
-        });
-
-        // Reset All
-        document.getElementById('reset-all').addEventListener('click', function() {
-            document.body.classList.remove('dark-mode', 'high-contrast');
-            fontSize = 100;
-            document.getElementById('font-size-value').textContent = fontSize + '%';
-            document.documentElement.style.fontSize = fontSize + '%';
-            setActiveButton(document.getElementById('normal-mode'));
-        });
-
-        function setActiveButton(button) {
-            document.querySelectorAll('.toggle-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
-        }
         
+        recentJobsContainer.appendChild(jobCard);
+    });
+    
+    // Add event listeners to view details buttons
+    document.querySelectorAll('#recent-job-cards-container .btn-view-details').forEach((button, index) => {
+        button.addEventListener('click', function() {
+            openModal(recentJobs[index]);
+        });
+    });
+}
+
+// Call the fetchRecentJobs function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch all jobs for the main job section
+    fetchJobs(1);
+    
+    // Fetch recent jobs for the recent jobs section
+    fetchRecentJobs();
+});
     </script>
+
+    <!-- Original scripts -->
+    <script src="../scripts/landing_page.js"></script>
 </body>
 </html>

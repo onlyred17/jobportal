@@ -88,7 +88,7 @@ try {
     $stmt->execute([$application_id, $full_name, $birthdate, $disability_type, $address, $contact_number, $email, $proof_of_pwd, $valid_id]);
 
     // Redirect with Application ID in message
-    header("Location: ../views/pwd_registration.php?message=Registration successful! Your Application ID is $application_id. Please save your application ID.");
+    header("Location: ../views/pwd_registration.php?message=Registration successful!");
 } catch (PDOException $e) {
     header("Location: ../views/pwd_registration.php?message=Error: " . $e->getMessage());
 }
