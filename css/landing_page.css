@@ -504,6 +504,30 @@ header nav a:hover::after {
 .accessibility-controls.active {
   display: block !important;
 }
+/* Tooltip Style */
+.accessibility-toggle::after {
+  content: "Accessibility Settings";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  left: -250%; /* Moves it further left */
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Show tooltip on hover */
+.accessibility-toggle:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
 
 .font-size-controls, .brightness-controls {
     display: flex;
