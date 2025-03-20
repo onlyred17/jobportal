@@ -1,10 +1,10 @@
 <?php
-
+$userType = $_SESSION['usertype'] ?? ''; // Fetch user type safely
 // Fetch employer details from the session or database
 $firstName = $_SESSION['first_name'] ?? '';
 $lastName = $_SESSION['last_name'] ?? '';
 $profilePicture = $_SESSION['profile_pic'] ?? '../images/default-profile.jpg';
-$userType = $_SESSION['user_type'] ?? '';
+
 
 
 
@@ -34,10 +34,9 @@ $employerName = trim("$firstName $lastName");
     </style>
 </head>
 <body>
+    
 <div class="navbar">
     <div class="navbar-left">
-      
-
 
     </div>
     <div class="navbar-right">
@@ -146,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
-
 
     <!-- Include Dark Mode Script -->
     <script src="../scripts/dark_mode.js"></script>
