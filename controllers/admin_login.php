@@ -38,8 +38,7 @@ try {
     $_SESSION['first_name'] = $admin['first_name']; // Store first name
     $_SESSION['last_name'] = $admin['last_name']; // Store last name
     $_SESSION['profile_pic'] = $admin['profile_pic']; // Store profile picture
-    $userType = isset($_SESSION['usertype']) ? $_SESSION['usertype'] : 'admin'; // Default to 'admin'
-
+    $_SESSION['usertype'] = 'admin'; // Explicitly set usertype to 'admin'
   // Insert into audit log for admin login
 $full_name = $admin['first_name'] . ' ' . $admin['last_name'];
 $ip_address = $_SERVER['REMOTE_ADDR']; // Get the user's IP address

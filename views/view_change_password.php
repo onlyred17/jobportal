@@ -1,6 +1,4 @@
-I'll modify the code to work with both staff_id and admin_id. Here's how we can update it:
 
-```php
 <?php
 session_start();
 require_once '../include/db_conn.php';

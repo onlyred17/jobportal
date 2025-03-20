@@ -3,11 +3,11 @@ session_start();
 // Include the database connection
 include '../include/db_conn.php';
 
-// Fetch all companies
-$query = "SELECT * FROM company";
+$query = "SELECT * FROM company WHERE is_deleted = 0";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -220,7 +220,7 @@ include '../include/sidebar.php';
                                             <i class="fas fa-edit me-1"></i> Edit
                                         </button>
                                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCompanyModal<?php echo $company['id']; ?>">
-                                            <i class="fas fa-trash-alt me-1"></i> Delete
+                                            <i class="fas fa-trash-alt me-1"></i> Archieve
                                         </button>
                                     </td>
                                 </tr>
@@ -287,7 +287,7 @@ include '../include/sidebar.php';
                                             </div>
                                             <div class="modal-body text-center">
                                                 <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-                                                <h5>Are you sure you want to delete this company?</h5>
+                                                <h5>Are you sure you want to archieve this company?</h5>
                                                 <p class="text-muted"><?php echo htmlspecialchars($company['name']); ?></p>
                                                 <p class="text-danger">This action cannot be undone.</p>
                                             </div>
@@ -296,7 +296,7 @@ include '../include/sidebar.php';
                                                     <i class="fas fa-times me-1"></i> Cancel
                                                 </button>
                                                 <a href="../controllers/delete_company.php?id=<?php echo $company['id']; ?>" class="btn btn-danger">
-                                                    <i class="fas fa-trash-alt me-1"></i> Delete
+                                                    <i class="fas fa-trash-alt me-1"></i> Archieve
                                                 </a>
                                             </div>
                                         </div>

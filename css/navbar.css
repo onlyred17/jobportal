@@ -26,8 +26,9 @@
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.5rem; /* Space between notification bar and profile */
 }
+
 
 /* Profile Section */
 .profile-dropdown {
