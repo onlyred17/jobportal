@@ -122,7 +122,9 @@
                 
                 <div class="form-actions">
                     <button type="reset" class="btn-secondary">Reset Form</button>
-                    <button type="submit" class="btn-primary">Submit Registration</button>
+                    <button type="submit" class="btn-secondary">Submit Registration</button>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='../views/view_status.php'">View Status</button>
+
                 </div>
             </div>
         </form>
