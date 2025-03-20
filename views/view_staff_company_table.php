@@ -142,6 +142,11 @@ $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
             background-color: var(--primary-color);
             border-color: var(--primary-color);
         }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
     </style>
 </head>
 <body>
@@ -155,7 +160,7 @@ include '../include/sidebar.php';
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Company List</h1>
-           
+          
         </div>
         
         <?php
@@ -171,13 +176,19 @@ include '../include/sidebar.php';
         ?>
         
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Companies</h6>
-                <a href="../controllers/generate_company_report.php?search=" 
-   id="generateReportBtn" class="btn btn-danger">
-   <i class="fas fa-file-pdf me-1"></i> Generate Report
-</a>
-            </div>
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Companies</h6>
+        <div class="action-btns">
+            <a href="../controllers/generate_company_report.php?search=" id="generateReportBtn" class="btn btn-danger">
+                <i class="fas fa-file-pdf me-1"></i> Generate Report
+            </a>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                <i class="fas fa-plus-circle me-1"></i> Add Company
+            </button>
+        </div>
+    </div>
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="companiesTable" class="table table-striped table-hover" width="100%" cellspacing="0">
@@ -300,6 +311,75 @@ include '../include/sidebar.php';
     </div>
 </div>
 
+<!-- Add Company Modal -->
+<div class="modal fade" id="addCompanyModal" tabindex="-1" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCompanyModalLabel">Add New Company</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Company Logo Preview -->
+                <img src="../img/default-company-logo.png" alt="Company Logo" class="modal-logo" id="newLogoPreview">
+                
+                <!-- Add Company Form -->
+                <form id="addCompanyForm" method="POST" action="../controllers/staff_add_company.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="newName" class="form-label">
+                            <i class="fas fa-building me-1 text-primary"></i> Company Name
+                        </label>
+                        <input type="text" class="form-control" id="newName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newLocation" class="form-label">
+                            <i class="fas fa-map-marker-alt me-1 text-primary"></i> Location
+                        </label>
+                        <input type="text" class="form-control" id="newLocation" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newDescription" class="form-label">
+                            <i class="fas fa-info-circle me-1 text-primary"></i> Description
+                        </label>
+                        <textarea class="form-control" id="newDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <!-- Logo upload input -->
+                    <div class="mb-3">
+                        <label for="newLogo" class="form-label">
+                            <i class="fas fa-image me-1 text-primary"></i> Company Logo
+                        </label>
+                        <input type="file" class="form-control" id="newLogo" name="logo" accept="image/*" onchange="previewLogo(this, 'newLogoPreview')" required>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus-circle me-1"></i> Add Company
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalTitle">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="feedbackModalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -308,6 +388,27 @@ include '../include/sidebar.php';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize modals
+        const addCompanyModal = new bootstrap.Modal(document.getElementById('addCompanyModal'), {
+            backdrop: 'static',
+            keyboard: true
+        });
+        
+        // Fix for modal backdrop issue
+        const modalElements = document.querySelectorAll('.modal');
+        modalElements.forEach(modalElement => {
+            modalElement.addEventListener('hidden.bs.modal', function() {
+                // Remove any remaining backdrop
+                const backdrops = document.getElementsByClassName('modal-backdrop');
+                for (let backdrop of backdrops) {
+                    backdrop.remove();
+                }
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+            });
+        });
+        
         const companiesTable = new DataTable('#companiesTable', {
             responsive: true,
             language: {
@@ -324,17 +425,60 @@ include '../include/sidebar.php';
                 }
             }
         });
-          // Update the Generate Report button with the current search term
-    const generateReportBtn = document.getElementById('generateReportBtn');
-    companiesTable.on('search.dt', function() {
-        const searchTerm = companiesTable.search();
-        generateReportBtn.href = `../controllers/generate_company_report.php?search=${encodeURIComponent(searchTerm)}`;
-    });
+        
+        // Update the Generate Report button with the current search term
+        const generateReportBtn = document.getElementById('generateReportBtn');
+        companiesTable.on('search.dt', function() {
+            const searchTerm = companiesTable.search();
+            generateReportBtn.href = `../controllers/generate_company_report.php?search=${encodeURIComponent(searchTerm)}`;
+        });
 
-    // Trigger the search event initially to set the correct href
-    companiesTable.search();
-});
- 
+        // Trigger the search event initially to set the correct href
+        companiesTable.search();
+        
+        // Handle form submission
+        const addCompanyForm = document.getElementById("addCompanyForm");
+        if (addCompanyForm) {
+            addCompanyForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the form from submitting traditionally
+                
+                let formData = new FormData(this);
+
+                fetch("../controllers/staff_add_company.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Close the addCompanyModal first
+                    addCompanyModal.hide();
+                    
+                    // Then show the feedback modal
+                    let feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+                    document.getElementById("feedbackModalTitle").innerText = data.status === "success" ? "Success" : "Error";
+                    document.getElementById("feedbackModalMessage").innerText = data.message;
+                    
+                    feedbackModal.show();
+
+                    if (data.status === "success") {
+                        setTimeout(() => {
+                            location.reload(); // Reload after success
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    // Close the addCompanyModal first
+                    addCompanyModal.hide();
+                    
+                    // Then show the feedback modal
+                    let feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+                    document.getElementById("feedbackModalTitle").innerText = "Error";
+                    document.getElementById("feedbackModalMessage").innerText = "An unexpected error occurred.";
+                    feedbackModal.show();
+                });
+            });
+        }
+    });
 
     // Function to preview logo before upload
     function previewLogo(input, previewId) {
@@ -354,8 +498,6 @@ include '../include/sidebar.php';
     tooltipTriggerList.forEach(function(tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl);
     });
-  
-
 </script>
 
 </body>

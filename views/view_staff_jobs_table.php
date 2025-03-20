@@ -7,12 +7,11 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
-    <!-- Modern UI Framework -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables with Bootstrap 5 styling -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+ <!-- Scripts - Include only once at the bottom of the page -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!-- Custom Styles -->
     <link href="../css/sidebar.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
@@ -214,7 +213,9 @@ include '../include/sidebar.php';
    id="generateReportBtn" class="btn btn-danger" target="_blank">
    <i class="fas fa-file-pdf"></i> Generate Report
 </a>
-
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postJobModal">
+            <i class="fas fa-plus me-1"></i> Post Job
+        </button>
                     </div>
                     
                 </form>
@@ -292,68 +293,247 @@ include '../include/sidebar.php';
         </div>
     </div>
 </div>
-
+<!-- Post Job Modal -->
+<div class="modal fade" id="postJobModal" tabindex="-1" aria-labelledby="postJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postJobModalLabel">
+                    <i class="fas fa-briefcase text-primary me-1"></i> Post a New Job
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="postJobForm" method="POST" action="../controllers/staff_job_posting.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="company_id" class="form-label">
+                            <i class="fas fa-building me-1 text-primary"></i> Select Company
+                        </label>
+                        <select class="form-control" id="company_id" name="company_id" required>
+                            <option value="">-- Choose Company --</option>
+                            <?php
+                            // Fetch companies from the database
+                            include '../include/db_conn.php'; // Ensure this path is correct
+                            $query = "SELECT id, name FROM company";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute();
+                            $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($companies as $company) {
+                                echo "<option value='{$company['id']}'>{$company['name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobTitle" class="form-label">
+                            <i class="fas fa-heading me-1 text-primary"></i> Job Title
+                        </label>
+                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobDescription" class="form-label">
+                            <i class="fas fa-file-alt me-1 text-primary"></i> Description
+                        </label>
+                        <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobLocation" class="form-label">
+                            <i class="fas fa-map-marker-alt me-1 text-primary"></i> Location
+                        </label>
+                        <input type="text" class="form-control" id="jobLocation" name="jobLocation" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobType" class="form-label">
+                            <i class="fas fa-briefcase me-1 text-primary"></i> Job Type
+                        </label>
+                        <select class="form-control" id="jobType" name="jobType" required>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">
+                            <i class="fas fa-dollar-sign me-1 text-primary"></i> Salary
+                        </label>
+                        <input type="number" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="requirements" class="form-label">
+                            <i class="fas fa-list me-1 text-primary"></i> Requirements
+                        </label>
+                        <textarea class="form-control" id="requirements" name="requirements" rows="3" required></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Post Job
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="feedbackModalMessage"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const jobsTable = new DataTable('#jobsTable', {
-            responsive: true,
-            language: {
-                search: "<i class='fas fa-search'></i> _INPUT_",
-                searchPlaceholder: "Search...",
-                lengthMenu: "Show _MENU_ entries",
-                info: "Showing _START_ to _END_ of _TOTAL_ jobs",
-                infoEmpty: "Showing 0 to 0 of 0 jobs",
-                paginate: {
-                    first: "<i class='fas fa-angle-double-left'></i>",
-                    previous: "<i class='fas fa-angle-left'></i>",
-                    next: "<i class='fas fa-angle-right'></i>",
-                    last: "<i class='fas fa-angle-double-right'></i>"
-                }
-            },
-            
-        });
-
-        // Handle modal opening and setting up the confirmation link
-        const confirmModal = document.getElementById('confirmModal');
-        confirmModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget; // Button that triggered the modal
-            const jobId = button.getAttribute('data-job-id');
-            const status = button.getAttribute('data-status');
-            
-            const statusLabel = document.getElementById('statusLabel');
-            const statusIcon = document.getElementById('statusIcon');
-            const confirmButton = document.getElementById('confirmButton');
-            
-            statusLabel.textContent = status;
-            
-            // Update icon and button colors based on status
-            if (status === 'Open') {
-                statusIcon.className = 'fas fa-lock-open fa-3x text-success mb-3';
-                confirmButton.className = 'btn btn-success';
-            } else {
-                statusIcon.className = 'fas fa-lock fa-3x text-warning mb-3';
-                confirmButton.className = 'btn btn-warning';
-            }
-            
-            confirmButton.href = `../controllers/update_job_status.php?id=${jobId}&status=${status}`;
-        });
-          // Update the Generate Report button with the current search term
-    const generateReportBtn = document.getElementById('generateReportBtn');
-    jobsTable.on('search.dt', function() {
-        const searchTerm = jobsTable.search();
-        generateReportBtn.href = `../controllers/generate_jobs_report.php?start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>&status=<?php echo $statusFilter; ?>&search=${searchTerm}`;
+    // Initialize modals once
+    const postJobModal = new bootstrap.Modal(document.getElementById('postJobModal'), {
+        backdrop: 'static',
+        keyboard: true
     });
-});
-
     
-</script>
+    // Handle post job button click
+    const postJobButton = document.querySelector('button[data-bs-target="#postJobModal"]');
+    if (postJobButton) {
+        postJobButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            postJobModal.show();
+        });
+    }
+    
+    // Fix for modal backdrop issue
+    const modalElement = document.getElementById('postJobModal');
+    modalElement.addEventListener('hidden.bs.modal', function() {
+        // Remove any remaining backdrop
+        const backdrops = document.getElementsByClassName('modal-backdrop');
+        for (let backdrop of backdrops) {
+            backdrop.remove();
+        }
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    });
 
+    // Initialize DataTable
+    const jobsTable = new DataTable('#jobsTable', {
+        responsive: true,
+        language: {
+            search: "<i class='fas fa-search'></i> _INPUT_",
+            searchPlaceholder: "Search...",
+            lengthMenu: "Show _MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ jobs",
+            infoEmpty: "Showing 0 to 0 of 0 jobs",
+            paginate: {
+                first: "<i class='fas fa-angle-double-left'></i>",
+                previous: "<i class='fas fa-angle-left'></i>",
+                next: "<i class='fas fa-angle-right'></i>",
+                last: "<i class='fas fa-angle-double-right'></i>"
+            }
+        },
+    });
+
+    // Handle confirm modal
+    const confirmModal = document.getElementById('confirmModal');
+    confirmModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const jobId = button.getAttribute('data-job-id');
+        const status = button.getAttribute('data-status');
+        
+        const statusLabel = document.getElementById('statusLabel');
+        const statusIcon = document.getElementById('statusIcon');
+        const confirmButton = document.getElementById('confirmButton');
+        
+        statusLabel.textContent = status;
+        
+        // Update icon and button colors based on status
+        if (status === 'Open') {
+            statusIcon.className = 'fas fa-lock-open fa-3x text-success mb-3';
+            confirmButton.className = 'btn btn-success';
+        } else {
+            statusIcon.className = 'fas fa-lock fa-3x text-warning mb-3';
+            confirmButton.className = 'btn btn-warning';
+        }
+        
+        confirmButton.href = `../controllers/update_job_status.php?id=${jobId}&status=${status}`;
+    });
+    
+    // Also add the backdrop fix for the confirm modal
+    confirmModal.addEventListener('hidden.bs.modal', function() {
+        const backdrops = document.getElementsByClassName('modal-backdrop');
+        for (let backdrop of backdrops) {
+            backdrop.remove();
+        }
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    });
+      
+    // Update the Generate Report button with the current search term
+    const generateReportBtn = document.getElementById('generateReportBtn');
+    if (generateReportBtn) {
+        jobsTable.on('search.dt', function() {
+            const searchTerm = jobsTable.search();
+            generateReportBtn.href = `../controllers/generate_jobs_report.php?start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>&status=<?php echo $statusFilter; ?>&search=${searchTerm}`;
+        });
+    }
+
+    // Handle form submission
+    const postJobForm = document.getElementById("postJobForm");
+    if (postJobForm) {
+        postJobForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting traditionally
+            
+            let formData = new FormData(this);
+
+            fetch("../controllers/staff_job_posting.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Close the postJobModal first
+                postJobModal.hide();
+                
+                // Then show the feedback modal
+                let feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+                document.getElementById("feedbackModalTitle").innerText = data.status === "success" ? "Success" : "Error";
+                document.getElementById("feedbackModalMessage").innerText = data.message;
+                
+                feedbackModal.show();
+
+                if (data.status === "success") {
+                    setTimeout(() => {
+                        location.reload(); // Reload after success
+                    }, 2000);
+                }
+            })
+            .catch(error => {
+                // Close the postJobModal first
+                postJobModal.hide();
+                
+                // Then show the feedback modal
+                let feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+                document.getElementById("feedbackModalTitle").innerText = "Error";
+                document.getElementById("feedbackModalMessage").innerText = "An unexpected error occurred.";
+                feedbackModal.show();
+            });
+        });
+    }
+});
+</script>
 </body>
 </html>
 

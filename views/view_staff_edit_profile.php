@@ -34,7 +34,7 @@ include '../controllers/staff_edit_profile.php';
         /* Main Content */
 .main-content {
     margin-left: 280px;
-    margin-top: 90px;
+    margin-top: 40px;
     padding: 2rem;
     transition: margin-left 0.3s;
     min-height: 100vh;
@@ -57,7 +57,7 @@ include '../controllers/staff_edit_profile.php';
         
         .profile-header {
             position: relative;
-            height: 150px;
+            height: 100px;
             background: linear-gradient(to right, #4361ee, #3a0ca3);
             display: flex;
             justify-content: center;
@@ -65,12 +65,11 @@ include '../controllers/staff_edit_profile.php';
         
         .profile-pic-container {
     position: relative;
-    margin-top: 60px;
 }
 
-.profile-pic {
-    width: 200px; /* Increased from 150px */
-    height: 200px; /* Increased from 150px */
+.profile-pic1 {
+    width: 120px !important; /* Increased from 150px */
+    height: 120px !important; /* Increased from 150px */
     border-radius: 50%;
     object-fit: cover;
     border: 6px solid white;
@@ -100,7 +99,7 @@ include '../controllers/staff_edit_profile.php';
         }
         
         .profile-body {
-            padding: 70px 30px 30px;
+            padding: 20px 30px 30px;
             text-align: center;
         }
         
@@ -205,8 +204,8 @@ include '../controllers/staff_edit_profile.php';
         
         .modal-body {
             padding: 30px;
-        }
-    </style>
+        }  
+  </style>
 </head>
 <body>
     <?php include '../include/sidebar.php'; ?>
@@ -215,37 +214,34 @@ include '../controllers/staff_edit_profile.php';
     <div class="main-content d-flex justify-content-center">
         <div class="profile-container">
             <div class="profile-card">
-                <!-- Profile Display -->
-                <div id="profileDisplay" class="animate-fade">
-                    <div class="profile-header">
-                        <div class="profile-pic-container">
-                            <img src="<?php echo !empty($staff['profile_pic']) ? htmlspecialchars($staff['profile_pic']) : '../images/default_profile.png'; ?>" 
-                                alt="Profile Picture" 
-                                class="profile-pic" 
-                                id="profilePicPreview">
-                            <div class="change-pic-btn" data-bs-toggle="modal" data-bs-target="#changeProfilePicModal">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-body">
-                        <h2 class="profile-name"><?php echo htmlspecialchars($staff['first_name']) . " " . htmlspecialchars($staff['last_name']); ?></h2>
-                        <p class="profile-contact"><i class="fas fa-phone me-2"></i><?php echo htmlspecialchars($staff['contact_number']); ?></p>
-
-                        <button id="editProfileBtn" class="btn btn-modern btn-primary">
-                            <i class="fas fa-edit me-2"></i>Edit Profile
-                        </button>
-                    </div>
+                <!-- Profile Display (Hidden) -->
+                <div id="profileDisplay" class="hidden">
+                    <!-- Your existing profile display content -->
                 </div>
 
-                <!-- Edit Profile Form (Initially Hidden) -->
-                <div id="editProfileFormContainer" class="hidden">
+                <!-- Edit Profile Form (Visible) -->
+                <div id="editProfileFormContainer">
                     <div class="profile-header"></div>
                     <div class="profile-body">
-                        <form id="editProfileForm" method="POST" action="../controllers/staff_edit_profile.php" class="form-modern animate-slide">
+                        <form id="editProfileForm" method="POST" action="../controllers/staff_edit_profile.php" enctype="multipart/form-data" class="form-modern animate-slide">
                             <h3 class="mb-4">Edit Your Profile</h3>
-                            
+
+                            <!-- Profile Picture Section -->
+                            <div class="mb-4 text-center">
+                                <div class="profile-pic-container">
+                                    <img src="<?php echo !empty($staff['profile_pic']) ? htmlspecialchars($staff['profile_pic']) : '../images/default_profile.png'; ?>" 
+                                         alt="Profile Picture" 
+                                         class="profile-pic1" 
+                                         id="profilePicPreview">
+                                    <div class="change-pic-btn" onclick="document.getElementById('profilePicInput').click()">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                </div>
+                                <input type="file" id="profilePicInput" name="profilePic" accept="image/*" class="form-control d-none">
+                                <small class="text-muted">Click the camera icon to change your profile picture.</small>
+                            </div>
+
+                            <!-- Edit Profile Fields -->
                             <div class="mb-4">
                                 <label for="editFirstName">First Name</label>
                                 <input type="text" id="editFirstName" name="firstName" class="form-control" value="<?php echo htmlspecialchars($staff['first_name']); ?>" required>
@@ -261,6 +257,7 @@ include '../controllers/staff_edit_profile.php';
                                 <input type="tel" id="editContactNumber" name="contactNumber" class="form-control" value="<?php echo htmlspecialchars($staff['contact_number']); ?>" required>
                             </div>
 
+                            <!-- Form Buttons -->
                             <div class="d-flex justify-content-center gap-3 mt-4">
                                 <button type="submit" class="btn btn-modern btn-success">
                                     <i class="fas fa-save me-2"></i>Save Changes
@@ -276,114 +273,29 @@ include '../controllers/staff_edit_profile.php';
         </div>
     </div>
 
-    <!-- Change Profile Picture Modal -->
-    <div class="modal fade" id="changeProfilePicModal" tabindex="-1" aria-labelledby="changeProfilePicLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="changeProfilePicLabel">Change Profile Picture</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="profilePicForm" method="POST" action="../controllers/staff_edit_profile.php" enctype="multipart/form-data" class="form-modern">
-                        <div class="mb-4 text-center">
-                            <div class="preview-container mb-3" style="display: none;">
-                                <img id="imagePreview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 50%;">
-                            </div>
-                            <div class="upload-container p-4 border border-dashed rounded-3 text-center">
-                                <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-                                <p class="mb-2">Drag and drop your image here or</p>
-                                <label for="profilePicInput" class="btn btn-modern btn-outline-primary btn-sm">Browse Files</label>
-                                <input type="file" id="profilePicInput" name="profilePic" accept="image/*" class="form-control d-none" required>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-modern btn-primary">
-                                <i class="fas fa-upload me-2"></i>Upload Photo
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Toggle between profile display and edit form
-        document.getElementById('editProfileBtn').addEventListener('click', function() {
-            document.getElementById('profileDisplay').style.display = 'none';
-            document.getElementById('editProfileFormContainer').style.display = 'block';
-        });
-
-        document.getElementById('cancelEdit').addEventListener('click', function() {
-            document.getElementById('profileDisplay').style.display = 'block';
-            document.getElementById('editProfileFormContainer').style.display = 'none';
-        });
-        
-        // Image preview functionality
+        // Image Preview Functionality
         document.getElementById('profilePicInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                const preview = document.getElementById('imagePreview');
-                const previewContainer = document.querySelector('.preview-container');
-                const uploadContainer = document.querySelector('.upload-container');
+                const preview = document.getElementById('profilePicPreview');
                 
                 reader.onload = function(event) {
                     preview.src = event.target.result;
-                    previewContainer.style.display = 'block';
-                    uploadContainer.style.display = 'none';
                 }
                 
                 reader.readAsDataURL(file);
             }
         });
-        
-        // Add drag and drop functionality
-        const uploadContainer = document.querySelector('.upload-container');
-        
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            uploadContainer.addEventListener(eventName, preventDefaults, false);
+
+        // Cancel Button Functionality
+        document.getElementById('cancelEdit').addEventListener('click', function() {
+            // Redirect or hide the edit form as needed
+            window.location.href = 'profile.php'; // Example: Redirect back to the profile page
         });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            uploadContainer.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            uploadContainer.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            uploadContainer.classList.add('border-primary');
-        }
-        
-        function unhighlight() {
-            uploadContainer.classList.remove('border-primary');
-        }
-        
-        uploadContainer.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            const fileInput = document.getElementById('profilePicInput');
-            
-            if (files.length > 0) {
-                fileInput.files = files;
-                
-                // Trigger change event
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
-            }
-        }
     </script>
 </body>
 </html>

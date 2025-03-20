@@ -53,7 +53,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
     <ul class="sidebar-menu">
         <?php if ($userType == 'staff'): ?>
             <li><a href="../views/view_staff_dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="../views/view_staff_job_posting.php"><i class="fas fa-briefcase"></i> Job Posting</a></li>
             <li><a href="../views/view_staff_edit_profile.php"><i class="fas fa-user-edit"></i> Profile</a></li>
             <li class="module">
                 <a href="#" onclick="toggleModule('job-table-menu')">
@@ -64,14 +63,14 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                     <li><a href="../views/view_staff_company_table.php"><i class="fas fa-list"></i>Manage Company</a></li>
                 </ul>
             </li>
-            <li class="module">
+            <!--<li class="module">
                 <a href="#" onclick="toggleModule('settings-menu')">
                     <i class="fas fa-cog"></i> Configuration
                 </a>
                 <ul class="sub-menu" id="settings-menu">
                     <li><a href="../views/view_staff_add_company.php"><i class="fas fa-plus"></i> Add Company</a></li>
                 </ul>
-            </li>        
+            </li>      -->  
             <li><a href="../controllers/logout_controllers.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         <?php elseif ($userType == 'admin'): ?>
             <li><a href="../views/view_admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
