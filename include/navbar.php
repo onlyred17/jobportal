@@ -7,6 +7,7 @@ $profilePicture = $_SESSION['profile_pic'] ?? '../images/default-profile.jpg';
 $userType = $_SESSION['user_type'] ?? '';
 
 
+
 // Concatenate first name and last name
 $employerName = trim("$firstName $lastName");
 ?>
@@ -35,18 +36,26 @@ $employerName = trim("$firstName $lastName");
 <body>
 <div class="navbar">
     <div class="navbar-left">
-        <!-- Add any left-aligned content here -->
+      
+
+
     </div>
     <div class="navbar-right">
-        <!-- Notification Bar for Admin -->
+        <!-- Profile Section -->  <!-- Notification Bar for Admin -->
         <?php if ($userType === 'admin'): ?>
-            <div class="notification-bar">
-                <i class="fas fa-bell"></i> <!-- Notification icon -->
-                <span class="notification-count">3</span> <!-- Example notification count -->
+    <div class="notification-container">
+        <div class="notification-bar" id="notification-bar">
+            <i class="fas fa-bell"></i>
+            <span class="notification-count" id="notification-count"></span>
+        </div>
+        <ul class="notification-dropdown" id="notification-dropdown">
+            <li class="dropdown-header">New Registrations</li>
+            <div id="notification-list">
+                <li class="dropdown-item">No new notifications</li>
             </div>
-        <?php endif; ?>
-
-        <!-- Profile Section -->
+        </ul>
+    </div>
+<?php endif; ?>
         <div class="profile-dropdown">
             <div class="profile" id="profileMenu">
                 <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-pic">
@@ -62,8 +71,66 @@ $employerName = trim("$firstName $lastName");
     </div>
 </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const notificationBar = document.getElementById("notification-bar");
+    const notificationCount = document.getElementById("notification-count");
+    const notificationDropdown = document.getElementById("notification-dropdown");
+    const notificationList = document.getElementById("notification-list");
+
+    function fetchNotifications() {
+        fetch('../controllers/fetch_notifications.php')
+            .then(response => response.json())
+            .then(data => {
+                // Update notification count (only unseen)
+                if (data.count > 0) {
+                    notificationCount.textContent = data.count;
+                    notificationCount.style.display = "inline-block";
+                } else {
+                    notificationCount.style.display = "none";
+                }
+
+                // Populate dropdown with all notifications (highlight unseen ones)
+                notificationList.innerHTML = data.notifications.map(notif => 
+                    `<li class="dropdown-item ${notif.seen == 0 ? 'fw-bold' : ''}">
+                        <strong>${notif.full_name}</strong><br>
+                        <small>${new Date(notif.created_at).toLocaleString()}</small>
+                    </li>`
+                ).join("");
+            })
+            .catch(error => console.error('Error fetching notifications:', error));
+    }
+
+    // Mark notifications as seen but keep them displayed
+    notificationBar.addEventListener("click", function () {
+        notificationDropdown.classList.toggle("show");
+
+        if (notificationDropdown.classList.contains("show") && notificationCount.textContent !== "") {
+            fetch('../controllers/mark_notifications_seen.php', { method: 'POST' })
+                .then(response => response.json())
+                .then(() => {
+                    notificationCount.textContent = ""; // Clear notification count
+                    fetchNotifications(); // Refresh list to update styles
+                })
+                .catch(error => console.error('Error marking notifications:', error));
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!notificationBar.contains(event.target) && !notificationDropdown.contains(event.target)) {
+            notificationDropdown.classList.remove("show");
+        }
+    });
+
+    // Fetch notifications every 10 seconds
+    setInterval(fetchNotifications, 10000);
+
+    // Initial fetch
+    fetchNotifications();
+});
+document.addEventListener("DOMContentLoaded", function () {
             const profileMenu = document.getElementById("profileMenu");
             const dropdownMenu = document.getElementById("dropdownMenu");
 
@@ -82,7 +149,8 @@ $employerName = trim("$firstName $lastName");
                 }
             });
         });
-    </script>
+</script>
+
 
     <!-- Include Dark Mode Script -->
     <script src="../scripts/dark_mode.js"></script>

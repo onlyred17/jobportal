@@ -128,4 +128,94 @@
 .dropdown-menu li a:hover {
     background: linear-gradient(90deg, #4a90e2, #1e3a8a);
     color: white;
+}/* Notification Container */
+.notification-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+/* Dropdown Menu with Scroll */
+.notification-dropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 280px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    max-height: 300px; /* Limit height */
+    overflow-y: auto;  /* Enable scrolling */
+    padding: 0; /* Remove default padding */
+
+}
+
+/* Custom Scrollbar */
+.notification-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb {
+    background: #aaa; /* Scrollbar color */
+    border-radius: 5px;
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Show Dropdown */
+.notification-dropdown.show {
+    display: block;
+}
+/* Notification Count (Red Badge) */
+.notification-count {
+    background: red; /* Red background */
+    color: white; /* White text */
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: none; /* Initially hidden */
+    border: 2px solid white; /* Add border for contrast */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+/* Dropdown Header */
+.dropdown-header {
+    font-weight: bold;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Notification List Items */
+.notification-dropdown .dropdown-item {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.notification-dropdown .dropdown-item:hover {
+    background: #f8f9fa;
+}
+
+/* Last item should not have a border */
+.notification-dropdown .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Style for Unseen Notifications */
+.unseen {
+    background: #f8d7da !important; /* Light red background */
+    font-weight: bold;
 }
