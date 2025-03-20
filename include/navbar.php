@@ -79,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const notificationDropdown = document.getElementById("notification-dropdown");
     const notificationList = document.getElementById("notification-list");
 
+    const profileMenu = document.getElementById("profileMenu");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
     function fetchNotifications() {
         fetch('../controllers/fetch_notifications.php')
             .then(response => response.json())
@@ -87,13 +90,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.count > 0) {
                     notificationCount.textContent = data.count;
                     notificationCount.style.display = "inline-block";
+                    notificationCount.style.backgroundColor = "red"; // Add color
+                    notificationCount.style.color = "white"; // Ensure contrast
+                    notificationCount.style.padding = "4px 8px";
+                    notificationCount.style.borderRadius = "50%";
                 } else {
-                    notificationCount.style.display = "none";
+                    notificationCount.style.display = "none"; // Properly hide
                 }
 
-                // Populate dropdown with all notifications (highlight unseen ones)
+                // Populate dropdown with all notifications
                 notificationList.innerHTML = data.notifications.map(notif => 
-                    `<li class="dropdown-item ${notif.seen == 0 ? 'fw-bold' : ''}">
+                    `<li class="dropdown-item ${notif.seen == 0 ? 'fw-bold unseen' : ''}">
                         <strong>${notif.full_name}</strong><br>
                         <small>${new Date(notif.created_at).toLocaleString()}</small>
                     </li>`
@@ -101,54 +108,43 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error fetching notifications:', error));
     }
+    notificationBar.addEventListener("click", function (event) {
+    event.stopPropagation();
+    const isVisible = notificationDropdown.classList.contains("show");
+    notificationDropdown.classList.toggle("show");
 
-    // Mark notifications as seen but keep them displayed
-    notificationBar.addEventListener("click", function () {
-        notificationDropdown.classList.toggle("show");
+    if (!isVisible && notificationCount.style.display !== "none") {
+        fetch('../controllers/mark_notifications_seen.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(() => {
+                notificationCount.textContent = "";
+                notificationCount.style.display = "none"; // Hide count properly
+                fetchNotifications();
+            })
+            .catch(error => console.error('Error marking notifications:', error));
+    }
+});
 
-        if (notificationDropdown.classList.contains("show") && notificationCount.textContent !== "") {
-            fetch('../controllers/mark_notifications_seen.php', { method: 'POST' })
-                .then(response => response.json())
-                .then(() => {
-                    notificationCount.textContent = ""; // Clear notification count
-                    fetchNotifications(); // Refresh list to update styles
-                })
-                .catch(error => console.error('Error marking notifications:', error));
-        }
+
+    profileMenu.addEventListener("click", function (event) {
+        event.stopPropagation();
+        dropdownMenu.classList.toggle("show");
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", function (event) {
         if (!notificationBar.contains(event.target) && !notificationDropdown.contains(event.target)) {
             notificationDropdown.classList.remove("show");
         }
+
+        if (!profileMenu.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("show");
+        }
     });
 
-    // Fetch notifications every 10 seconds
     setInterval(fetchNotifications, 10000);
-
-    // Initial fetch
     fetchNotifications();
 });
-document.addEventListener("DOMContentLoaded", function () {
-            const profileMenu = document.getElementById("profileMenu");
-            const dropdownMenu = document.getElementById("dropdownMenu");
 
-            profileMenu.addEventListener("click", function () {
-                if (dropdownMenu.classList.contains("show")) {
-                    dropdownMenu.classList.remove("show");
-                } else {
-                    dropdownMenu.classList.add("show");
-                }
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener("click", function (event) {
-                if (!profileMenu.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove("show");
-                }
-            });
-        });
 </script>
 
 

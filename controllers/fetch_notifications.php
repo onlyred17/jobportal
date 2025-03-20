@@ -3,10 +3,9 @@ session_start();
 require '../include/db_conn.php'; // Ensure this file initializes a PDO connection
 
 try {
-    // Fetch all notifications but differentiate seen/unseen
+    // Fetch all notifications regardless of status
     $stmt = $conn->prepare("SELECT id, full_name, created_at, seen 
                             FROM pwd_registration 
-                            WHERE status = 'pending' 
                             ORDER BY created_at DESC");
     $stmt->execute();
     $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);

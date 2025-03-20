@@ -3,8 +3,8 @@ session_start();
 require '../include/db_conn.php'; // Ensure this file initializes a PDO connection
 
 try {
-    // Mark all unseen notifications as seen
-    $stmt = $conn->prepare("UPDATE pwd_registration SET seen = 1 WHERE seen = 0 AND status = 'pending'");
+    // Mark all unseen notifications as seen (without status check)
+    $stmt = $conn->prepare("UPDATE pwd_registration SET seen = 1 WHERE seen = 0");
     $stmt->execute();
 
     echo json_encode(['success' => true]);
