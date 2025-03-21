@@ -10,18 +10,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/landing_page.css">
 <style>
-    /* Align checkbox to the left of the label */
+
+        .registration-container {
+  max-width: 600px; /* Reduce the max-width for a narrower container */
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px; /* Reduce padding to make the container more compact */
+}
+
+.registration-intro {
+  margin-bottom: 15px; /* Reduce space below the intro text */
+  font-size: 14px; /* Slightly smaller font size */
+  line-height: 1.4; /* Adjust line height for better readability */
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 20px; /* Reduce space between form groups */
+}
+
+.form-group h3 {
+  font-size: 16px; /* Smaller heading size */
+  margin-bottom: 10px; /* Reduce space below headings */
+}
+
+.form-row {
+  margin-bottom: 10px; /* Reduce space between form rows */
+}
+
+.form-field {
+  margin-bottom: 10px; /* Reduce space between form fields */
+}
+
+.form-field label {
+  font-size: 14px; /* Smaller label font size */
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  padding: 8px; /* Reduce padding inside inputs and textareas */
+  font-size: 14px; /* Smaller font size for inputs */
+  width: 100%; /* Ensure inputs take full width */
+}
+
+.form-field textarea {
+  height: 80px; /* Reduce height of textarea */
+}
+
 .consent-checkbox {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;  /* Adjust gap if needed */
+  align-items: center;
+  margin-bottom: 10px; /* Reduce space below checkbox */
 }
 
-/* Remove unnecessary margin from label */
+.consent-checkbox input {
+  margin-right: 10px; /* Space between checkbox and label */
+}
+
 .consent-checkbox label {
-    margin: 0 !important;
+  font-size: 14px; /* Smaller font size for consent text */
 }
 
+.form-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 15px; /* Reduce space above buttons */
+}
+
+.form-actions button {
+  padding: 8px 15px; /* Smaller button padding */
+  font-size: 14px; /* Smaller button text */
+}
+
+.registration-info {
+  margin-top: 20px; /* Reduce space above registration info */
+  font-size: 14px; /* Smaller font size for info text */
+}
+
+.registration-info h3 {
+  font-size: 16px; /* Smaller heading size */
+  margin-bottom: 10px; /* Reduce space below heading */
+}
+
+.registration-info ol {
+  padding-left: 20px; /* Adjust list padding */
+}
+
+.registration-info ol li {
+  margin-bottom: 5px; /* Reduce space between list items */
+}
+
+.registration-info p {
+  margin-top: 10px; /* Reduce space above paragraph */
+}
 </style>
 <body id="body-element">
     <!-- Header -->
