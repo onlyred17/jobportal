@@ -11,7 +11,6 @@ if (!isset($_SESSION['admin_id']) || $_SESSION['usertype'] !== 'admin') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Get form data
-        $admin_id = $_SESSION['admin_id']; // Admin who is adding
         $full_name = $_POST['full_name'];
         $address = $_POST['address'];
         $contact_number = $_POST['contact_number'];
@@ -19,14 +18,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $birthdate = $_POST['birthdate'];
         $disability_type = $_POST['disability_type'];
 
-        // Prepare SQL statement for insertion
-        $sql = "INSERT INTO pwd_registration (admin_id, full_name, address, contact_number, email, birthdate, disability_type) 
-                VALUES (:admin_id, :full_name, :address, :contact_number, :email, :birthdate, :disability_type)";
+        // Check if the email already exists in the database
+        $check_email_sql = "SELECT COUNT(*) FROM registered_pwd WHERE email = :email";
+        $check_email_stmt = $conn->prepare($check_email_sql);
+        $check_email_stmt->bindParam(':email', $email);
+        $check_email_stmt->execute();
+        $email_count = $check_email_stmt->fetchColumn();
+
+        if ($email_count > 0) {
+            // Redirect with error message if email already exists
+            header("Location: ../views/view_admin_manage_pwd.php?error=Email already exists");
+            exit();
+        }
+
+        // Prepare SQL statement for insertion into registered_pwd table
+        $sql = "INSERT INTO registered_pwd (full_name, address, contact_number, email, birthdate, disability_type) 
+                VALUES (:full_name, :address, :contact_number, :email, :birthdate, :disability_type)";
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $conn->prepare($sql); // Using $conn to prepare the query
 
         // Bind parameters
-        $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
         $stmt->bindParam(':full_name', $full_name);
         $stmt->bindParam(':address', $address);
         $stmt->bindParam(':contact_number', $contact_number);
@@ -39,14 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Insert audit log
             $admin_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
             $ip_address = $_SERVER['REMOTE_ADDR'];
-            $action = "Added PWD";
-            $description = "Admin $admin_name (ID: $admin_id) added PWD $full_name.";
+            $action = "Added PWD to registered list";
+            $description = "Admin $admin_name added PWD $full_name to the registered list.";
             
             $audit_sql = "INSERT INTO audit_log (user_id, full_name, action, description, ip_address, usertype) 
                           VALUES (:user_id, :full_name, :action, :description, :ip_address, 'admin')";
             
-            $audit_stmt = $pdo->prepare($audit_sql);
-            $audit_stmt->bindParam(':user_id', $admin_id);
+            $audit_stmt = $conn->prepare($audit_sql); // Using $conn to prepare the audit query
+            $audit_stmt->bindParam(':user_id', $_SESSION['admin_id']); // Bind admin ID from session
             $audit_stmt->bindParam(':full_name', $admin_name);
             $audit_stmt->bindParam(':action', $action);
             $audit_stmt->bindParam(':description', $description);
@@ -54,17 +65,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $audit_stmt->execute();
 
             // Redirect with success message
-            header("Location: ../views/view_admin_manage_pwd.php?success=PWD added successfully");
+            header("Location: ../views/view_admin_manage_pwd.php?success=PWD added to registered list successfully");
             exit();
         } else {
-            header("Location: ../views/view_admin_manage_pwd?error=Failed to add PWD");
+            // Redirect with error message if query execution fails
+            header("Location: ../views/view_admin_manage_pwd.php?error=Failed to add PWD to registered list");
             exit();
         }
     } catch (PDOException $e) {
         die("Database error: " . $e->getMessage());
     }
 } else {
-    header("Location:../views/view_admin_manage_pwd");
+    header("Location: ../views/view_admin_manage_pwd.php");
     exit();
 }
-?>

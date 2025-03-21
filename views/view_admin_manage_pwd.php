@@ -1,11 +1,12 @@
 <?php
 session_start();
 include '../include/db_conn.php';
-
+// Check for success or error messages
+$success_message = isset($_GET['success']) ? $_GET['success'] : null;
+$error_message = isset($_GET['error']) ? $_GET['error'] : null;
 // Fetch only released PWD registrations
 $query = "SELECT id, full_name, address, contact_number, email, birthdate, disability_type 
-          FROM pwd_registration 
-          WHERE status IN ('released')";
+          FROM registered_pwd";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -15,7 +16,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage PWD</title>
+    <title>Manage Registered PWD</title>
     <!-- Modern UI Framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables with Bootstrap 5 styling -->
@@ -140,7 +141,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-fluid px-4">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Manage PWD</h1>
+            <h1 class="h3 mb-0 text-gray-800">Registered PWD</h1>
       
         </div>
         
@@ -358,7 +359,67 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">
+                    <i class="fas fa-check-circle me-2"></i> Success
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-check-circle fa-2x me-3"></i>
+                <span id="successMessage">PWD registered successfully!</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                    <i class="fas fa-check me-1"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Error Modal HTML -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="errorModalLabel"><i class="fas fa-exclamation-circle me-2"></i> Error</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-exclamation-circle fa-2x me-3"></i>
+                <span><?php echo $error_message; ?></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Success Modal -->
+<?php if ($success_message): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        });
+    </script>
+<?php endif; ?>
 
+<!-- Error Modal -->
+<?php if ($error_message): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        });
+    </script>
+<?php endif; ?>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

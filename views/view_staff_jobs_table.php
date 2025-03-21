@@ -377,7 +377,7 @@ include '../include/sidebar.php';
 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white"> <!-- Using Bootstrap bg-primary and text-white -->
                 <h5 class="modal-title" id="feedbackModalTitle"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -388,6 +388,7 @@ include '../include/sidebar.php';
         </div>
     </div>
 </div>
+
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

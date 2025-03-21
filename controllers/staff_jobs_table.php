@@ -16,7 +16,6 @@ $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
 $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 $statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
 
-
 // Prepare query with optional filters
 $query = "SELECT * FROM jobs WHERE 1=1";
 $params = [];
@@ -32,6 +31,7 @@ if (!empty($statusFilter)) {
     $params[':status'] = $statusFilter;
 }
 
+// Ensure sorting from latest to old by posted_date DESC
 $query .= " ORDER BY posted_date DESC";
 
 try {

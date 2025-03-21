@@ -115,7 +115,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                     <i class="fas fa-cogs"></i> Configuration
                 </a>
                 <ul class="sub-menu" id="admin-settings-menu">
-                    <li><a href="../views/view_admin_add_staff.php"><i class="fas fa-user-plus"></i> Add Staff</a></li>
                     <li><a href="../views/view_admin_audit_logs.php"><i class="fas fa-history"></i> Audit Logs</a></li>
                 </ul>
             </li>

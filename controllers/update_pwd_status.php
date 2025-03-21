@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Fetch full name before updating
-        $query = "SELECT full_name FROM pwd_registration WHERE id = :id";
+        $query = "SELECT full_name, address, contact_number, email, birthdate, disability_type FROM pwd_registration WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($pwd) {
             $full_name = $pwd['full_name'];
+            $address = $pwd['address'];
+            $contact_number = $pwd['contact_number'];
+            $email = $pwd['email'];
+            $birthdate = $pwd['birthdate'];
+            $disability_type = $pwd['disability_type'];
 
             // Update status in the database
             $query = "UPDATE pwd_registration SET status = :status WHERE id = :id";
@@ -34,6 +39,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             
             if ($stmt->execute()) {
+                // If status is "Released", insert into registered_pwd
+                if ($status === 'Released') {
+                    // Insert the record into the registered_pwd table
+                    $insertQuery = "INSERT INTO registered_pwd (full_name, address, contact_number, email, birthdate, disability_type)
+                                    VALUES (:full_name, :address, :contact_number, :email, :birthdate, :disability_type)";
+                    $insertStmt = $conn->prepare($insertQuery);
+
+                    $insertStmt->bindParam(':full_name', $full_name);
+                    $insertStmt->bindParam(':address', $address);
+                    $insertStmt->bindParam(':contact_number', $contact_number);
+                    $insertStmt->bindParam(':email', $email);
+                    $insertStmt->bindParam(':birthdate', $birthdate);
+                    $insertStmt->bindParam(':disability_type', $disability_type);
+
+                    // Execute the insertion
+                    $insertStmt->execute();
+                }
+
                 // Fetch admin's first name and last name from session
                 $adminFirstName = $_SESSION['first_name']; // Assuming admin first name is stored in session
                 $adminLastName = $_SESSION['last_name']; // Assuming admin last name is stored in session
@@ -91,3 +114,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Location: ../views/view_admin_pwd_registration.php');
     exit();
 }
+?>
