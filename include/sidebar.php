@@ -81,8 +81,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                 <ul class="sub-menu" id="manage-users-menu">
                     <li><a href="../views/view_admin_pwd_registration.php"><i class="fas fa-user-plus"></i> Manage Registration</a></li>
                     <li><a href="../views/view_admin_manage_pwd.php"><i class="fas fa-wheelchair"></i> Manage PWD</a></li>
-                    <li><a href="../views/view_admin_manage_staff.php"><i class="fas fa-user-tie"></i> Manage Staff</a></li> <!-- NEW -->
-
                 </ul>
             </li>
             <li><a href="../views/view_admin_edit_profile.php"><i class="fas fa-user-edit"></i> Profile</a></li>
@@ -92,7 +90,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
         <i class="fas fa-cogs"></i> Configuration
     </a>
     <ul class="sub-menu" id="admin-settings-menu">
-        <li><a href="../views/view_admin_add_staff.php"><i class="fas fa-user-plus"></i> Add Staff</a></li>
         <li><a href="../views/view_admin_audit_logs.php"><i class="fas fa-history"></i> Audit Logs</a></li> <!-- Added this line -->
 
     </ul>
