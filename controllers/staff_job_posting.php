@@ -68,8 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':salary' => $salary,
             ':job_type' => $jobType,
             ':company_location' => $companyLocation,
-
-            
         ]);
 
         // Fetch the new job count after posting
@@ -98,10 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auditStmt->bindParam(':full_name', $staffFullName);
         $auditStmt->execute();
 
-        // Fetch all PWD registered applicants' emails
+        // Fetch all PWD registered applicants' emails from both tables
         $stmt = $conn->prepare("SELECT email FROM pwd_registration");
         $stmt->execute();
         $emails = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        // Fetch emails from registered_pwd table as well
+        $stmt = $conn->prepare("SELECT email FROM registered_pwd");
+        $stmt->execute();
+        $emailsRegistered = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        // Merge both email lists
+        $allEmails = array_merge($emails, $emailsRegistered);
 
         // Send email notification
         $mail = new PHPMailer(true);
@@ -114,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('your_brevo_email@example.com', 'PWD Job Portal');
+            $mail->setFrom('capstone_project@example.com', 'PWD Job Portal');
             $mail->isHTML(true);
             $mail->Subject = 'New Job Opportunity: ' . $jobTitle;
             $mail->Body = "<h3>New Job Posted</h3>
@@ -126,9 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p><strong>Requirements:</strong> $requirements</p><br>
             <p>Visit our job portal to view more Jobs!</p>";
 
-
             // Send email to each PWD applicant
-            foreach ($emails as $email) {
+            foreach ($allEmails as $email) {
                 $mail->addAddress($email);
                 $mail->send();
                 $mail->clearAddresses(); // Clear previous recipients for the next loop
