@@ -9,7 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/landing_page.css">
+<style>
 
+
+</style>
 <body id="body-element">
     <!-- Header -->
     <header>
@@ -111,22 +114,22 @@
             </div>
             
             <div class="form-group">
-                <div class="form-row">
-                    <div class="form-field full-width">
-                        <div class="consent-checkbox">
-                            <input type="checkbox" id="consent" name="consent" required>
-                            <label for="consent">I consent to the collection and processing of my personal data in accordance with the Data Privacy Act. I understand that this information will be used solely for the purpose of registration and job matching services.</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="reset" class="btn-secondary">Reset Form</button>
-                    <button type="submit" class="btn-secondary">Submit Registration</button>
-                    <button type="button" class="btn-secondary" onclick="window.location.href='../views/view_status.php'">View Status</button>
-
-                </div>
+    <div class="form-row">
+        <div class="form-field full-width">
+            <div class="consent-checkbox">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">I consent to the collection and processing of my personal data in accordance with the Data Privacy Act. I understand that this information will be used solely for the purpose of registration and job matching services.</label>
             </div>
+        </div>
+    </div>
+    
+    <div class="form-actions">
+        <button type="reset" class="btn-secondary">Reset Form</button>
+        <button type="submit" class="btn-secondary">Submit Registration</button>
+        <button type="button" class="btn-secondary" onclick="window.location.href='../views/view_status.php'">View Status</button>
+    </div>
+</div>
+
         </form>
         
         <div class="registration-info">

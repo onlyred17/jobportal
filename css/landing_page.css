@@ -2343,7 +2343,6 @@ body .high-contrast .settings-modal-content {
 }
 
 .consent-checkbox {
-  display: flex;
   align-items: flex-start;
   gap: 10px;
 }
@@ -2360,7 +2359,6 @@ body .high-contrast .settings-modal-content {
 
 .form-actions {
   display: flex;
-  justify-content: flex-end;
   gap: 15px;
   margin-top: 20px;
 }
