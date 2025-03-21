@@ -2511,3 +2511,64 @@ body .high-contrast .settings-modal-content {
   background-color: transparent;
   color: #6200EA;
 }
+.language-selection {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.language-selection h6 {
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.language-selection .toggle-btn {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.language-selection .toggle-btn.active {
+  background: #4a6ee0;
+  color: white;
+  border-color: #4a6ee0;
+}
+
+/* For the dark mode */
+.dark-mode .language-selection h6 {
+  color: #ccc;
+}
+
+.dark-mode .language-selection .toggle-btn {
+  background: #333;
+  border-color: #444;
+  color: #eee;
+}
+
+.dark-mode .language-selection .toggle-btn.active {
+  background: #4a6ee0;
+  color: white;
+  border-color: #3050b5;
+}
+
+/* For high contrast mode */
+.high-contrast .language-selection h6 {
+  color: #fff;
+}
+
+.high-contrast .language-selection .toggle-btn {
+  background: #000;
+  border-color: #fff;
+  color: #fff;
+}
+
+.high-contrast .language-selection .toggle-btn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}

@@ -137,29 +137,36 @@
         </div>
     </section>
     
-    <!-- Accessibility Toggle Button -->
-    <button class="accessibility-toggle" id="accessibility-toggle">
-        <i class="fas fa-universal-access"></i>
-    </button>
-    <div class="accessibility-controls" id="accessibility-controls">
-        <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
-        <div class="controls-section">
-            <div class="font-size-controls">
-                <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
-                <span id="font-size-value-panel">100%</span>
-                <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
-            </div>
+<!-- Accessibility Toggle Button -->
+<button class="accessibility-toggle" id="accessibility-toggle">
+    <i class="fas fa-universal-access"></i>
+</button>
+<div class="accessibility-controls" id="accessibility-controls">
+    <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
+    <div class="controls-section">
+        <div class="font-size-controls">
+            <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
+            <span id="font-size-value-panel">100%</span>
+            <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
         </div>
-        <div class="controls-section">
-            <div class="brightness-mode">
-                <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
-                <button id="dark-mode-panel" class="toggle-btn">Dark</button>
-                <button id="high-contrast-panel" class="toggle-btn">High Contrast</button>
-            </div>
-        </div>
-        <button id="tts-toggle-panel">Enable TTS on Hover</button>
-        <button id="reset-all-panel">Reset All</button>
     </div>
+    <div class="controls-section">
+        <div class="brightness-mode">
+            <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
+            <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+            <button id="high-contrast-panel" class="toggle-btn">High Contrast</button>
+        </div>
+    </div>
+    <div class="controls-section">
+        <div class="language-selection">
+            <h6><i class="fas fa-language"></i> Language</h6>
+            <button id="english-mode" class="toggle-btn active">English</button>
+            <button id="tagalog-mode" class="toggle-btn">Tagalog</button>
+        </div>
+    </div>
+    <button id="tts-toggle-panel">Enable TTS on Hover</button>
+    <button id="reset-all-panel">Reset All</button>
+</div>
 
     <!-- Enhanced Footer Section -->
     <footer class="footer">

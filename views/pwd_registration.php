@@ -190,27 +190,34 @@
     </footer>
 <!-- Accessibility Toggle Button -->
 <button class="accessibility-toggle" id="accessibility-toggle">
-        <i class="fas fa-universal-access"></i>
-    </button>
-    <div class="accessibility-controls" id="accessibility-controls">
-        <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
-        <div class="controls-section">
-            <div class="font-size-controls">
-                <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
-                <span id="font-size-value-panel">100%</span>
-                <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
-            </div>
+    <i class="fas fa-universal-access"></i>
+</button>
+<div class="accessibility-controls" id="accessibility-controls">
+    <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
+    <div class="controls-section">
+        <div class="font-size-controls">
+            <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
+            <span id="font-size-value-panel">100%</span>
+            <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
         </div>
-        <div class="controls-section">
-            <div class="brightness-mode">
-                <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
-                <button id="dark-mode-panel" class="toggle-btn">Dark</button>
-                <button id="high-contrast-panel" class="toggle-btn">High Contrast</button>
-            </div>
-        </div>
-        <button id="tts-toggle-panel">Enable TTS on Hover</button>
-        <button id="reset-all-panel">Reset All</button>
     </div>
+    <div class="controls-section">
+        <div class="brightness-mode">
+            <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
+            <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+            <button id="high-contrast-panel" class="toggle-btn">High Contrast</button>
+        </div>
+    </div>
+    <div class="controls-section">
+        <div class="language-selection">
+            <h6><i class="fas fa-language"></i> Language</h6>
+            <button id="english-mode" class="toggle-btn active">English</button>
+            <button id="tagalog-mode" class="toggle-btn">Tagalog</button>
+        </div>
+    </div>
+    <button id="tts-toggle-panel">Enable TTS on Hover</button>
+    <button id="reset-all-panel">Reset All</button>
+</div>
 </body>
 <script src="../scripts/landing_page.js"></script>
 <script>
@@ -293,6 +300,150 @@ document.getElementById('tts-toggle-panel').addEventListener('click', function (
     localStorage.setItem('ttsEnabled', ttsEnabled);
     this.textContent = ttsEnabled === 'true' ? 'Disable TTS on Hover' : 'Enable TTS on Hover';
 });
+});
+// Language Toggle Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Get language buttons
+    const englishButton = document.getElementById('english-mode');
+    const tagalogButton = document.getElementById('tagalog-mode');
+    
+    // Language translations for the PWD registration page
+    const translations = {
+        english: {
+            // Accessibility Panel
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Dark',
+            highContrastMode: 'High Contrast',
+            enableTTS: 'Enable TTS on Hover',
+            disableTTS: 'Disable TTS on Hover',
+            resetAll: 'Reset All',
+            language: 'Language',
+            
+            // PWD Registration Form
+            pwdRegistrationTitle: 'PWD ID Registration',
+            pwdRegistrationIntro: 'Register your PWD ID to access personalized job recommendations and special features tailored for Persons with Disabilities.',
+            fullName: 'Full Name',
+            dateOfBirth: 'Date of Birth',
+            contactNumber: 'Contact Number',
+            emailAddress: 'Email Address',
+            completeAddress: 'Complete Address',
+            disabilityType: 'Type of Disability',
+            proofOfPWD: 'Proof of PWD',
+            validID: 'Valid ID',
+            consentText: 'I consent to the collection and processing of my personal data in accordance with the Data Privacy Act.',
+            resetForm: 'Reset Form',
+            submitRegistration: 'Submit Registration',
+            viewStatus: 'View Status',
+            registrationProcessTitle: 'Registration Process',
+            registrationProcessSteps: [
+                'Fill out the registration form completely.',
+                'Upload the required documents (PWD certification and valid ID).',
+                'Submit your application.',
+                'Your application will be reviewed by our team.',
+                'Once approved, you\'ll receive your PWD ID and can start accessing our job matching services.'
+            ],
+            supportContact: 'For assistance, please contact our support team at support@disabilitytoability.com or call (02) 8123-4567.'
+        },
+        tagalog: {
+            // Accessibility Panel
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Madilim',
+            highContrastMode: 'Mataas na Kontrast',
+            enableTTS: 'Paganahin ang TTS sa Hover',
+            disableTTS: 'Huwag Paganahin ang TTS sa Hover',
+            resetAll: 'I-reset Lahat',
+            language: 'Wika',
+            
+            // PWD Registration Form
+            pwdRegistrationTitle: 'Rehistro ng PWD ID',
+            pwdRegistrationIntro: 'Irehistro ang iyong PWD ID upang makakuha ng mga personalized na rekomendasyon sa trabaho at mga espesyal na tampok na inaalok para sa mga Persons with Disabilities.',
+            fullName: 'Buong Pangalan',
+            dateOfBirth: 'Petsa ng Kapanganakan',
+            contactNumber: 'Numero ng Telepono',
+            emailAddress: 'Email Address',
+            completeAddress: 'Kumpletong Address',
+            disabilityType: 'Uri ng Kapansanan',
+            proofOfPWD: 'Patunay ng PWD',
+            validID: 'Balidong ID',
+            consentText: 'Ako ay sumasang-ayon sa koleksyon at pagproseso ng aking personal na data alinsunod sa Data Privacy Act.',
+            resetForm: 'I-reset ang Form',
+            submitRegistration: 'Isumite ang Rehistro',
+            viewStatus: 'Tingnan ang Status',
+            registrationProcessTitle: 'Proseso ng Rehistro',
+            registrationProcessSteps: [
+                'Punan ang registration form ng kumpleto.',
+                'I-upload ang mga kinakailangang dokumento (PWD certification at valid ID).',
+                'I-submit ang iyong aplikasyon.',
+                'Susuriin ng aming koponan ang iyong aplikasyon.',
+                'Kapag naaprubahan, matatanggap mo ang iyong PWD ID at makakagamit ng mga serbisyo ng job matching.'
+            ],
+            supportContact: 'Para sa tulong, mangyaring makipag-ugnay sa aming support team sa support@disabilitytoability.com o tumawag sa (02) 8123-4567.'
+        }
+    };
+    
+    // Current language (default to English)
+    let currentLanguage = 'english';
+    
+    // Function to update text based on current language
+    function updateLanguage(language) {
+        currentLanguage = language;
+        
+        // Update PWD registration form text
+        document.querySelector('.registration-container h2').textContent = translations[language].pwdRegistrationTitle;
+        document.querySelector('.registration-intro').textContent = translations[language].pwdRegistrationIntro;
+        
+        document.querySelectorAll('label[for="full-name"]').forEach(label => label.textContent = translations[language].fullName);
+        document.querySelectorAll('label[for="birthdate"]').forEach(label => label.textContent = translations[language].dateOfBirth);
+        document.querySelectorAll('label[for="contact-number"]').forEach(label => label.textContent = translations[language].contactNumber);
+        document.querySelectorAll('label[for="email"]').forEach(label => label.textContent = translations[language].emailAddress);
+        document.querySelectorAll('label[for="address"]').forEach(label => label.textContent = translations[language].completeAddress);
+        
+        document.querySelectorAll('label[for="disability-type"]').forEach(label => label.textContent = translations[language].disabilityType);
+        document.querySelectorAll('label[for="proof-of-pwd"]').forEach(label => label.textContent = translations[language].proofOfPWD);
+        document.querySelectorAll('label[for="valid-id"]').forEach(label => label.textContent = translations[language].validID);
+        
+        document.querySelector('.consent-checkbox label').textContent = translations[language].consentText;
+        
+        document.querySelector('.form-actions button[type="reset"]').textContent = translations[language].resetForm;
+        document.querySelector('.form-actions button[type="submit"]').textContent = translations[language].submitRegistration;
+        document.querySelector('.form-actions button[type="button"]').textContent = translations[language].viewStatus;
+        
+        document.querySelector('.registration-info h3').textContent = translations[language].registrationProcessTitle;
+        
+        const processList = document.querySelector('.registration-info ol');
+        processList.innerHTML = '';
+        translations[language].registrationProcessSteps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            processList.appendChild(li);
+        });
+        
+        document.querySelector('.registration-info p').textContent = translations[language].supportContact;
+    }
+    
+    // Add event listeners to language buttons
+    englishButton.addEventListener('click', function() {
+        updateLanguage('english');
+        setActiveLanguageButton(this);
+    });
+    
+    tagalogButton.addEventListener('click', function() {
+        updateLanguage('tagalog');
+        setActiveLanguageButton(this);
+    });
+    
+    // Function to set active language button
+    function setActiveLanguageButton(button) {
+        document.querySelectorAll('.language-selection .toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+    
+    // Initialize the page with the default language (English)
+    updateLanguage(currentLanguage);
 });
 
 </script>

@@ -450,6 +450,247 @@ document.addEventListener('DOMContentLoaded', () => {
             window.speechSynthesis.cancel();
         }, { once: true });
     }
+    
 });
 
 
+// Language Toggle Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Get language buttons
+    const englishButton = document.getElementById('english-mode');
+    const tagalogButton = document.getElementById('tagalog-mode');
+    
+    // Language translations
+    const translations = {
+        english: {
+            // Accessibility Panel
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Dark',
+            highContrastMode: 'High Contrast',
+            enableTTS: 'Enable TTS on Hover',
+            disableTTS: 'Disable TTS on Hover',
+            resetAll: 'Reset All',
+            language: 'Language',
+            
+            // Job listings
+            viewDetails: 'View Details',
+            postedOn: 'Posted',
+            jobType: 'Job Type',
+            location: 'Location',
+            status: 'Status',
+            requirements: 'Requirements',
+            apply: 'Apply Now',
+            listen: 'Listen',
+            noJobsAvailable: 'No jobs available.',
+            closeModal: 'Close',
+            
+            // Text-to-speech phrases
+            ttsJobTitle: 'Job Title',
+            ttsCompany: 'Company',
+            ttsBriefDescription: 'Brief Description',
+            ttsJobType: 'Job Type',
+            ttsLocation: 'Location',
+            ttsStatus: 'Status',
+            ttsPostedOn: 'Posted on',
+            ttsMoreInfo: 'For more info, click the view details',
+            ttsRequirements: 'Requirements',
+            ttsDescription: 'Description'
+        },
+        tagalog: {
+            // Accessibility Panel
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Madilim',
+            highContrastMode: 'Mataas na Kontrast',
+            enableTTS: 'Paganahin ang TTS sa Hover',
+            disableTTS: 'Huwag Paganahin ang TTS sa Hover',
+            resetAll: 'I-reset Lahat',
+            language: 'Wika',
+            
+            // Job listings
+            viewDetails: 'Tingnan ang Detalye',
+            postedOn: 'Nai-post',
+            jobType: 'Uri ng Trabaho',
+            location: 'Lokasyon',
+            status: 'Katayuan',
+            requirements: 'Mga Kinakailangan',
+            apply: 'Mag-apply Ngayon',
+            listen: 'Pakinggan',
+            noJobsAvailable: 'Walang trabahong available.',
+            closeModal: 'Isara',
+            
+            // Text-to-speech phrases
+            ttsJobTitle: 'Pamagat ng Trabaho',
+            ttsCompany: 'Kumpanya',
+            ttsBriefDescription: 'Maikling Paglalarawan',
+            ttsJobType: 'Uri ng Trabaho',
+            ttsLocation: 'Lokasyon',
+            ttsStatus: 'Katayuan',
+            ttsPostedOn: 'Na-post noong',
+            ttsMoreInfo: 'Para sa karagdagang impormasyon, i-click ang tingnan ang detalye',
+            ttsRequirements: 'Mga Kinakailangan',
+            ttsDescription: 'Paglalarawan'
+        }
+    };
+    
+    // Current language (default to English)
+    let currentLanguage = 'english';
+    
+    // Function to update text based on current language
+    function updateLanguage(language) {
+        currentLanguage = language;
+        
+        // Update accessibility panel text
+        document.querySelector('#accessibility-controls h5').innerHTML = 
+            `<i class="fas fa-universal-access"></i> ${translations[language].accessibilityTitle}`;
+        document.getElementById('normal-mode-panel').textContent = translations[language].normalMode;
+        document.getElementById('dark-mode-panel').textContent = translations[language].darkMode;
+        document.getElementById('high-contrast-panel').textContent = translations[language].highContrastMode;
+        document.getElementById('reset-all-panel').textContent = translations[language].resetAll;
+        
+        // Update language section
+        document.querySelector('.language-selection h6').innerHTML = 
+            `<i class="fas fa-language"></i> ${translations[language].language}`;
+        
+        // Update TTS button text (maintaining its current state)
+        const ttsButton = document.getElementById('tts-toggle-panel');
+        const isTTSEnabled = ttsButton.textContent.includes('Disable') || 
+                             ttsButton.textContent.includes('Huwag');
+        ttsButton.textContent = isTTSEnabled ? 
+            translations[language].disableTTS : 
+            translations[language].enableTTS;
+        
+        // Update job cards if they exist
+        document.querySelectorAll('.btn-view-details').forEach(button => {
+            button.textContent = translations[language].viewDetails;
+        });
+        
+        document.querySelectorAll('.job-date').forEach(date => {
+            const dateText = date.textContent;
+            const dateValue = dateText.replace('Posted ', '').replace('Nai-post ', '');
+            date.innerHTML = `<i class="fas fa-calendar-alt"></i> ${translations[language].postedOn} ${dateValue}`;
+        });
+        
+        // Update job modal if it's open
+        if (document.getElementById('job-modal').style.display === 'block') {
+            // Update modal buttons and labels
+            document.getElementById('modal-apply').textContent = translations[language].apply;
+            document.getElementById('modal-listen').textContent = translations[language].listen;
+            document.querySelector('#modal-requirements-title').textContent = translations[language].requirements;
+            document.querySelector('.modal-close').textContent = translations[language].closeModal;
+        }
+    }
+    
+    // Add event listeners to language buttons
+    englishButton.addEventListener('click', function() {
+        updateLanguage('english');
+        setActiveLanguageButton(this);
+    });
+    
+    tagalogButton.addEventListener('click', function() {
+        updateLanguage('tagalog');
+        setActiveLanguageButton(this);
+    });
+    
+    // Function to set active language button
+    function setActiveLanguageButton(button) {
+        document.querySelectorAll('.language-selection .toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+    
+    // Update speech synthesis language based on selected language
+    const originalSpeakJobDetails = window.speakJobDetails;
+    window.speakJobDetails = function(job) {
+        // Stop any current speech
+        window.speechSynthesis.cancel();
+        
+        // Prepare the text to speak with proper pauses
+        const textToSpeak = `
+            ${translations[currentLanguage].ttsJobTitle}: ${job.title}. 
+            ${translations[currentLanguage].ttsCompany}: ${job.company_name}.
+            ${translations[currentLanguage].ttsJobType}: ${job.job_type}.
+            ${translations[currentLanguage].ttsLocation}: ${job.location}.
+            ${translations[currentLanguage].ttsDescription}: ${job.description}.
+            ${translations[currentLanguage].ttsStatus}: ${job.status}.
+            ${translations[currentLanguage].ttsRequirements}: ${getRequirementsText(job.requirements)}.
+        `;
+        
+        // Create speech utterance
+        const speech = new SpeechSynthesisUtterance(textToSpeak);
+        speech.lang = currentLanguage === 'english' ? 'en-US' : 'tl-PH';
+        speech.rate = 1;  // Normal speed
+        speech.pitch = 1; // Normal pitch
+        speech.volume = 1; // Full volume
+        
+        // Add visual indicator that speaking is in progress
+        const listenButton = document.getElementById('modal-listen');
+        const originalText = listenButton.innerHTML;
+        listenButton.innerHTML = '<i class="fas fa-pause"></i> Stop Reading';
+        
+        // Add event to track when speech has ended
+        speech.onend = function() {
+            listenButton.innerHTML = originalText;
+        };
+        
+        // Allow stopping the speech when button is clicked again
+        listenButton.onclick = function() {
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                listenButton.innerHTML = originalText;
+                
+                // Reset the click handler
+                setTimeout(() => {
+                    listenButton.onclick = function() {
+                        speakJobDetails(job);
+                    };
+                }, 100);
+            }
+        };
+        
+        // Start speaking
+        window.speechSynthesis.speak(speech);
+    };
+    
+    // Also update the addTextToSpeech function
+    const originalAddTextToSpeech = window.addTextToSpeech;
+    window.addTextToSpeech = function(jobs) {
+        document.querySelectorAll('.btn-listen').forEach((button, index) => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent triggering other click events
+                const job = jobs[index];
+                
+                // Stop any current speech
+                window.speechSynthesis.cancel();
+                
+                const textToSpeak = `
+                    ${translations[currentLanguage].ttsJobTitle}: ${job.title}. 
+                    ${translations[currentLanguage].ttsCompany}: ${job.company_name}.
+                    ${translations[currentLanguage].ttsBriefDescription}: ${job.description.substring(0, 150)}. 
+                    ${translations[currentLanguage].ttsJobType}: ${job.job_type}. 
+                    ${translations[currentLanguage].ttsLocation}: ${job.location}.
+                    ${translations[currentLanguage].ttsStatus}: ${job.status}.
+                    ${translations[currentLanguage].ttsPostedOn}: ${formatDate(job.posted_date)}.
+                    ${translations[currentLanguage].ttsMoreInfo}.
+                `;
+    
+                const speech = new SpeechSynthesisUtterance(textToSpeak);
+                speech.lang = currentLanguage === 'english' ? 'en-US' : 'tl-PH';
+                speech.rate = 1;
+                speech.pitch = 1;
+                speech.volume = 1;
+    
+                // Visual indicator
+                this.innerHTML = '<i class="fas fa-pause"></i>';
+                
+                speech.onend = () => {
+                    this.innerHTML = '<i class="fas fa-volume-up"></i>';
+                };
+                
+                window.speechSynthesis.speak(speech);
+            });
+        });
+    };
+});
