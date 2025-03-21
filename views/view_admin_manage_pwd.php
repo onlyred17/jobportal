@@ -157,12 +157,19 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">PWD List</h6>
-                <a href="../controllers/generate_manage_pwd_report.php" 
-       id="generateReportBtn" class="btn btn-danger" target="_blank">
-       <i class="fas fa-file-pdf me-1"></i> Generate Report
-    </a>
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">PWD List</h6>
+        <div class="d-flex gap-2">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPwdModal">
+    <i class="fas fa-plus me-1"></i> Add PWD
+</button>
+
+            <a href="../controllers/generate_manage_pwd_report.php" 
+               id="generateReportBtn" class="btn btn-danger" target="_blank">
+                <i class="fas fa-file-pdf me-1"></i> Generate Report
+            </a>
+        </div>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -175,6 +182,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Email</th>
                                 <th>Birthdate</th>
                                 <th>Disability Type</th>
+                                
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -298,6 +306,55 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <i class="fas fa-print me-1"></i> Print Details
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Add PWD Modal -->
+<div class="modal fade" id="addPwdModal" tabindex="-1" aria-labelledby="addPwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="addPwdModalLabel">
+                    <i class="fas fa-user-plus me-2"></i> Add PWD
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="../controllers/admin_add_pwd.php" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" class="form-control" id="fullName" name="full_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label"><i class="fas fa-map-marker-alt"></i> Address</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label"><i class="fas fa-phone"></i> Contact</label>
+                        <input type="text" class="form-control" id="contact" name="contact_number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthdate" class="form-label"><i class="fas fa-calendar-alt"></i> Birthdate</label>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disability" class="form-label"><i class="fas fa-wheelchair"></i> Disability Type</label>
+                        <input type="text" class="form-control" id="disability" name="disability_type" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i> Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i> Save PWD
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

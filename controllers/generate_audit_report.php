@@ -1,43 +1,43 @@
 <?php
 require_once '../vendor/autoload.php'; // Load Composer's autoloader
-require_once '../include/db_conn.php'; // Include your database connection
+require_once '../include/db_conn.php'; // Include database connection
 
 // Retrieve search term from GET request
 $searchQuery = $_GET['search'] ?? '';
 
-// Fetch the logged-in user's information
+// Fetch logged-in user's details
 session_start();
-$staffId = $_SESSION['staff_id'] ?? 'Unknown';
+$staffId = $_SESSION['admin_id'] ?? 'Unknown';
 $firstName = $_SESSION['first_name'] ?? 'Unknown';
 $lastName = $_SESSION['last_name'] ?? '';
 
 // Get the current date and time
 $printedDate = date("Y-m-d H:i:s");
 
-// Fetch filtered data from the database using PDO
-$query = "SELECT * FROM company WHERE is_deleted = 0";
+// Fetch filtered audit logs
+$query = "SELECT * FROM audit_log WHERE 1=1";
 $params = [];
 
 if (!empty($searchQuery)) {
-    $query .= " AND (name LIKE :search OR location LIKE :search OR description LIKE :search)";
+    $query .= " AND (full_name LIKE :search OR action LIKE :search OR description LIKE :search)";
     $params[':search'] = "%$searchQuery%";
 }
 
-$query .= " ORDER BY name ASC"; // Order by company name alphabetically
+$query .= " ORDER BY created_at DESC"; // Order by most recent first
 
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
-$companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$auditLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Include TCPDF
 require_once '../vendor/tecnickcom/tcpdf/tcpdf.php';
 
-// Create PDF instance in landscape mode
+// Create PDF instance in landscape mode with custom margins
 $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-$pdf->SetCreator('Company Management System');
+$pdf->SetCreator('Audit System');
 $pdf->SetAuthor($firstName . ' ' . $lastName);
-$pdf->SetTitle('Company List Report');
-$pdf->SetSubject('Company List Report');
+$pdf->SetTitle('Audit Logs Report');
+$pdf->SetSubject('Audit Logs Report');
 
 // Remove default header/footer
 $pdf->setPrintHeader(false);
@@ -50,16 +50,19 @@ $pdf->SetAutoPageBreak(true, 15);
 // Add a page
 $pdf->AddPage();
 
+// Add logo if available (comment out if not needed)
+// $pdf->Image('../img/logo.png', 15, 15, 30, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+
 // Set colors
-$headerBgColor = [52, 152, 219]; // Blue
+$headerBgColor = [41, 128, 185]; // Blue
 $headerTextColor = [255, 255, 255]; // White
-$alternateRowColor = [240, 248, 255]; // Light blue
+$alternateRowColor = [245, 247, 250]; // Light gray
 $borderColor = [189, 195, 199]; // Gray
 
 // Header
 $pdf->SetFont('helvetica', 'B', 20);
 $pdf->SetTextColor(44, 62, 80); // Dark text
-$pdf->Cell(0, 15, 'COMPANY LIST REPORT', 0, 1, 'C');
+$pdf->Cell(0, 15, 'AUDIT LOGS REPORT', 0, 1, 'C');
 $pdf->Ln(2);
 
 // Report information section
@@ -92,38 +95,38 @@ $pdf->SetFont('helvetica', '', 10);
 $pdf->Cell(100, 5, ($searchQuery ? $searchQuery : 'None'), 0, 0, 'L');
 
 $pdf->SetFont('helvetica', 'B', 10);
-$pdf->Cell(30, 5, 'Total Companies:', 0, 0, 'L');
+$pdf->Cell(30, 5, 'Total Records:', 0, 0, 'L');
 $pdf->SetFont('helvetica', '', 10);
-$pdf->Cell(80, 5, count($companies), 0, 1, 'L');
+$pdf->Cell(80, 5, count($auditLogs), 0, 1, 'L');
 
 $pdf->Ln(15);
 
 // Table Headers
-$pdf->SetFont('helvetica', 'B', 11);
+$pdf->SetFont('helvetica', 'B', 10);
 $pdf->SetFillColor($headerBgColor[0], $headerBgColor[1], $headerBgColor[2]);
 $pdf->SetTextColor($headerTextColor[0], $headerTextColor[1], $headerTextColor[2]);
 $pdf->SetDrawColor($borderColor[0], $borderColor[1], $borderColor[2]);
 
 // Column widths (adjusted for landscape)
-$colWidths = [15, 70, 50, 120, 15];
+$colWidths = [40, 30, 25, 100, 45, 30];
 
 // Table headers
-$pdf->Cell($colWidths[0], 10, '#', 1, 0, 'C', true);
-$pdf->Cell($colWidths[1], 10, 'Company Name', 1, 0, 'C', true);
-$pdf->Cell($colWidths[2], 10, 'Location', 1, 0, 'C', true);
+$pdf->Cell($colWidths[0], 10, 'User', 1, 0, 'C', true);
+$pdf->Cell($colWidths[1], 10, 'Action', 1, 0, 'C', true);
+$pdf->Cell($colWidths[2], 10, 'User Type', 1, 0, 'C', true);
 $pdf->Cell($colWidths[3], 10, 'Description', 1, 0, 'C', true);
-$pdf->Cell($colWidths[4], 10, 'ID', 1, 1, 'C', true);
+$pdf->Cell($colWidths[4], 10, 'Timestamp', 1, 0, 'C', true);
+$pdf->Cell($colWidths[5], 10, 'IP Address', 1, 1, 'C', true);
 
 // Reset text color for table content
 $pdf->SetTextColor(44, 62, 80);
-$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFont('helvetica', '', 9);
 
-// Counter for row numbering
-$counter = 1;
+// Counter for row coloring
 $fill = false;
 
 // Loop through records and add to table
-foreach ($companies as $company) {
+foreach ($auditLogs as $log) {
     // Set the background color for alternating rows
     if ($fill) {
         $pdf->SetFillColor($alternateRowColor[0], $alternateRowColor[1], $alternateRowColor[2]);
@@ -132,56 +135,62 @@ foreach ($companies as $company) {
     }
     
     // Calculate row height based on description content
-    $descriptionHeight = $pdf->getStringHeight($colWidths[3], $company['description']);
+    $descriptionHeight = $pdf->getStringHeight($colWidths[3], $log['description']);
     $rowHeight = max(8, $descriptionHeight);
     
     // Save current position
     $x = $pdf->GetX();
     $y = $pdf->GetY();
     
-    // Row number
-    $pdf->Cell($colWidths[0], $rowHeight, $counter, 1, 0, 'C', $fill);
+    // Add styling to action text
+    $action = $log['action'];
     
-    // Company name - using MultiCell for potential long names
-    $pdf->SetXY($x + $colWidths[0], $y);
-    $pdf->MultiCell($colWidths[1], $rowHeight, htmlspecialchars($company['name']), 1, 'L', $fill);
+    // User name
+    $pdf->Cell($colWidths[0], $rowHeight, htmlspecialchars($log['full_name']), 1, 0, 'L', $fill);
     
-    // Location - using MultiCell for potential long locations
-    $pdf->SetXY($x + $colWidths[0] + $colWidths[1], $y);
-    $pdf->MultiCell($colWidths[2], $rowHeight, htmlspecialchars($company['location']), 1, 'L', $fill);
+    // Action with colored text
+    $pdf->Cell($colWidths[1], $rowHeight, $action, 1, 0, 'C', $fill);
+    
+    // User type
+    $pdf->Cell($colWidths[2], $rowHeight, htmlspecialchars($log['usertype']), 1, 0, 'C', $fill);
     
     // Description (using MultiCell for text wrapping)
     $pdf->SetXY($x + $colWidths[0] + $colWidths[1] + $colWidths[2], $y);
-    $pdf->MultiCell($colWidths[3], $rowHeight, htmlspecialchars($company['description']), 1, 'L', $fill);
+    $pdf->MultiCell($colWidths[3], $rowHeight, htmlspecialchars($log['description']), 1, 'L', $fill);
     
-    // Company ID
+    // Move to position after description
     $pdf->SetXY($x + $colWidths[0] + $colWidths[1] + $colWidths[2] + $colWidths[3], $y);
-    $pdf->Cell($colWidths[4], $rowHeight, $company['id'], 1, 1, 'C', $fill);
+    
+    // Timestamp
+    $pdf->Cell($colWidths[4], $rowHeight, htmlspecialchars($log['created_at']), 1, 0, 'C', $fill);
+    
+    // IP Address
+    $pdf->Cell($colWidths[5], $rowHeight, htmlspecialchars($log['ip_address']), 1, 1, 'C', $fill);
     
     // Reset position for next row
-    $pdf->SetX($x);
+    $pdf->SetXY($x, $y + $rowHeight);
     
     // Toggle fill for next row
     $fill = !$fill;
-    $counter++;
     
     // Check if we need a page break for the next row
     if ($pdf->GetY() > $pdf->getPageHeight() - 20) {
         $pdf->AddPage();
         
         // Repeat header on new page
-        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->SetFont('helvetica', 'B', 10);
         $pdf->SetFillColor($headerBgColor[0], $headerBgColor[1], $headerBgColor[2]);
         $pdf->SetTextColor($headerTextColor[0], $headerTextColor[1], $headerTextColor[2]);
         
-        $pdf->Cell($colWidths[0], 10, '#', 1, 0, 'C', true);
-        $pdf->Cell($colWidths[1], 10, 'Company Name', 1, 0, 'C', true);
-        $pdf->Cell($colWidths[2], 10, 'Location', 1, 0, 'C', true);
+        $pdf->Cell($colWidths[0], 10, 'User', 1, 0, 'C', true);
+        $pdf->Cell($colWidths[1], 10, 'Action', 1, 0, 'C', true);
+        $pdf->Cell($colWidths[2], 10, 'User Type', 1, 0, 'C', true);
         $pdf->Cell($colWidths[3], 10, 'Description', 1, 0, 'C', true);
-        $pdf->Cell($colWidths[4], 10, 'ID', 1, 1, 'C', true);
+        $pdf->Cell($colWidths[4], 10, 'Timestamp', 1, 0, 'C', true);
+        $pdf->Cell($colWidths[5], 10, 'IP Address', 1, 1, 'C', true);
         
         $pdf->SetTextColor(44, 62, 80);
-        $pdf->SetFont('helvetica', '', 10);
+        $pdf->SetFont('helvetica', '', 9);
     }
 }
 
@@ -192,5 +201,5 @@ $pdf->Cell(0, 10, 'Page ' . $pdf->getAliasNumPage() . ' of ' . $pdf->getAliasNbP
 
 // Output the PDF
 ob_end_clean();
-$pdf->Output('company_list_report.pdf', 'I');
+$pdf->Output('audit_logs_report.pdf', 'I');
 ?>

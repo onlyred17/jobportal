@@ -2,8 +2,8 @@
 session_start();
 include '../include/db_conn.php';
 
-// Check if admin is logged in
-if (!isset($_SESSION['admin_id']) || $_SESSION['usertype'] !== 'admin') {
+// Check if super admin is logged in
+if (!isset($_SESSION['super_admin_id']) || $_SESSION['usertype'] !== 'super_admin') {
     $_SESSION['message'] = ['type' => 'danger', 'text' => 'Unauthorized access.'];
     header("Location: ../login.php");
     exit();
@@ -12,14 +12,14 @@ if (!isset($_SESSION['admin_id']) || $_SESSION['usertype'] !== 'admin') {
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $_SESSION['message'] = ['type' => 'danger', 'text' => 'Invalid request method.'];
-    header("Location: ../views/view_admin_manage_staff.php");
+    header("Location: ../views/view_super_admin_manage_staff.php");
     exit();
 }
 
 // Validate inputs
 if (!isset($_POST['staff_id'], $_POST['status'])) {
     $_SESSION['message'] = ['type' => 'danger', 'text' => 'Missing required fields.'];
-    header("Location: ../views/view_admin_manage_staff.php");
+    header("Location: ../views/view_super_admin_manage_staff.php");
     exit();
 }
 
@@ -29,7 +29,7 @@ $valid_statuses = ['Active', 'Inactive'];
 
 if (!$staff_id || !in_array($status, $valid_statuses)) {
     $_SESSION['message'] = ['type' => 'danger', 'text' => 'Invalid staff ID or status.'];
-    header("Location: ../views/view_admin_manage_staff.php");
+    header("Location: ../views/view_super_admin_manage_staff.php");
     exit();
 }
 
@@ -43,7 +43,7 @@ try {
 
     if (!$staff) {
         $_SESSION['message'] = ['type' => 'danger', 'text' => 'Staff member not found.'];
-        header("Location: ../views/view_admin_manage_staff.php");
+        header("Location: ../views/view_super_admin_manage_staff.php");
         exit();
     }
 
@@ -57,17 +57,17 @@ try {
 
     if ($stmt->execute()) {
         // Log the status update
-        $admin_id = $_SESSION['admin_id'];
-        $admin_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+        $super_admin_id = $_SESSION['super_admin_id'];
+        $super_admin_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
         $ip_address = $_SERVER['REMOTE_ADDR'];
         $action = "STATUS_UPDATE";
-        $description = "Admin $admin_name (ID: $admin_id) set $staff_name (ID: $staff_id) to $status.";
+        $description = "Super Admin $super_admin_name (ID: $super_admin_id) set $staff_name (ID: $staff_id) to $status.";
 
         $log_sql = "INSERT INTO audit_log (user_id, full_name, action, description, ip_address, usertype, created_at) 
-                    VALUES (:user_id, :full_name, :action, :description, :ip_address, 'admin', NOW())";
+                    VALUES (:user_id, :full_name, :action, :description, :ip_address, 'super_admin', NOW())";
         $log_stmt = $conn->prepare($log_sql);
-        $log_stmt->bindParam(':user_id', $admin_id, PDO::PARAM_INT);
-        $log_stmt->bindParam(':full_name', $admin_name, PDO::PARAM_STR);
+        $log_stmt->bindParam(':user_id', $super_admin_id, PDO::PARAM_INT);
+        $log_stmt->bindParam(':full_name', $super_admin_name, PDO::PARAM_STR);
         $log_stmt->bindParam(':action', $action, PDO::PARAM_STR);
         $log_stmt->bindParam(':description', $description, PDO::PARAM_STR);
         $log_stmt->bindParam(':ip_address', $ip_address, PDO::PARAM_STR);
@@ -86,5 +86,5 @@ try {
 }
 
 // Redirect back to manage staff page
-header("Location: ../views/view_admin_manage_staff.php");
+header("Location: ../views/view_super_admin_manage_staff.php");
 exit();

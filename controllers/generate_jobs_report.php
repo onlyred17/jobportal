@@ -18,11 +18,7 @@ $statusFilter = $_GET['status'] ?? '';
 $searchQuery = $_GET['search'] ?? '';
 
 // Fetch filtered data from the database using PDO
-$query = "SELECT j.company_name, j.title, j.status, j.posted_date, 
-                 s.staff_id, s.first_name, s.last_name 
-          FROM jobs j
-          LEFT JOIN staff s ON j.staff_id = s.staff_id
-          WHERE 1=1";
+$query = "SELECT j.company_name, j.title, j.status, j.posted_date FROM jobs j WHERE 1=1";
 $params = [];
 
 // Apply filters dynamically
@@ -43,6 +39,7 @@ if (!empty($searchQuery)) {
     $params[':search'] = "%$searchQuery%";
 }
 
+$query .= " ORDER BY j.company_name ASC"; // Sort alphabetically by company name
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -50,51 +47,84 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Include TCPDF
 require_once '../vendor/tecnickcom/tcpdf/tcpdf.php';
 
-// Create new PDF instance
-$pdf = new TCPDF();
+// Create new PDF instance in landscape mode
+$pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+$pdf->SetCreator('Job Listings System');
+$pdf->SetAuthor($firstName . ' ' . $lastName);
 $pdf->SetTitle('Job Listings Report');
+$pdf->SetSubject('Job Listings Report');
+
+// Remove default header/footer
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
+
+// Set margins
+$pdf->SetMargins(15, 15, 15);
+$pdf->SetAutoPageBreak(true, 15);
+
+// Add a page
 $pdf->AddPage();
 
-// Set header
-$pdf->SetFont('helvetica', 'B', 16);
-$pdf->Cell(0, 10, 'Job Listings Report', 0, 1, 'C');
-$pdf->Ln(5);
+// Set colors
+$headerBgColor = [52, 152, 219]; // Blue
+$headerTextColor = [255, 255, 255]; // White
+$alternateRowColor = [240, 248, 255]; // Light blue
+$borderColor = [189, 195, 199]; // Gray
+
+// Header
+$pdf->SetFont('helvetica', 'B', 20);
+$pdf->SetTextColor(44, 62, 80);
+$pdf->Cell(0, 15, 'JOB LISTINGS REPORT', 0, 1, 'C');
+$pdf->Ln(2);
+
+// Report information section
+$pdf->SetFont('helvetica', '', 10);
+$pdf->SetTextColor(44, 62, 80);
+$pdf->SetFillColor(248, 249, 250);
+$pdf->SetDrawColor($borderColor[0], $borderColor[1], $borderColor[2]);
 
 // Printed by details
 $printedDate = date('Y-m-d H:i:s');
-$pdf->SetFont('helvetica', '', 12);
 $pdf->Cell(0, 10, 'Printed By: ' . $firstName . ' ' . $lastName . ' (ID: ' . $staffId . ')', 0, 1, 'L');
 $pdf->Cell(0, 10, 'Printed Date: ' . $printedDate, 0, 1, 'L');
-$pdf->Ln(3);
+$pdf->Ln(5);
 
-// Add filter details to the PDF
-$pdf->Cell(0, 10, 'Filters Applied:', 0, 1, 'L');
-$pdf->Cell(0, 10, 'Start Date: ' . ($startDate ? $startDate : 'Not specified'), 0, 1, 'L');
-$pdf->Cell(0, 10, 'End Date: ' . ($endDate ? $endDate : 'Not specified'), 0, 1, 'L');
-$pdf->Cell(0, 10, 'Status: ' . ($statusFilter ? $statusFilter : 'All'), 0, 1, 'L');
-$pdf->Cell(0, 10, 'Search Term: ' . ($searchQuery ? $searchQuery : 'None'), 0, 1, 'L');
-$pdf->Ln(10);
+// Table Headers
+$pdf->SetFont('helvetica', 'B', 11);
+$pdf->SetFillColor($headerBgColor[0], $headerBgColor[1], $headerBgColor[2]);
+$pdf->SetTextColor($headerTextColor[0], $headerTextColor[1], $headerTextColor[2]);
+$pdf->SetDrawColor($borderColor[0], $borderColor[1], $borderColor[2]);
 
-// Table Header
-$pdf->SetFont('helvetica', 'B', 12);
-$pdf->Cell(50, 10, 'Company Name', 1, 0, 'C');
-$pdf->Cell(60, 10, 'Job Title', 1, 0, 'C');
-$pdf->Cell(30, 10, 'Status', 1, 0, 'C');
-$pdf->Cell(40, 10, 'Posted Date', 1, 1, 'C');
+$colWidths = [70, 90, 40, 50];
 
-$pdf->SetFont('helvetica', '', 12);
+$pdf->Cell($colWidths[0], 10, 'Company Name', 1, 0, 'C', true);
+$pdf->Cell($colWidths[1], 10, 'Job Title', 1, 0, 'C', true);
+$pdf->Cell($colWidths[2], 10, 'Status', 1, 0, 'C', true);
+$pdf->Cell($colWidths[3], 10, 'Posted Date', 1, 1, 'C', true);
 
-// Populate table rows
+$pdf->SetTextColor(44, 62, 80);
+$pdf->SetFont('helvetica', '', 10);
+
+$fill = false;
+
+// Loop through records and add to table
 foreach ($results as $row) {
-    $pdf->Cell(50, 10, $row['company_name'], 1, 0, 'C');
-    $pdf->Cell(60, 10, $row['title'], 1, 0, 'C');
-    $pdf->Cell(30, 10, $row['status'], 1, 0, 'C');
-    $pdf->Cell(40, 10, $row['posted_date'], 1, 1, 'C');
+    $pdf->SetFillColor($fill ? $alternateRowColor[0] : 255, $fill ? $alternateRowColor[1] : 255, $fill ? $alternateRowColor[2] : 255);
+    
+    $pdf->Cell($colWidths[0], 8, htmlspecialchars($row['company_name']), 1, 0, 'L', $fill);
+    $pdf->Cell($colWidths[1], 8, htmlspecialchars($row['title']), 1, 0, 'L', $fill);
+    $pdf->Cell($colWidths[2], 8, $row['status'], 1, 0, 'C', $fill);
+    $pdf->Cell($colWidths[3], 8, $row['posted_date'], 1, 1, 'C', $fill);
+    
+    $fill = !$fill;
 }
 
-// Clear any output buffer before sending PDF
-ob_end_clean();
+// Footer
+$pdf->SetY(-15);
+$pdf->SetFont('helvetica', 'I', 8);
+$pdf->Cell(0, 10, 'Page ' . $pdf->getAliasNumPage() . ' of ' . $pdf->getAliasNbPages(), 0, 0, 'C');
 
-// Output PDF
+// Output the PDF
+ob_end_clean();
 $pdf->Output('job_listings_report.pdf', 'I');
 ?>

@@ -5,9 +5,6 @@ $firstName = $_SESSION['first_name'] ?? '';
 $lastName = $_SESSION['last_name'] ?? '';
 $profilePicture = $_SESSION['profile_pic'] ?? '../images/default-profile.jpg';
 
-
-
-
 // Concatenate first name and last name
 $employerName = trim("$firstName $lastName");
 ?>

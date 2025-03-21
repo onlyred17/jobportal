@@ -63,9 +63,13 @@ include '../include/sidebar.php';
         <h1 class="h3 mb-4 text-gray-800">Audit Logs</h1>
 
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Audit Logs</h6>
-            </div>
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Audit Logs</h6>
+    <a href="../controllers/generate_audit_report.php" class="btn btn-danger"target="_blank">
+        <i class="fas fa-download" ></i> Generate Report
+    </a>
+</div>
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="auditTable" class="table table-striped table-hover">
@@ -147,12 +151,21 @@ include '../include/sidebar.php';
 
 <script>
 $(document).ready(function() {
-    $('#auditTable').DataTable();
+    // Initialize DataTable and store it in a variable
+    const table = $('#auditTable').DataTable();
+    
+    // Update the Generate Report button with the current search term
+    table.on('search.dt', function() {
+        const searchTerm = table.search();
+        const reportUrl = `../controllers/generate_audit_report.php?search=${encodeURIComponent(searchTerm)}`;
+        $('.btn-danger').attr('href', reportUrl);
+    });
 
+    // Your existing modal code
     $(document).on("click", ".view-log", function() {
         $('#logUser').text($(this).data('user'));
         $('#logAction').text($(this).data('action'));
-        $('#logDescription').text($(this).data('description')); // Full description
+        $('#logDescription').text($(this).data('description'));
         $('#logIP').text($(this).data('ip'));
         $('#logTimestamp').text($(this).data('timestamp'));
         $('#logUserType').text($(this).data('usertype'));

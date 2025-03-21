@@ -28,15 +28,14 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
             --danger-color: #e74a3b;
         }
 
-              /* Main Content */
-.main-content {
-    margin-left: 280px;
-    margin-top: 90px;
-    padding: 2rem;
-    transition: margin-left 0.3s;
-    min-height: 100vh;
-}
-    
+        .main-content {
+            margin-left: 280px;
+            margin-top: 90px;
+            padding: 2rem;
+            transition: margin-left 0.3s;
+            min-height: 100vh;
+        }
+        
         body {
             background-color: #f8f9fa;
             font-family: 'Nunito', sans-serif;
@@ -80,11 +79,15 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .modal-header {
             border-bottom: none;
         }
+
+        .add-staff-btn {
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
 
-<?php include '../include/navbar.php'; ?>
+<?php include '../include/navbar_user.php'; ?>
 <?php include '../include/sidebar.php'; ?>
 
 <div class="main-content">
@@ -106,6 +109,10 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h6 class="text-primary">Staff List</h6>
+            <!-- Add Staff Button -->
+            <button class="btn btn-success btn-sm add-staff-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+                <i class="fas fa-plus"></i> Add Staff
+            </button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -151,15 +158,58 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="fas fa-user-plus"></i> Add Staff</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form action="../controllers/super_admin_add_staff.php" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="first_name" class="form-control" placeholder="Enter first name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="last_name" class="form-control" placeholder="Enter last name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Add Staff
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <!-- Update Staff Modal -->
 <div class="modal fade" id="updateStaffModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update Staff Status</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <form action="../controllers/admin_update_staff.php" method="POST">
+            <form action="../controllers/super_admin_update_staff.php" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="staff_id" id="staffId">
                     <div class="mb-3">

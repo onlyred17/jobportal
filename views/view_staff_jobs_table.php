@@ -152,6 +152,9 @@ session_start();
             width: 100% !important;
             margin: 0 !important;
         }
+        div.dataTables_filter {
+    text-align: right;
+}
     </style>
 </head>
 <body>

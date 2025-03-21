@@ -41,8 +41,8 @@ session_destroy();
 // Redirect based on user type
 if ($usertype === 'admin') {
     header("Location: ../views/view_admin_login.php");
-} elseif ($usertype === 'employer') {
-    header("Location: ../views/view_employer_login.php");
+} elseif ($usertype === 'super_admin') {
+    header("Location: ../views/view_super_admin_login.php");
 } else {
     header("Location: ../views/view_staff_login.php"); // Default login page
 }

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($checkStmt->rowCount() > 0) {
         $_SESSION['message'] = ['type' => 'error', 'text' => 'Staff with this email already exists!'];
-        header('Location: ../views/view_admin_add_staff.php');
+        header('Location: ../views/view_super_admin_manage_staff.php');
         exit;
     }
 
@@ -42,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Staff added successfully!'];
 
         // Insert into audit log for staff creation
-        $user_id = isset($_SESSION['staff_id']) ? $_SESSION['staff_id'] : (isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null);
+        $user_id = isset($_SESSION['super_admin_id']) ? $_SESSION['super_admin_id'] : null;
         $full_name = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : 'Unknown';
         $ip_address = $_SERVER['REMOTE_ADDR'];
         $action = 'Create';
         $description_log = "Staff '{$first_name} {$last_name}' added";
-        $usertype = isset($_SESSION['staff_id']) ? 'staff' : (isset($_SESSION['admin_id']) ? 'admin' : 'unknown');
+        $usertype = 'super_admin';
 
         // Insert the audit log
         $audit_sql = "INSERT INTO audit_log (user_id, full_name, action, description, ip_address, usertype) 
@@ -66,6 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect to avoid form resubmission
-    header('Location: ../views/view_admin_add_staff.php');
+    header('Location: ../views/view_super_admin_manage_staff.php');
     exit;
 }
