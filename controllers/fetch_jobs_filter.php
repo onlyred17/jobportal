@@ -10,7 +10,7 @@ $start = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
 
-// Build the query with optional filters
+// Build the query with optional filters and ORDER BY
 $query = "SELECT * FROM jobs WHERE 
           (title LIKE :search OR 
            location LIKE :search OR 
@@ -21,7 +21,7 @@ if ($job_type != '') {
     $query .= " AND job_type = :job_type";
 }
 
-$query .= " LIMIT :start, :limit";
+$query .= " ORDER BY posted_date DESC LIMIT :start, :limit";
 
 // Prepare and execute the query for fetching jobs
 $stmt = $conn->prepare($query);

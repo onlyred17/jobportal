@@ -1,6 +1,9 @@
 <?php
 session_start();
 include '../include/db_conn.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require '../vendor/autoload.php'; // Load PHPMailer
 
 // Check if the user is logged in
 if (!isset($_SESSION['staff_id'])) {
@@ -12,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate inputs
     $jobTitle = trim(htmlspecialchars($_POST['jobTitle']));
     $jobDescription = trim(htmlspecialchars($_POST['jobDescription']));
-    $jobLocation = trim(htmlspecialchars($_POST['jobLocation']));
     $jobType = trim(htmlspecialchars($_POST['jobType']));
     $salary = trim(htmlspecialchars($_POST['salary']));
     $requirements = trim(htmlspecialchars($_POST['requirements']));
@@ -29,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Fetch company details
-        $stmt = $conn->prepare("SELECT name, logo FROM company WHERE id = :company_id");
+        $stmt = $conn->prepare("SELECT name, logo, location FROM company WHERE id = :company_id");
         $stmt->execute([':company_id' => $companyId]);
         $company = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -40,12 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $companyName = $company['name'];
         $companyLogo = $company['logo'];
+        $companyLocation = $company['location']; // Fetch company location
 
         // Insert the job posting into the database
         $stmt = $conn->prepare("
-            INSERT INTO jobs (company_id, company_name, company_logo, title, description, status, posted_date, staff_id, requirements, salary, job_type)
-            VALUES (:company_id, :company_name, :company_logo, :title, :description, :status, :posted_date, :staff_id, :requirements, :salary, :job_type)
-        ");
+        INSERT INTO jobs (company_id, company_name, company_logo, location, title, description, status, posted_date, staff_id, requirements, salary, job_type)
+        VALUES (:company_id, :company_name, :company_logo, :company_location, :title, :description, :status, :posted_date, :staff_id, :requirements, :salary, :job_type)
+    ");
+    
 
         // Set default values for status and posted_date
         $status = 'open';
@@ -62,7 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':staff_id' => $staffId,
             ':requirements' => $requirements,
             ':salary' => $salary,
-            ':job_type' => $jobType
+            ':job_type' => $jobType,
+            ':company_location' => $companyLocation,
+
+            
         ]);
 
         // Fetch the new job count after posting
@@ -91,8 +98,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auditStmt->bindParam(':full_name', $staffFullName);
         $auditStmt->execute();
 
+        // Fetch all PWD registered applicants' emails
+        $stmt = $conn->prepare("SELECT email FROM pwd_registration");
+        $stmt->execute();
+        $emails = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        // Send email notification
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp-relay.brevo.com'; // Brevo SMTP server
+            $mail->SMTPAuth = true;
+            $mail->Username = 'jaredsonvicente1771@gmail.com'; // Your Brevo email
+            $mail->Password = 'kWV40qgL9B7DGT5P'; // Your Brevo API Key
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('your_brevo_email@example.com', 'PWD Job Portal');
+            $mail->isHTML(true);
+            $mail->Subject = 'New Job Opportunity: ' . $jobTitle;
+            $mail->Body = "<h3>New Job Posted</h3>
+            <p><strong>Title:</strong> $jobTitle</p>
+            <p><strong>Company:</strong> $companyName</p>
+            <p><strong>Location:</strong> $companyLocation</p> <!-- Use company location -->
+            <p><strong>Salary:</strong> $salary</p>
+            <p><strong>Type:</strong> $jobType</p>
+            <p><strong>Requirements:</strong> $requirements</p><br>
+            <p>Visit our job portal to view more Jobs!</p>";
+
+
+            // Send email to each PWD applicant
+            foreach ($emails as $email) {
+                $mail->addAddress($email);
+                $mail->send();
+                $mail->clearAddresses(); // Clear previous recipients for the next loop
+            }
+        } catch (Exception $e) {
+            error_log("Email sending failed: " . $mail->ErrorInfo);
+        }
+
         // Send the new job count back in the response
-        echo json_encode(['status' => 'success', 'message' => 'Job posted successfully!', 'newJobsCount' => $newJobsCount]);
+        echo json_encode(['status' => 'success', 'message' => 'Job posted successfully! Email notifications sent.', 'newJobsCount' => $newJobsCount]);
         exit;
     } catch (PDOException $e) {
         echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);

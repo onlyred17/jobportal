@@ -337,12 +337,6 @@ include '../include/sidebar.php';
                         <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="jobLocation" class="form-label">
-                            <i class="fas fa-map-marker-alt me-1 text-primary"></i> Location
-                        </label>
-                        <input type="text" class="form-control" id="jobLocation" name="jobLocation" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="jobType" class="form-label">
                             <i class="fas fa-briefcase me-1 text-primary"></i> Job Type
                         </label>

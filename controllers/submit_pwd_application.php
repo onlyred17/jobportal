@@ -1,6 +1,9 @@
 <?php
-include '..//include/db_conn.php'; // Include the database connection file
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../vendor/autoload.php'; // Load PHPMailer
+include '../include/db_conn.php'; // Include the database connection file
 
 // Function to generate a random unique Application ID
 function generateApplicationID($conn) {
@@ -72,14 +75,38 @@ try {
     $application_id = generateApplicationID($conn);
 
     // Insert data into database with status 'Pending'
-    $stmt = $conn->prepare("
-        INSERT INTO pwd_registration (application_id, full_name, birthdate, disability_type, address, contact_number, email, proof_of_pwd, valid_id, status, created_at, updated_at) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', NOW(), NOW())
-    ");
+    $stmt = $conn->prepare("INSERT INTO pwd_registration (application_id, full_name, birthdate, disability_type, address, contact_number, email, proof_of_pwd, valid_id, status, created_at, updated_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', NOW(), NOW())");
     $stmt->execute([$application_id, $full_name, $birthdate, $disability_type, $address, $contact_number, $email, $proof_of_pwd, $valid_id]);
 
-    // Redirect with Application ID in message
-    header("Location: ../views/pwd_registration.php?message=Registration successful!");
+    // Send confirmation email using Brevo SMTP
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp-relay.brevo.com'; // Brevo SMTP server
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jaredsonvicente1771@gmail.com'; // Your Brevo email
+        $mail->Password = 'kWV40qgL9B7DGT5P'; // Your Brevo API Key
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('your_brevo_email@example.com', 'PWD Registration');
+        $mail->addAddress($email, $full_name);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'PWD Registration Confirmation';
+        $mail->Body = "Dear $full_name,<br><br>" .
+                      "Your application has been received successfully! Your Application ID is <strong>$application_id</strong>.<br><br>" .
+                      "We will review your application and notify you of the next steps soon.<br><br>" .
+                      "Best regards,<br>PWD Registration Team";
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Email sending failed: " . $mail->ErrorInfo);
+    }
+
+    // Redirect with success message including Application ID
+    header("Location: ../views/pwd_registration.php?message=Registration successful! Your Application ID is $application_id");
 } catch (PDOException $e) {
     header("Location: ../views/pwd_registration.php?message=Error: " . $e->getMessage());
 }
