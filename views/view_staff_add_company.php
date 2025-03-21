@@ -18,7 +18,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 </head>
 <body>
    <?php
-    include '../include/navbar.php';
+    include '../include/navbar_user.php';
     include '../include/sidebar.php';
 
    ?>

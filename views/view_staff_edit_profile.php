@@ -209,8 +209,8 @@ include '../controllers/staff_edit_profile.php';
 </head>
 <body>
     <?php include '../include/sidebar.php'; ?>
-    <?php include '../include/navbar.php'; ?>
-
+    <?php     include '../include/navbar_user.php';
+ ?>
     <div class="main-content d-flex justify-content-center">
         <div class="profile-container">
             <div class="profile-card">

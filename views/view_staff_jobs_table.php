@@ -157,7 +157,7 @@ session_start();
 <body>
 <?php
 include '../controllers/staff_jobs_table.php';
-include '../include/navbar.php';
+include '../include/navbar_user.php';
 include '../include/sidebar.php';
 ?>
 

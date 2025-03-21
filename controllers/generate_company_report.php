@@ -15,7 +15,7 @@ $lastName = $_SESSION['last_name'] ?? '';
 $printedDate = date("Y-m-d H:i:s");
 
 // Fetch filtered data from the database using PDO
-$query = "SELECT * FROM company WHERE 1=1";
+$query = "SELECT * FROM company WHERE is_deleted = 0";
 $params = [];
 
 if (!empty($searchQuery)) {

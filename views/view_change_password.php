@@ -190,7 +190,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-<?php include '../include/navbar.php'; include '../include/sidebar.php'; ?>
+<?php
+if ($isAdmin) {
+    include '../include/navbar.php';
+    include '../include/sidebar.php';
+} else {
+    include '../include/navbar_user.php';
+    include '../include/sidebar.php';
+}
+?>
+
 
     <div class="main-content">
         <div class="row justify-content-center">

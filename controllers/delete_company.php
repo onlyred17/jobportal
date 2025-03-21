@@ -33,7 +33,7 @@ if (isset($_GET['id'])) {
             $user_id = isset($_SESSION['staff_id']) ? $_SESSION['staff_id'] : (isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null);
             $full_name = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : 'Unknown';
             $ip_address = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
-            $action = 'Soft Delete'; // Action type
+            $action = 'Archieve'; // Action type
             $description = "Company '{$companyName}' soft deleted"; // Description of the action
 
             // Check the user type (staff or admin)

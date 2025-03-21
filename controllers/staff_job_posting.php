@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $staffFullName = $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; // Full name from session
         $ipAddress = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
         $action = 'Job Posting'; // Action type
-        $descriptionLog = "Job posted: " . $jobTitleForLog . " by " . $staffFullName; // Description of the action
+        $descriptionLog = "Job posted: " . $jobTitleForLog . " at " . $companyName . " by " . $staffFullName;
         $usertype = 'staff'; // User type (staff)
 
         // Insert the audit log

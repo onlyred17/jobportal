@@ -35,33 +35,32 @@ $employerName = trim("$firstName $lastName");
 </head>
 <body>
     
+
 <div class="navbar">
     <div class="navbar-left">
-
+        <!-- Admin-specific links can go here -->
     </div>
     <div class="navbar-right">
-        <!-- Profile Section -->  <!-- Notification Bar for Admin -->
-        <?php if ($userType === 'admin'): ?>
-    <div class="notification-container">
-        <div class="notification-bar" id="notification-bar">
-            <i class="fas fa-bell"></i>
-            <span class="notification-count" id="notification-count"></span>
-        </div>
-        <ul class="notification-dropdown" id="notification-dropdown">
-            <li class="dropdown-header">New Registrations</li>
-            <div id="notification-list">
-                <li class="dropdown-item">No new notifications</li>
+        <!-- Admin Notification Bar -->
+        <div class="notification-container">
+            <div class="notification-bar" id="notification-bar">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count" id="notification-count"></span>
             </div>
-        </ul>
-    </div>
-<?php endif; ?>
+            <ul class="notification-dropdown" id="notification-dropdown">
+                <li class="dropdown-header">New Registrations</li>
+                <div id="notification-list">
+                    <li class="dropdown-item">No new notifications</li>
+                </div>
+            </ul>
+        </div>
+
+        <!-- Profile Dropdown -->
         <div class="profile-dropdown">
             <div class="profile" id="profileMenu">
                 <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-pic">
                 <span class="profile-name"><?php echo $employerName; ?></span>
             </div>
-
-            <!-- Dropdown Menu -->
             <ul class="dropdown-menu" id="dropdownMenu">
                 <li><a href="../views/view_change_password.php"><i class="fas fa-key"></i> Change Password</a></li>
                 <li><a href="../controllers/logout_controllers.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -69,6 +68,7 @@ $employerName = trim("$firstName $lastName");
         </div>
     </div>
 </div>
+
 
 
 <script>

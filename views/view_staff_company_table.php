@@ -152,7 +152,7 @@ $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 <?php
 include '../controllers/update_company.php';
-include '../include/navbar.php';
+include '../include/navbar_user.php';
 include '../include/sidebar.php';
 ?>
 <div class="main-content">

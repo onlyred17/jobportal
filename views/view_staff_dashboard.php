@@ -20,7 +20,8 @@ include '../controllers/staff_dashboard.php';
     <?php include '../include/sidebar.php'; ?>
 
     <!-- Navbar -->
-    <?php include '../include/navbar.php'; ?>
+    <?php     include '../include/navbar_user.php';
+ ?>
 
     <!-- Main Content -->
     <div class="main-content">
