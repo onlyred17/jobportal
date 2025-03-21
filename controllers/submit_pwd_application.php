@@ -5,6 +5,18 @@ use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php'; // Load PHPMailer
 include '../include/db_conn.php'; // Include the database connection file
 
+// Start session to get logged-in user's ID
+session_start();
+
+// Ensure the admin is logged in by checking session data
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../login.php"); // Redirect to login page if not logged in
+    exit();
+}
+
+// Get the logged-in admin ID
+$loggedInAdminID = $_SESSION['admin_id'];
+
 // Function to generate a random unique Application ID
 function generateApplicationID($conn) {
     do {
@@ -79,14 +91,41 @@ try {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', NOW(), NOW())");
     $stmt->execute([$application_id, $full_name, $birthdate, $disability_type, $address, $contact_number, $email, $proof_of_pwd, $valid_id]);
 
+    // Insert a new notification with the full name of the registered user
+    $stmt_notification = $conn->prepare("INSERT INTO notifications (message, created_at) 
+        VALUES (?, NOW())");
+    $stmt_notification->execute(["New PWD registration from $full_name"]);
+
+    // Get the notification ID (last inserted ID)
+    $notification_id = $conn->lastInsertId();
+
+// Fetch all admins (including the logged-in admin)
+$stmt_admins = $conn->prepare("SELECT admin_id FROM admin");
+$stmt_admins->execute();
+$admins = $stmt_admins->fetchAll(PDO::FETCH_ASSOC);
+
+// Insert notifications for all admins (including the logged-in admin)
+foreach ($admins as $admin) {
+    // Ensure that admin['admin_id'] is correctly retrieved from the DB
+    if (isset($admin['admin_id']) && !empty($admin['admin_id'])) {
+        $stmt_admin_notification = $conn->prepare("INSERT INTO notification_admin (notification_id, admin_id, seen, created_at) 
+            VALUES (?, ?, 0, NOW())");
+        $stmt_admin_notification->execute([$notification_id, $admin['admin_id']]);  // Change here from 'id' to 'admin_id'
+    } else {
+        // Log an error or handle cases where admin ID is missing
+        error_log("Admin ID is missing or invalid.");
+    }
+}
+
+
     // Send confirmation email using Brevo SMTP
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
         $mail->Host = 'smtp-relay.brevo.com'; // Brevo SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'jaredsonvicente1771@gmail.com'; // Your Brevo email
-        $mail->Password = 'kWV40qgL9B7DGT5P'; // Your Brevo API Key
+        $mail->Username = 'your_brevo_email@example.com'; // Your Brevo email
+        $mail->Password = 'your_brevo_password'; // Your Brevo API Key
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
@@ -95,9 +134,9 @@ try {
 
         $mail->isHTML(true);
         $mail->Subject = 'PWD Registration Confirmation';
-        $mail->Body = "Dear $full_name,<br><br>" .
-                      "Your application has been received successfully! Your Application ID is <strong>$application_id</strong>.<br><br>" .
-                      "We will review your application and notify you of the next steps soon.<br><br>" .
+        $mail->Body = "Dear $full_name,<br><br>" . 
+                      "Your application has been received successfully! Your Application ID is <strong>$application_id</strong>.<br><br>" . 
+                      "We will review your application and notify you of the next steps soon.<br><br>" . 
                       "Best regards,<br>PWD Registration Team";
 
         $mail->send();

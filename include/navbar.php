@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 // Update notification count (only unseen)
-                if (data.count > 0) {
-                    notificationCount.textContent = data.count;
+                if (data.unseen_count > 0) {
+                    notificationCount.textContent = data.unseen_count;
                     notificationCount.style.display = "inline-block";
                     notificationCount.style.backgroundColor = "red"; // Add color
                     notificationCount.style.color = "white"; // Ensure contrast
@@ -97,30 +97,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Populate dropdown with all notifications
                 notificationList.innerHTML = data.notifications.map(notif => 
                     `<li class="dropdown-item ${notif.seen == 0 ? 'fw-bold unseen' : ''}">
-                        <strong>${notif.full_name}</strong><br>
+                        <strong>${notif.message}</strong><br>
                         <small>${new Date(notif.created_at).toLocaleString()}</small>
                     </li>`
                 ).join("");
             })
             .catch(error => console.error('Error fetching notifications:', error));
     }
+
     notificationBar.addEventListener("click", function (event) {
-    event.stopPropagation();
-    const isVisible = notificationDropdown.classList.contains("show");
-    notificationDropdown.classList.toggle("show");
+        event.stopPropagation();
+        const isVisible = notificationDropdown.classList.contains("show");
+        notificationDropdown.classList.toggle("show");
 
-    if (!isVisible && notificationCount.style.display !== "none") {
-        fetch('../controllers/mark_notifications_seen.php', { method: 'POST' })
-            .then(response => response.json())
-            .then(() => {
-                notificationCount.textContent = "";
-                notificationCount.style.display = "none"; // Hide count properly
-                fetchNotifications();
-            })
-            .catch(error => console.error('Error marking notifications:', error));
-    }
-});
-
+        if (!isVisible && notificationCount.style.display !== "none") {
+            // Mark notifications as seen when opening the notification bar
+            fetch('../controllers/mark_notifications_seen.php', { method: 'POST' })
+                .then(response => response.json())
+                .then(() => {
+                    notificationCount.textContent = "";
+                    notificationCount.style.display = "none"; // Hide count properly
+                    fetchNotifications(); // Refresh notifications
+                })
+                .catch(error => console.error('Error marking notifications:', error));
+        }
+    });
 
     profileMenu.addEventListener("click", function (event) {
         event.stopPropagation();
@@ -137,8 +138,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    setInterval(fetchNotifications, 10000);
-    fetchNotifications();
+    setInterval(fetchNotifications, 10000); // Refresh every 10 seconds
+    fetchNotifications(); // Initial fetch when the page loads
 });
 
 </script>

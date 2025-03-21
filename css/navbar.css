@@ -128,85 +128,96 @@
 .dropdown-menu li a:hover {
     background: linear-gradient(90deg, #4a90e2, #1e3a8a);
     color: white;
-}/* Notification Container */
+}
+/* Notification Container */
 .notification-container {
     position: relative;
     display: inline-block;
     margin-right: 20px;
     cursor: pointer;
+    font-size: 16px; /* Improved font size for better readability */
 }
 
-/* Dropdown Menu with Scroll */
+/* Notification Dropdown */
 .notification-dropdown {
     position: absolute;
     right: 0;
     top: 40px;
-    width: 280px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Adjusted width for better spacing */
+    background: #ffffff;
+    border: 1px solid #e1e1e1; /* Lighter border for a softer look */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     display: none;
     z-index: 1000;
-    max-height: 300px; /* Limit height */
-    overflow-y: auto;  /* Enable scrolling */
-    padding: 0; /* Remove default padding */
-
+    max-height: 350px; /* Increased max height for better viewing */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0;
+    transition: all 0.3s ease; /* Smooth transition when opening */
 }
 
 /* Custom Scrollbar */
 .notification-dropdown::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .notification-dropdown::-webkit-scrollbar-thumb {
-    background: #aaa; /* Scrollbar color */
-    border-radius: 5px;
+    background: #ddd;
+    border-radius: 10px;
 }
 
 .notification-dropdown::-webkit-scrollbar-thumb:hover {
-    background: #888;
+    background: #bbb;
 }
 
 /* Show Dropdown */
 .notification-dropdown.show {
     display: block;
 }
+
 /* Notification Count (Red Badge) */
 .notification-count {
-    background: red; /* Red background */
-    color: white; /* White text */
-    font-size: 12px;
+    background: #dc3545; /* Dark red background for better contrast */
+    color: white;
+    font-size: 14px;
     font-weight: bold;
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 50%;
     position: absolute;
     top: -5px;
     right: -5px;
-    display: none; /* Initially hidden */
-    border: 2px solid white; /* Add border for contrast */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    display: none;
+    border: 2px solid #ffffff; /* White border for contrast */
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease; /* Smooth transition */
 }
+
 /* Dropdown Header */
 .dropdown-header {
     font-weight: bold;
-    padding: 10px;
+    padding: 12px;
     background: #007bff;
     color: white;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 16px;
+    text-align: center;
 }
 
 /* Notification List Items */
 .notification-dropdown .dropdown-item {
-    padding: 10px;
+    padding: 12px 15px;
     border-bottom: 1px solid #f1f1f1;
-    transition: background 0.2s;
+    transition: background 0.3s ease;
     cursor: pointer;
+    font-size: 14px;
+    color: #333;
 }
 
+/* Hover effect for notification list items */
 .notification-dropdown .dropdown-item:hover {
-    background: #f8f9fa;
+    background: #f1f1f1;
+    color: #007bff; /* Highlight text color */
 }
 
 /* Last item should not have a border */
@@ -219,3 +230,16 @@
     background: #f8d7da !important; /* Light red background */
     font-weight: bold;
 }
+
+/* Notification Title (optional) */
+.notification-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Notification Message */
+.notification-message {
+    font-size: 12px;
+    color: #555;
+}
+

@@ -3,9 +3,12 @@ session_start();
 require '../include/db_conn.php'; // Ensure this file initializes a PDO connection
 
 try {
-    // Mark all unseen notifications as seen (without status check)
-    $stmt = $conn->prepare("UPDATE pwd_registration SET seen = 1 WHERE seen = 0");
-    $stmt->execute();
+    // Get the logged-in admin's ID from the session
+    $admin_id = $_SESSION['admin_id']; // Ensure this session variable is set
+
+    // Mark the notifications as seen for this specific admin
+    $stmt = $conn->prepare("UPDATE notification_admin SET seen = 1 WHERE admin_id = ? AND seen = 0");
+    $stmt->execute([$admin_id]);
 
     echo json_encode(['success' => true]);
 } catch (PDOException $e) {
