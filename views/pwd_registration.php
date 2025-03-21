@@ -10,7 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/landing_page.css">
 <style>
+    /* Align checkbox to the left of the label */
+.consent-checkbox {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;  /* Adjust gap if needed */
+}
 
+/* Remove unnecessary margin from label */
+.consent-checkbox label {
+    margin: 0 !important;
+}
 
 </style>
 <body id="body-element">
@@ -222,80 +232,9 @@
     <button id="reset-all-panel">Reset All</button>
 </div>
 </body>
-<script src="../scripts/landing_page.js"></script>
+<script src="../scripts/registration.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved font size
-    const savedFontSize = localStorage.getItem('fontSize');
-    if (savedFontSize) {
-        document.documentElement.style.fontSize = savedFontSize + '%';
-    }
-
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-    } else if (savedTheme === 'high-contrast') {
-        document.body.classList.add('high-contrast');
-    }
-
-    // Apply TTS setting
-    const ttsEnabled = localStorage.getItem('ttsEnabled');
-    if (ttsEnabled === 'true') {
-        document.getElementById('tts-toggle-panel').textContent = 'Disable TTS on Hover';
-    } else {
-        document.getElementById('tts-toggle-panel').textContent = 'Enable TTS on Hover';
-    }
-});
 document.addEventListener('DOMContentLoaded', () => {
-
-// Save font size preference
-function saveFontSize(fontSize) {
-    localStorage.setItem('fontSize', fontSize);
-}
-
-// Save theme preference (Normal, Dark, High Contrast)
-function saveTheme(theme) {
-    localStorage.setItem('theme', theme);
-}
-
-// Save TTS preference (Enabled or Disabled)
-function saveTTS(state) {
-    localStorage.setItem('ttsEnabled', state);
-}
-
-// Font Size Change
-document.getElementById('increase-font-panel').addEventListener('click', function () {
-    let fontSize = parseInt(localStorage.getItem('fontSize') || '100') + 10;
-    if (fontSize <= 150) {
-        document.documentElement.style.fontSize = fontSize + '%';
-        saveFontSize(fontSize);
-    }
-});
-
-document.getElementById('decrease-font-panel').addEventListener('click', function () {
-    let fontSize = parseInt(localStorage.getItem('fontSize') || '100') - 10;
-    if (fontSize >= 70) {
-        document.documentElement.style.fontSize = fontSize + '%';
-        saveFontSize(fontSize);
-    }
-});
-
-// Theme Change
-document.getElementById('normal-mode-panel').addEventListener('click', function () {
-    document.body.classList.remove('dark-mode', 'high-contrast');
-    saveTheme('normal');
-});
-
-document.getElementById('dark-mode-panel').addEventListener('click', function () {
-    document.body.classList.add('dark-mode');
-    saveTheme('dark');
-});
-
-document.getElementById('high-contrast-panel').addEventListener('click', function () {
-    document.body.classList.add('high-contrast');
-    saveTheme('high-contrast');
-});
 
 // TTS Toggle
 document.getElementById('tts-toggle-panel').addEventListener('click', function () {
