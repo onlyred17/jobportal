@@ -9,24 +9,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Secure password
     $created_at = date('Y-m-d H:i:s');
     $status = 'active'; // Default status
-    $usertype = 'staff'; // Default user type
+    $usertype = 'admin'; // Default user type
     $profilePicPath = '../images/default_profile.jpg'; // Default profile picture
 
-    // Check if staff email already exists
-    $checkSql = "SELECT staff_id FROM staff WHERE email = :email";
+    // Check if admin email already exists
+    $checkSql = "SELECT admin_id FROM admin WHERE email = :email";
     $checkStmt = $conn->prepare($checkSql);
     $checkStmt->bindParam(':email', $email);
     $checkStmt->execute();
 
     if ($checkStmt->rowCount() > 0) {
-        $_SESSION['message'] = ['type' => 'error', 'text' => 'Staff with this email already exists!'];
-        header('Location: ../views/view_super_admin_manage_staff.php');
+        $_SESSION['message'] = ['type' => 'error', 'text' => 'Admin with this email already exists!'];
+        header('Location: ../views/view_super_admin_manage_admin.php');
         exit;
     }
 
     // Insert into database
     try {
-        $sql = "INSERT INTO staff (first_name, last_name, email, password, profile_pic, created_at, status, usertype) 
+        $sql = "INSERT INTO admin (first_name, last_name, email, password, profile_pic, created_at, status, usertype) 
                 VALUES (:first_name, :last_name, :email, :password, :profile_pic, :created_at, :status, :usertype)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':first_name', $first_name);
@@ -39,14 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':usertype', $usertype);
         $stmt->execute();
 
-        $_SESSION['message'] = ['type' => 'success', 'text' => 'Staff added successfully!'];
+        $_SESSION['message'] = ['type' => 'success', 'text' => 'Admin added successfully!'];
 
-        // Insert into audit log for staff creation
+        // Insert into audit log for admin creation
         $user_id = isset($_SESSION['super_admin_id']) ? $_SESSION['super_admin_id'] : null;
         $full_name = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : 'Unknown';
         $ip_address = $_SERVER['REMOTE_ADDR'];
         $action = 'Create';
-        $description_log = "Staff '{$first_name} {$last_name}' added";
+        $description_log = "Admin '{$first_name} {$last_name}' added";
         $usertype = 'super_admin';
 
         // Insert the audit log
@@ -66,6 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect to avoid form resubmission
-    header('Location: ../views/view_super_admin_manage_staff.php');
+    header('Location: ../views/view_super_admin_manage_admin.php');
     exit;
 }

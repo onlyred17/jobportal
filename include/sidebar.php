@@ -82,7 +82,7 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                 </a>
                 <ul class="sub-menu" id="staff-user-management-menu">
                     <li><a href="../views/view_super_admin_manage_staff.php"><i class="fas fa-user"></i> Staff Table</a></li>
-                    <li><a href="../views/view_admin_admin_table.php"><i class="fas fa-user-shield"></i> Admin Table</a></li>
+                    <li><a href="../views/view_super_admin_manage_admin.php"><i class="fas fa-user-shield"></i> Admin Table</a></li>
                 </ul>
             </li>
             <li><a href="../views/view_super_admin_edit_profile.php"><i class="fas fa-user-edit"></i> Edit Profile</a></li>
@@ -92,8 +92,8 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                     <i class="fas fa-cogs"></i> Configuration
                 </a>
                 <ul class="sub-menu" id="settings-menu">
-                    <li><a href="../views/view_admin_backup_restore.php"><i class="fas fa-database"></i> Backup & Restore</a></li>
-                    <li><a href="../views/view_admin_audit_logs.php"><i class="fas fa-history"></i> Audit Logs</a></li>
+                    <li><a href="../views/view_super_admin_backup_and_restore.php"><i class="fas fa-database"></i> Backup & Restore</a></li>
+                    <li><a href="../views/view_super_admin_audit_logs.php"><i class="fas fa-history"></i> Audit Logs</a></li>
                 </ul>
             </li>
 
@@ -106,7 +106,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
                 <ul class="sub-menu" id="manage-users-menu">
                     <li><a href="../views/view_admin_pwd_registration.php"><i class="fas fa-user-plus"></i> Manage Registration</a></li>
                     <li><a href="../views/view_admin_manage_pwd.php"><i class="fas fa-wheelchair"></i> Manage PWD</a></li>
-                    <li><a href="../views/view_admin_manage_staff.php"><i class="fas fa-user-tie"></i> Manage Staff</a></li>
                 </ul>
             </li>
             <li><a href="../views/view_admin_edit_profile.php"><i class="fas fa-user-edit"></i> Profile</a></li>

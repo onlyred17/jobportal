@@ -262,9 +262,7 @@ include '../controllers/admin_edit_profile.php';
                                 <button type="submit" class="btn btn-modern btn-success">
                                     <i class="fas fa-save me-2"></i>Save Changes
                                 </button>
-                                <button type="button" class="btn btn-modern btn-danger" id="cancelEdit">
-                                    <i class="fas fa-times me-2"></i>Cancel
-                                </button>
+                               
                             </div>
                         </form>
                     </div>

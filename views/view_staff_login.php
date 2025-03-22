@@ -267,9 +267,7 @@ html, body {
                     <div class="forgot-password">
                         <a href="#">Forgot Password?</a>
                     </div>
-                    <div class="sign-up-link">
-                        Don't have an account? <a href="view_staff_registration.php">Sign Up</a>
-                    </div>
+                 
                 </form>
             </div>
         </div>

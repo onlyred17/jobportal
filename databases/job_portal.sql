@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 10:05 AM
+-- Generation Time: Mar 21, 2025 at 12:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -46,7 +46,7 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`admin_id`, `first_name`, `last_name`, `email`, `contact_number`, `password`, `profile_pic`, `created_at`, `updated_at`, `usertype`) VALUES
 (1, 'Admin', 'User', 'admin1@gmail.com', '1234567890', '$2y$10$eBlpro.qGUxoA9m8/PxW9ubUnkFKvdCaP6FI93UESeQ.XwAXzhzHK', '../uploads/1742464226_bg6.jpg', '2025-03-12 13:47:23', '2025-03-20 09:50:26', 'admin'),
-(2, 'Admin', 'Two', 'admin2@gmail.com', '', '$2y$10$fPJBvzUVJvhFCvVKPFzJfeCWlI0rhTQs3TNvjDCyZ8OAzEPeQawW6', '../uploads/1741528292_my_profile.jpg', '2025-03-12 14:01:32', '2025-03-12 14:38:22', 'admin');
+(2, 'Admin', 'Two', 'admin2@gmail.com', '123123123222', '$2y$10$fPJBvzUVJvhFCvVKPFzJfeCWlI0rhTQs3TNvjDCyZ8OAzEPeQawW6', '../uploads/1742550993_bg6.jpg', '2025-03-12 14:01:32', '2025-03-21 09:56:33', 'admin');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,12 @@ INSERT INTO `audit_log` (`id`, `user_id`, `full_name`, `action`, `description`, 
 (237, 1, 'Sample Staff', 'Job Posting', 'Job posted: a at McDonald\'s by Sample Staff', '::1', '2025-03-21 07:52:48', 'staff'),
 (238, 1, 'Sample Staff', 'Create', 'Company \'SM corp\' created', '::1', '2025-03-21 07:55:15', 'staff'),
 (239, 1, 'Admin User', 'Logout', 'User logged out.', '::1', '2025-03-21 07:57:37', 'admin'),
-(240, 1, 'Supers Admin', 'Login', 'Super Admin logged in successfully', '::1', '2025-03-21 07:57:53', 'super_admin');
+(240, 1, 'Supers Admin', 'Login', 'Super Admin logged in successfully', '::1', '2025-03-21 07:57:53', 'super_admin'),
+(241, 1, 'Admin User', 'Login', 'Admin logged in successfully', '::1', '2025-03-21 09:55:33', 'admin'),
+(242, 2, 'Admin Two', 'Login', 'Admin logged in successfully', '::1', '2025-03-21 09:56:11', 'admin'),
+(243, 2, 'Admin Two', 'Update', 'Admin profile updated: Contact Number, Profile Picture', '::1', '2025-03-21 09:56:33', 'admin'),
+(244, 2, 'Admin Two', 'Logout', 'User logged out.', '::1', '2025-03-21 11:09:02', 'admin'),
+(245, 2, 'Admin Two', 'Login', 'Admin logged in successfully', '::1', '2025-03-21 11:09:12', 'admin');
 
 -- --------------------------------------------------------
 
@@ -196,6 +201,54 @@ INSERT INTO `jobs` (`id`, `company_id`, `company_name`, `company_logo`, `title`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notification_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`notification_id`, `message`, `created_at`) VALUES
+(1, 'New PWD registration from John Doe (Application ID: APP_5943144B)', '2025-03-21 11:26:38'),
+(2, 'New PWD registration from John Doe (Application ID: APP_B96301E1)', '2025-03-21 11:30:43'),
+(3, 'New PWD registration from John Doe (Application ID: APP_3D58E069)', '2025-03-21 11:31:28'),
+(4, 'New PWD registration from John Doe (Application ID: APP_6A4E0323)', '2025-03-21 11:33:28'),
+(5, 'New PWD registration from John Doe (Application ID: APP_E26DEB9D)', '2025-03-21 11:35:34'),
+(6, 'New PWD registration from John Doe (Application ID: APP_E7C29543)', '2025-03-21 11:38:27'),
+(7, 'New PWD registration from red (Application ID: APP_59133B7D)', '2025-03-21 11:43:47'),
+(8, 'New PWD registration from John Doe (Application ID: APP_14D35EDF)', '2025-03-21 11:47:22'),
+(9, 'New PWD registration from John Doe', '2025-03-21 11:50:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification_admin`
+--
+
+CREATE TABLE `notification_admin` (
+  `notification_id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `seen` tinyint(4) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notification_admin`
+--
+
+INSERT INTO `notification_admin` (`notification_id`, `admin_id`, `seen`, `created_at`) VALUES
+(9, 1, 1, '2025-03-21 11:50:15'),
+(9, 2, 1, '2025-03-21 11:50:15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pwd_registration`
 --
 
@@ -213,26 +266,16 @@ CREATE TABLE `pwd_registration` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('Pending','Approved','For Printing','For Release','Released','Rejected') NOT NULL DEFAULT 'Pending',
-  `read_status` tinyint(1) DEFAULT 0,
-  `seen` tinyint(1) DEFAULT 0
+  `seen` int(11) DEFAULT 0,
+  `notification_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pwd_registration`
 --
 
-INSERT INTO `pwd_registration` (`id`, `full_name`, `birthdate`, `disability_type`, `address`, `contact_number`, `email`, `application_id`, `proof_of_pwd`, `valid_id`, `created_at`, `updated_at`, `status`, `read_status`, `seen`) VALUES
-(69, 'Juan Dela Cruz', '1990-05-15', 'Visual Impairment', 'Manila, Philippines', '09123456789', 'juan.delacruz@example.com', 'APP-001', 'proof1.jpg', 'id1.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(70, 'Maria Clara', '1985-08-22', 'Hearing Impairment', 'Cebu, Philippines', '09234567891', 'maria.clara@example.com', 'APP-002', 'proof2.jpg', 'id2.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(71, 'Jose Rizal', '1861-06-19', 'Orthopedic Disability', 'Laguna, Philippines', '09345678912', 'jose.rizal@example.com', 'APP-003', 'proof3.jpg', 'id3.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(72, 'Andres Bonifacio', '1863-11-30', 'Intellectual Disability', 'Tondo, Manila', '09456789123', 'andres.bonifacio@example.com', 'APP-004', 'proof4.jpg', 'id4.jpg', '2025-03-20 12:09:14', '2025-03-21 07:35:33', 'Released', 0, 1),
-(73, 'Emilio Aguinaldo', '1869-03-22', 'Speech Impairment', 'Kawit, Cavite', '09567891234', 'emilio.aguinaldo@example.com', 'APP-005', 'proof5.jpg', 'id5.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(74, 'Gabriela Silang', '1731-03-19', 'Orthopedic Disability', 'Ilocos Sur, Philippines', '09678912345', 'gabriela.silang@example.com', 'APP-006', 'proof6.jpg', 'id6.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(75, 'Apolinario Mabini', '1864-07-23', 'Orthopedic Disability', 'Batangas, Philippines', '09789123456', 'apolinario.mabini@example.com', 'APP-007', 'proof7.jpg', 'id7.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(76, 'Melchora Aquino', '1812-01-06', 'Visual Impairment', 'Quezon City, Philippines', '09891234567', 'melchora.aquino@example.com', 'APP-008', 'proof8.jpg', 'id8.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(77, 'Antonio Luna', '1866-10-29', 'Hearing Impairment', 'Manila, Philippines', '09912345678', 'antonio.luna@example.com', 'APP-009', 'proof9.jpg', 'id9.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(78, 'Gregorio del Pilar', '1875-11-14', 'Speech Impairment', 'Bulacan, Philippines', '09998765432', 'gregorio.pilar@example.com', 'APP-010', 'proof10.jpg', 'id10.jpg', '2025-03-20 12:09:14', '2025-03-20 12:21:41', 'Pending', 0, 1),
-(80, 'John Doe', '2025-02-25', 'ADHD', 'Taytay', '09071559721', 'admin1@gmail.com', '', '', '', '2025-03-21 07:30:33', '2025-03-21 07:31:24', 'Pending', 0, 1);
+INSERT INTO `pwd_registration` (`id`, `full_name`, `birthdate`, `disability_type`, `address`, `contact_number`, `email`, `application_id`, `proof_of_pwd`, `valid_id`, `created_at`, `updated_at`, `status`, `seen`, `notification_id`) VALUES
+(103, 'John Doe', '2025-02-26', 'visual', 'a', 'asd', 'admin122@gmail.com', 'APP_FF405204', '../applications/1742557815_bg6.jpg', '../applications/1742557815_bg6.jpg', '2025-03-21 11:50:15', '2025-03-21 11:50:15', 'Pending', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -352,6 +395,19 @@ ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notification_id`);
+
+--
+-- Indexes for table `notification_admin`
+--
+ALTER TABLE `notification_admin`
+  ADD PRIMARY KEY (`notification_id`,`admin_id`),
+  ADD KEY `admin_id` (`admin_id`);
+
+--
 -- Indexes for table `pwd_registration`
 --
 ALTER TABLE `pwd_registration`
@@ -393,7 +449,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -408,10 +464,16 @@ ALTER TABLE `jobs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `pwd_registration`
 --
 ALTER TABLE `pwd_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `registered_pwd`
@@ -430,6 +492,17 @@ ALTER TABLE `staff`
 --
 ALTER TABLE `super_admin`
   MODIFY `super_admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `notification_admin`
+--
+ALTER TABLE `notification_admin`
+  ADD CONSTRAINT `notification_admin_ibfk_1` FOREIGN KEY (`notification_id`) REFERENCES `notifications` (`notification_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `notification_admin_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

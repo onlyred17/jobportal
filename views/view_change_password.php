@@ -3,17 +3,30 @@
 session_start();
 require_once '../include/db_conn.php';
 
-// Check if user is logged in (either staff or admin)
-if (!isset($_SESSION['staff_id']) && !isset($_SESSION['admin_id'])) {
+// Check if user is logged in (either staff, admin, or super_admin)
+if (!isset($_SESSION['staff_id']) && !isset($_SESSION['admin_id']) && !isset($_SESSION['super_admin_id'])) {
     header("Location: login.php");
     exit();
 }
 
 // Determine user type and ID
+$isSuperAdmin = isset($_SESSION['super_admin_id']);
 $isAdmin = isset($_SESSION['admin_id']);
-$userId = $isAdmin ? $_SESSION['admin_id'] : $_SESSION['staff_id'];
-$userTable = $isAdmin ? 'admin' : 'staff';
-$idField = $isAdmin ? 'admin_id' : 'staff_id';
+
+if ($isSuperAdmin) {
+    $userId = $_SESSION['super_admin_id'];
+    $userTable = 'super_admin';
+    $idField = 'super_admin_id';
+} elseif ($isAdmin) {
+    $userId = $_SESSION['admin_id'];
+    $userTable = 'admin';
+    $idField = 'admin_id';
+} else {
+    $userId = $_SESSION['staff_id'];
+    $userTable = 'staff';
+    $idField = 'staff_id';
+}
+
 $message = "";
 $status = "";
 
@@ -24,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Fetch current password from the appropriate table
-        $stmt = $conn->prepare("SELECT password, email FROM $userTable WHERE $idField = ?");
+        $stmt = $conn->prepare("SELECT password FROM $userTable WHERE $idField = ?");
         $stmt->execute([$userId]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -34,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } 
         // Verify old password
         elseif (!password_verify($oldPassword, $user['password'])) {
-            error_log("Failed password change attempt for " . ($isAdmin ? "admin" : "staff") . " ID: $userId");
+            error_log("Failed password change attempt for $userTable ID: $userId");
             $message = "Incorrect old password.";
             $status = "error";
         } 
@@ -42,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = "New passwords do not match.";
             $status = "error";
         } 
-        // Using specified password requirements: 1 uppercase, 1 number, at least 8 characters
+        // Password requirements
         elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $newPassword)) {
             $message = "Password must be at least 8 characters, include 1 uppercase and 1 number.";
             $status = "error";
@@ -51,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Hash new password
             $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-            // Update password in the database with timestamp
+            // Update password in the database
             $updateStmt = $conn->prepare("UPDATE $userTable SET password = ? WHERE $idField = ?");
             if ($updateStmt->execute([$hashedPassword, $userId])) {
                 $message = "Password changed successfully!";
@@ -66,6 +79,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "An error occurred. Please try again later.";
         $status = "error";
     }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+</head>
+<body>
+<?php
+if ($isSuperAdmin || $isAdmin) {
+    include '../include/navbar.php';
+    include '../include/sidebar.php';
+} else {
+    include '../include/navbar_user.php';
+    include '../include/sidebar.php';
 }
 ?>
 
