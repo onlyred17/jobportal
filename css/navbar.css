@@ -1,0 +1,245 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff; /* White background */
+    padding: .5rem 2rem;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 280px; /* Adjust based on sidebar width */
+    right: 0;
+    z-index: 1000;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Left */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Navbar Right */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Space between notification bar and profile */
+}
+
+
+/* Profile Section */
+.profile-dropdown {
+    position: relative; /* Ensure dropdown stays close */
+}
+
+/* Profile */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Profile Hover Effect */
+.profile:hover {
+    background: rgba(0, 0, 0, 0.07);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Profile Picture Hover Effect */
+.profile:hover .profile-pic {
+    transform: scale(1.1);
+    border-color: #4a90e2;
+}
+
+/* Profile Name */
+.profile-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+/* Profile Name Hover Effect */
+.profile:hover .profile-name {
+    color: #1e3a8a;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 110%; /* Reduced to bring dropdown closer */
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 200px;
+    list-style: none;
+    padding: 5px 0;
+    margin-top: 0; /* Removed unnecessary margin */
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-5px); /* Reduced translateY for a smoother animation */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Show class for smooth animation */
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Dropdown Items */
+.dropdown-menu li {
+    padding: 0;
+}
+
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+    text-decoration: none;
+    padding: 12px 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Modern Hover Effect */
+.dropdown-menu li a:hover {
+    background: linear-gradient(90deg, #4a90e2, #1e3a8a);
+    color: white;
+}
+/* Notification Container */
+.notification-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: 16px; /* Improved font size for better readability */
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 300px; /* Adjusted width for better spacing */
+    background: #ffffff;
+    border: 1px solid #e1e1e1; /* Lighter border for a softer look */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    max-height: 350px; /* Increased max height for better viewing */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0;
+    transition: all 0.3s ease; /* Smooth transition when opening */
+}
+
+/* Custom Scrollbar */
+.notification-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+}
+
+/* Show Dropdown */
+.notification-dropdown.show {
+    display: block;
+}
+
+/* Notification Count (Red Badge) */
+.notification-count {
+    background: #dc3545; /* Dark red background for better contrast */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: none;
+    border: 2px solid #ffffff; /* White border for contrast */
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Dropdown Header */
+.dropdown-header {
+    font-weight: bold;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Notification List Items */
+.notification-dropdown .dropdown-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Hover effect for notification list items */
+.notification-dropdown .dropdown-item:hover {
+    background: #f1f1f1;
+    color: #007bff; /* Highlight text color */
+}
+
+/* Last item should not have a border */
+.notification-dropdown .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Style for Unseen Notifications */
+.unseen {
+    background: #f8d7da !important; /* Light red background */
+    font-weight: bold;
+}
+
+/* Notification Title (optional) */
+.notification-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Notification Message */
+.notification-message {
+    font-size: 12px;
+    color: #555;
+}
+

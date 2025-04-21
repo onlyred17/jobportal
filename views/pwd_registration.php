@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWD ID Registration</title>
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../css/landing_page.css">
+<style>
+
+.registration-container {
+  max-width: 600px; /* Reduce the max-width for a narrower container */
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px; /* Reduce padding to make the container more compact */
+}
+
+.registration-intro {
+  margin-bottom: 15px; /* Reduce space below the intro text */
+  font-size: 14px; /* Slightly smaller font size */
+  line-height: 1.4; /* Adjust line height for better readability */
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 20px; /* Reduce space between form groups */
+}
+
+.form-group h3 {
+  font-size: 16px; /* Smaller heading size */
+  margin-bottom: 10px; /* Reduce space below headings */
+}
+
+.form-row {
+  margin-bottom: 10px; /* Reduce space between form rows */
+}
+
+.form-field {
+  margin-bottom: 10px; /* Reduce space between form fields */
+}
+
+.form-field label {
+  font-size: 14px; /* Smaller label font size */
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  padding: 8px; /* Reduce padding inside inputs and textareas */
+  font-size: 14px; /* Smaller font size for inputs */
+  width: 100%; /* Ensure inputs take full width */
+}
+
+.form-field textarea {
+  height: 80px; /* Reduce height of textarea */
+}
+
+.consent-checkbox {
+  align-items: center;
+  margin-bottom: 10px; /* Reduce space below checkbox */
+}
+
+.consent-checkbox input {
+  margin-right: 10px; /* Space between checkbox and label */
+}
+
+.consent-checkbox label {
+  font-size: 14px; /* Smaller font size for consent text */
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 15px; /* Reduce space above buttons */
+}
+
+.form-actions button {
+  padding: 8px 15px; /* Smaller button padding */
+  font-size: 14px; /* Smaller button text */
+}
+
+.registration-info {
+  margin-top: 20px; /* Reduce space above registration info */
+  font-size: 14px; /* Smaller font size for info text */
+}
+
+.registration-info h3 {
+  font-size: 16px; /* Smaller heading size */
+  margin-bottom: 10px; /* Reduce space below heading */
+}
+
+.registration-info ol {
+  padding-left: 20px; /* Adjust list padding */
+}
+
+.registration-info ol li {
+  margin-bottom: 5px; /* Reduce space between list items */
+}
+
+.registration-info p {
+  margin-top: 10px; /* Reduce space above paragraph */
+}
+</style>
+<body id="body-element">
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <h1>DisabilityToAbility</h1>
+            <nav>
+    <a href="../views/pwd_landing_page.php#home">Home</a>
+    <a href="../views/pwd_landing_page.php#about" >About Us</a>
+    <a href="../views/pwd_landing_page.php#jobs">Job Wall</a>
+    <a href="../views/pwd_registration.php">PWD Registration</a>
+</nav>
+        </div>
+    </header>
+
+
+    <div class="registration-container">
+        <h2>PWD ID Registration</h2>
+        <p class="registration-intro">Register your PWD ID to access personalized job recommendations and special features tailored for Persons with Disabilities.</p>
+        
+        <?php if(isset($_GET['message'])): ?>
+            <div class="alert <?php echo strpos($_GET['message'], 'successful') !== false ? 'alert-success' : 'alert-error'; ?>">
+                <?php echo htmlspecialchars($_GET['message']); ?>
+            </div>
+        <?php endif; ?>
+        
+        <form id="pwd-registration-form" class="registration-form" action="../controllers/submit_pwd_application.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <h3>Personal Information</h3>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label for="full-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="full-name" name="full_name" placeholder="Enter your complete name" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="birthdate">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="birthdate" name="birthdate" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="contact-number">Contact Number <span class="required">*</span></label>
+                        <input type="tel" id="contact-number" name="contact_number" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label for="address">Complete Address <span class="required">*</span></label>
+                        <textarea id="address" name="address" rows="3" placeholder="Enter your complete address" required></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <h3>PWD Information</h3>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label for="disability-type">Type of Disability <span class="required">*</span></label>
+                        <select id="disability-type" name="disability_type" required>
+                            <option value="">Select Type of Disability</option>
+                            <option value="visual">Visual Disability</option>
+                            <option value="hearing">Hearing Disability</option>
+                            <option value="mobility">Mobility Disability</option>
+                            <option value="cognitive">Cognitive Disability</option>
+                            <option value="psychosocial">Psychosocial Disability</option>
+                            <option value="speech">Speech Disability</option>
+                            <option value="chronic_illness">Chronic Illness</option>
+                            <option value="multiple">Multiple Disabilities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label for="proof-of-pwd">Proof of PWD <span class="required">*</span></label>
+                        <input type="file" id="proof-of-pwd" name="proof_of_pwd" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <p class="form-hint">Upload a clear copy of your PWD certification (PDF, JPG, PNG formats accepted)</p>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label for="valid-id">Valid ID <span class="required">*</span></label>
+                        <input type="file" id="valid-id" name="valid_id" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <p class="form-hint">Upload a clear copy of any government-issued ID (PDF, JPG, PNG formats accepted)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+    <div class="form-row">
+        <div class="form-field full-width">
+            <div class="consent-checkbox">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">I consent to the collection and processing of my personal data in accordance with the Data Privacy Act. I understand that this information will be used solely for the purpose of registration and job matching services.</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-actions">
+        <button type="reset" class="btn-secondary">Reset Form</button>
+        <button type="submit" class="btn-secondary">Submit Registration</button>
+        <button type="button" class="btn-secondary" onclick="window.location.href='../views/view_status.php'">View Status</button>
+    </div>
+</div>
+
+        </form>
+        
+        <div class="registration-info">
+            <h3>Registration Process</h3>
+            <ol>
+                <li>Fill out the registration form completely.</li>
+                <li>Upload the required documents (PWD certification and valid ID).</li>
+                <li>Submit your application.</li>
+                <li>Your application will be reviewed by our team.</li>
+                <li>Once approved, you'll receive your PWD ID and can start accessing our job matching services.</li>
+            </ol>
+            <p>For assistance, please contact our support team at <a href="mailto:support@disabilitytoability.com">support@disabilitytoability.com</a> or call (02) 8123-4567.</p>
+        </div>
+    </div>
+
+
+     <!-- Enhanced Footer Section -->
+     <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DisabilityToAbility</h3>
+                    <p>Creating equal employment opportunities for all.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home" class="section-link" data-section="home">Home</a></li>
+                        <li><a href="#about" class="section-link" data-section="about">About Us</a></li>
+                        <li><a href="#jobs" class="section-link" data-section="jobs">Job Listings</a></li>
+                        <li><a href="../views/pwd_registration.php">Registration</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Employment Ave., Manila</li>
+                        <li><i class="fas fa-phone"></i> (02) 8123-4567</li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@pwdjobportal.com">info@pwdjobportal.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 DisabilityToAbility. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+<!-- Accessibility Toggle Button -->
+<button class="accessibility-toggle" id="accessibility-toggle">
+    <i class="fas fa-universal-access"></i>
+</button>
+<div class="accessibility-controls" id="accessibility-controls">
+    <h5><i class="fas fa-universal-access"></i> Accessibility</h5>
+    <div class="controls-section">
+        <div class="font-size-controls">
+            <button id="decrease-font-panel" title="Decrease Font Size"><i class="fas fa-minus"></i> A</button>
+            <span id="font-size-value-panel">100%</span>
+            <button id="increase-font-panel" title="Increase Font Size">A <i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+    <div class="controls-section">
+        <div class="brightness-mode">
+            <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
+            <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+        </div>
+    </div>
+    <div class="controls-section">
+        <div class="language-selection">
+            <h6><i class="fas fa-language"></i> Language</h6>
+            <button id="english-mode" class="toggle-btn active">English</button>
+            <button id="tagalog-mode" class="toggle-btn">Tagalog</button>
+        </div>
+    </div>
+    <button id="tts-toggle-panel">Enable TTS on Hover</button>
+    <button id="reset-all-panel">Reset All</button>
+</div>
+</body>
+<script src="../scripts/registration.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+// TTS Toggle
+document.getElementById('tts-toggle-panel').addEventListener('click', function () {
+    let ttsEnabled = localStorage.getItem('ttsEnabled') === 'true' ? 'false' : 'true';
+    localStorage.setItem('ttsEnabled', ttsEnabled);
+    this.textContent = ttsEnabled === 'true' ? 'Disable TTS on Hover' : 'Enable TTS on Hover';
+});
+});
+// Language Toggle Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Get language buttons
+    const englishButton = document.getElementById('english-mode');
+    const tagalogButton = document.getElementById('tagalog-mode');
+    
+    // Language translations for the PWD registration page
+    const translations = {
+        english: {
+            // Header/Navigation
+            home: "Home",
+            aboutUs: "About Us",
+            jobWall: "Job Wall",
+            pwdRegistration: "PWD Registration",
+            
+            // Accessibility Panel
+            accessibility: "Accessibility",
+            normalMode: "Normal",
+            darkMode: "Dark",
+            highContrastMode: "High Contrast",
+            language: "Language",
+            enableTTS: "Enable TTS on Hover",
+            disableTTS: "Disable TTS on Hover",
+            resetAll: "Reset All",
+            close: "Close",
+            
+            // Footer
+            footerTagline: "Creating equal employment opportunities for all.",
+            quickLinks: "Quick Links",
+            contactUs: "Contact Us",
+            allRightsReserved: "All rights reserved.",
+            termsOfService: "Terms of Service",
+            privacyPolicy: "Privacy Policy",
+            accessibilityStatement: "Accessibility Statement",
+            
+            // PWD Registration Form
+            pwdRegistrationTitle: 'PWD ID Registration',
+            pwdRegistrationIntro: 'Register your PWD ID to access personalized job recommendations and special features tailored for Persons with Disabilities.',
+            fullName: 'Full Name',
+            dateOfBirth: 'Date of Birth',
+            contactNumber: 'Contact Number',
+            emailAddress: 'Email Address',
+            completeAddress: 'Complete Address',
+            disabilityType: 'Type of Disability',
+            proofOfPWD: 'Proof of PWD',
+            validID: 'Valid ID',
+            consentText: 'I consent to the collection and processing of my personal data in accordance with the Data Privacy Act.',
+            resetForm: 'Reset Form',
+            submitRegistration: 'Submit Registration',
+            viewStatus: 'View Status',
+            registrationProcessTitle: 'Registration Process',
+            registrationProcessSteps: [
+                'Fill out the registration form completely.',
+                'Upload the required documents (PWD certification and valid ID).',
+                'Submit your application.',
+                'Your application will be reviewed by our team.',
+                'Once approved, you\'ll receive your PWD ID and can start accessing our job matching services.'
+            ],
+            supportContact: 'For assistance, please contact our support team at support@disabilitytoability.com or call (02) 8123-4567.'
+        },
+        tagalog: {
+            // Header/Navigation
+            home: "Home",
+            aboutUs: "Tungkol sa Amin",
+            jobWall: "Job Wall",
+            pwdRegistration: "Rehistro ng PWD",
+            
+            // Accessibility Panel
+            accessibility: "Accessibility",
+            normalMode: "Normal",
+            darkMode: "Madilim",
+            highContrastMode: "Mataas na Kontrast",
+            language: "Wika",
+            enableTTS: "Paganahin ang TTS sa Hover",
+            disableTTS: "Huwag Paganahin ang TTS sa Hover",
+            resetAll: "I-reset Lahat",
+            close: "Isara",
+            
+            // Footer
+            footerTagline: "Lumilikha ng pantay na oportunidad sa trabaho para sa lahat.",
+            quickLinks: "Madaliang mga Link",
+            contactUs: "Makipag-ugnay sa Amin",
+            allRightsReserved: "Lahat ng karapatan ay nakalaan.",
+            termsOfService: "Mga Tuntunin ng Serbisyo",
+            privacyPolicy: "Patakaran sa Privacy",
+            accessibilityStatement: "Pahayag sa Accessibility",
+            
+            // PWD Registration Form
+            pwdRegistrationTitle: 'Rehistro ng PWD ID',
+            pwdRegistrationIntro: 'Irehistro ang iyong PWD ID upang makakuha ng mga personalized na rekomendasyon sa trabaho at mga espesyal na tampok na inaalok para sa mga Persons with Disabilities.',
+            fullName: 'Buong Pangalan',
+            dateOfBirth: 'Petsa ng Kapanganakan',
+            contactNumber: 'Numero ng Telepono',
+            emailAddress: 'Email Address',
+            completeAddress: 'Kumpletong Address',
+            disabilityType: 'Uri ng Kapansanan',
+            proofOfPWD: 'Patunay ng PWD',
+            validID: 'Balidong ID',
+            consentText: 'Ako ay sumasang-ayon sa koleksyon at pagproseso ng aking personal na data alinsunod sa Data Privacy Act.',
+            resetForm: 'I-reset ang Form',
+            submitRegistration: 'Isumite ang Rehistro',
+            viewStatus: 'Tingnan ang Status',
+            registrationProcessTitle: 'Proseso ng Rehistro',
+            registrationProcessSteps: [
+                'Punan ang registration form ng kumpleto.',
+                'I-upload ang mga kinakailangang dokumento (PWD certification at valid ID).',
+                'I-submit ang iyong aplikasyon.',
+                'Susuriin ng aming koponan ang iyong aplikasyon.',
+                'Kapag naaprubahan, matatanggap mo ang iyong PWD ID at makakagamit ng mga serbisyo ng job matching.'
+            ],
+            supportContact: 'Para sa tulong, mangyaring makipag-ugnay sa aming support team sa support@disabilitytoability.com o tumawag sa (02) 8123-4567.'
+        }
+    };
+    
+    // Current language (default to stored language or English)
+    let currentLanguage = localStorage.getItem('selectedLanguage') || 'english';
+    
+    // Function to update text based on current language
+    function updateLanguage(language) {
+        // Store the selected language in localStorage to maintain across pages
+        localStorage.setItem('selectedLanguage', language);
+        currentLanguage = language;
+        
+        // Update navigation text
+        document.querySelectorAll('.nav-link[data-section="home"]').forEach(el => el.textContent = translations[language].home);
+        document.querySelectorAll('.nav-link[data-section="about"]').forEach(el => el.textContent = translations[language].aboutUs);
+        document.querySelectorAll('.nav-link[data-section="jobs"]').forEach(el => el.textContent = translations[language].jobWall);
+        document.querySelectorAll('a[href="../views/pwd_registration.php"]').forEach(el => el.textContent = translations[language].pwdRegistration);
+        
+        // Update accessibility panel
+        document.querySelector('.accessibility-controls h5').textContent = translations[language].accessibility;
+        document.querySelector('#normal-mode-panel').textContent = translations[language].normalMode;
+        document.querySelector('#dark-mode-panel').textContent = translations[language].darkMode;
+        document.querySelector('#high-contrast-panel').textContent = translations[language].highContrastMode;
+        document.querySelector('.language-selection h6').textContent = translations[language].language;
+        
+        const ttsButton = document.querySelector('#tts-toggle-panel');
+        if (ttsButton) {
+            if (localStorage.getItem('ttsEnabled') === 'true') {
+                ttsButton.textContent = translations[language].disableTTS;
+            } else {
+                ttsButton.textContent = translations[language].enableTTS;
+            }
+        }
+        
+        document.querySelector('#reset-all-panel').textContent = translations[language].resetAll;
+        
+        // Update footer text
+        document.querySelector('.footer-section p').textContent = translations[language].footerTagline;
+        document.querySelectorAll('.footer-section h3')[1].textContent = translations[language].quickLinks;
+        document.querySelectorAll('.footer-section h3')[2].textContent = translations[language].contactUs;
+        
+        const footerLinks = document.querySelectorAll('.footer-section ul li a');
+        footerLinks[0].textContent = translations[language].home;
+        footerLinks[1].textContent = translations[language].aboutUs;
+        footerLinks[2].textContent = translations[language].jobWall;
+        footerLinks[3].textContent = translations[language].pwdRegistration;
+        
+        const copyrightText = document.querySelector('.footer-bottom p').textContent;
+        const yearMatch = copyrightText.match(/\d{4}/);
+        if (yearMatch) {
+            const year = yearMatch[0];
+            document.querySelector('.footer-bottom p').textContent = `© ${year} DisabilityToAbility. ${translations[language].allRightsReserved}`;
+        }
+        
+        const footerBottomLinks = document.querySelectorAll('.footer-links a');
+        footerBottomLinks[0].textContent = translations[language].termsOfService;
+        footerBottomLinks[1].textContent = translations[language].privacyPolicy;
+        footerBottomLinks[2].textContent = translations[language].accessibilityStatement;
+        
+        // Update PWD registration form text
+        const pwdTitle = document.querySelector('.registration-container h2');
+        if (pwdTitle) {
+            pwdTitle.textContent = translations[language].pwdRegistrationTitle;
+        }
+        
+        const registrationIntro = document.querySelector('.registration-intro');
+        if (registrationIntro) {
+            registrationIntro.textContent = translations[language].pwdRegistrationIntro;
+        }
+        
+        document.querySelectorAll('label[for="full-name"]').forEach(label => label.textContent = translations[language].fullName);
+        document.querySelectorAll('label[for="birthdate"]').forEach(label => label.textContent = translations[language].dateOfBirth);
+        document.querySelectorAll('label[for="contact-number"]').forEach(label => label.textContent = translations[language].contactNumber);
+        document.querySelectorAll('label[for="email"]').forEach(label => label.textContent = translations[language].emailAddress);
+        document.querySelectorAll('label[for="address"]').forEach(label => label.textContent = translations[language].completeAddress);
+        
+        document.querySelectorAll('label[for="disability-type"]').forEach(label => label.textContent = translations[language].disabilityType);
+        document.querySelectorAll('label[for="proof-of-pwd"]').forEach(label => label.textContent = translations[language].proofOfPWD);
+        document.querySelectorAll('label[for="valid-id"]').forEach(label => label.textContent = translations[language].validID);
+        
+        const consentCheckbox = document.querySelector('.consent-checkbox label');
+        if (consentCheckbox) {
+            consentCheckbox.textContent = translations[language].consentText;
+        }
+        
+        const resetBtn = document.querySelector('.form-actions button[type="reset"]');
+        const submitBtn = document.querySelector('.form-actions button[type="submit"]');
+        const viewBtn = document.querySelector('.form-actions button[type="button"]');
+        
+        if (resetBtn) resetBtn.textContent = translations[language].resetForm;
+        if (submitBtn) submitBtn.textContent = translations[language].submitRegistration;
+        if (viewBtn) viewBtn.textContent = translations[language].viewStatus;
+        
+        const infoTitle = document.querySelector('.registration-info h3');
+        if (infoTitle) {
+            infoTitle.textContent = translations[language].registrationProcessTitle;
+        }
+        
+        const processList = document.querySelector('.registration-info ol');
+        if (processList) {
+            processList.innerHTML = '';
+            translations[language].registrationProcessSteps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                processList.appendChild(li);
+            });
+        }
+        
+        const supportInfo = document.querySelector('.registration-info p');
+        if (supportInfo) {
+            supportInfo.textContent = translations[language].supportContact;
+        }
+    }
+    
+    // Function to set active language button
+    function setActiveLanguageButton(button) {
+        document.querySelectorAll('.language-selection .toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+    
+    // Add event listeners to language buttons
+    englishButton.addEventListener('click', function() {
+        updateLanguage('english');
+        setActiveLanguageButton(this);
+    });
+    
+    tagalogButton.addEventListener('click', function() {
+        updateLanguage('tagalog');
+        setActiveLanguageButton(this);
+    });
+    
+    // Initialize the page with the stored or default language
+    const initialLanguage = localStorage.getItem('selectedLanguage') || 'english';
+    updateLanguage(initialLanguage);
+    
+    // Set the correct active button based on stored language
+    if (initialLanguage === 'english') {
+        setActiveLanguageButton(englishButton);
+    } else {
+        setActiveLanguageButton(tagalogButton);
+    }
+});
+// Add to the end of your existing <script> tag or in registration.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Mode toggle buttons
+    const normalModeBtn = document.getElementById('normal-mode-panel');
+    const darkModeBtn = document.getElementById('dark-mode-panel');
+    const highContrastBtn = document.getElementById('high-contrast-panel');
+    
+    // Get registration container
+    const registrationContainer = document.querySelector('.registration-container');
+    const body = document.getElementById('body-element');
+    
+    // Function to apply normal mode
+    function applyNormalMode() {
+        // Remove any mode classes
+        body.classList.remove('dark-mode', 'high-contrast-mode');
+        registrationContainer.classList.remove('dark-mode', 'high-contrast-mode');
+        
+        // Set active button
+        normalModeBtn.classList.add('active');
+        darkModeBtn.classList.remove('active');
+        highContrastBtn.classList.remove('active');
+        
+        // Save mode preference
+        localStorage.setItem('displayMode', 'normal');
+    }
+    
+    // Function to apply dark mode
+    function applyDarkMode() {
+        // Remove other mode classes
+        body.classList.remove('high-contrast-mode');
+        registrationContainer.classList.remove('high-contrast-mode');
+        
+        // Add dark mode class
+        body.classList.add('dark-mode');
+        registrationContainer.classList.add('dark-mode');
+        
+        // Set active button
+        normalModeBtn.classList.remove('active');
+        darkModeBtn.classList.add('active');
+        highContrastBtn.classList.remove('active');
+        
+        // Save mode preference
+        localStorage.setItem('displayMode', 'dark');
+    }
+    
+    // Function to apply high contrast mode
+    function applyHighContrastMode() {
+        // Remove other mode classes
+        body.classList.remove('dark-mode');
+        registrationContainer.classList.remove('dark-mode');
+        
+        // Add high contrast mode class
+        body.classList.add('high-contrast-mode');
+        registrationContainer.classList.add('high-contrast-mode');
+        
+        // Set active button
+        normalModeBtn.classList.remove('active');
+        darkModeBtn.classList.remove('active');
+        highContrastBtn.classList.add('active');
+        
+        // Save mode preference
+        localStorage.setItem('displayMode', 'high-contrast');
+    }
+    
+    // Add event listeners to mode buttons
+    normalModeBtn.addEventListener('click', applyNormalMode);
+    darkModeBtn.addEventListener('click', applyDarkMode);
+    highContrastBtn.addEventListener('click', applyHighContrastMode);
+    
+    // Load saved mode preference on page load
+    const savedMode = localStorage.getItem('displayMode');
+    if (savedMode === 'dark') {
+        applyDarkMode();
+    } else if (savedMode === 'high-contrast') {
+        applyHighContrastMode();
+    } else {
+        applyNormalMode(); // Default to normal mode
+    }
+});
+</script>
+
+</html>
