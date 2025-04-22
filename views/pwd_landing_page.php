@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Header/Navigation
             home: "Home",
             aboutUs: "Tungkol sa Amin",
-            jobWall: "Job Wall",
+            jobWall: "Mga Trabaho",
             pwdRegistration: "Rehistro ng PWD",
             
             // Hero Section
@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // Current language (default to English)
-    let currentLanguage = localStorage.getItem('selectedLanguage') || 'english';
+    let currentLanguage =  'english';
     
     // Function to update text based on current language
     function updateLanguage(language) {

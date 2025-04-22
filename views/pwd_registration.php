@@ -8,10 +8,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="../css/landing_page.css">
+<link rel="stylesheet" href="../css/registration.css">
 <style>
 
-        .registration-container {
+.registration-container {
   max-width: 600px; /* Reduce the max-width for a narrower container */
   margin: 0 auto;
   background-color: #fff;
@@ -347,6 +347,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Language translations for the PWD registration page
     const translations = {
         english: {
+             // Header/Navigation
+             home: "Home",
+            aboutUs: "About Us",
+            jobWall: "Job Wall",
+            pwdRegistration: "PWD Registration",
             // Accessibility Panel
             accessibilityTitle: 'Accessibility',
             normalMode: 'Normal',
@@ -383,6 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
             supportContact: 'For assistance, please contact our support team at support@disabilitytoability.com or call (02) 8123-4567.'
         },
         tagalog: {
+              // Header/Navigation
+              home: "Home",
+            aboutUs: "Tungkol sa Amin",
+            jobWall: "Mga Trabaho",
+            pwdRegistration: "Rehistro ng PWD",
+            
             // Accessibility Panel
             accessibilityTitle: 'Accessibility',
             normalMode: 'Normal',
@@ -427,6 +438,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLanguage(language) {
         currentLanguage = language;
         
+           // Update navigation text
+        document.querySelectorAll('a[href="../views/pwd_landing_page.php#home"]').forEach(el => el.textContent = translations[language].home);
+        document.querySelectorAll('a[href="../views/pwd_landing_page.php#about"]').forEach(el => el.textContent = translations[language].aboutUs);
+        document.querySelectorAll('a[href="../views/pwd_landing_page.php#jobs"]').forEach(el => el.textContent = translations[language].jobWall);
+        document.querySelectorAll('a[href="../views/pwd_registration.php"]').forEach(el => el.textContent = translations[language].pwdRegistration);
         // Update PWD registration form text
         document.querySelector('.registration-container h2').textContent = translations[language].pwdRegistrationTitle;
         document.querySelector('.registration-intro').textContent = translations[language].pwdRegistrationIntro;
