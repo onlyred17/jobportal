@@ -127,10 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p><strong>Title:</strong> $jobTitle</p>
             <p><strong>Company:</strong> $companyName</p>
             <p><strong>Location:</strong> $companyLocation</p> <!-- Use company location -->
-            <p><strong>Salary:</strong> $salary</p>
             <p><strong>Type:</strong> $jobType</p>
             <p><strong>Requirements:</strong> $requirements</p><br>
-            <p>Visit our job portal to view more Jobs!</p>";
+            <p>Visit our job portal to view more Jobs! http://localhost/jobportal/views/pwd_landing_page.php#home</p>";
 
             // Send email to each PWD applicant
             foreach ($allEmails as $email) {
