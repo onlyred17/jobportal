@@ -60,24 +60,33 @@
   height: 80px; /* Reduce height of textarea */
 }
 
-.consent-checkbox {
-  align-items: center;
-  margin-bottom: 10px; /* Reduce space below checkbox */
+.consent-checkbox{
+    display: grid;
+  grid-template-columns: auto 1fr; /* checkbox + label */
+  column-gap: 10px;
+  align-items: start;
+  max-width: 100%;
 }
 
-.consent-checkbox input {
-  margin-right: 10px; /* Space between checkbox and label */
-}
+.consent-checkbox input{
+    height: 30px;
+    width: 30px;
+    border: 2px solid #000; /* border color and thickness */
 
-.consent-checkbox label {
-  font-size: 14px; /* Smaller font size for consent text */
+
+}
+.consent-checkbox label{
+    font-size: 15px;
+    padding-right: 10px;
+    word-break: break-word;
 }
 
 .form-actions {
   display: flex;
-  gap: 10px; /* Space between buttons */
-  margin-top: 15px; /* Reduce space above buttons */
+  gap: 10px;
+  margin-top: 15px;
 }
+
 
 .form-actions button {
   padding: 8px 15px; /* Smaller button padding */
@@ -209,11 +218,15 @@
             <div class="form-group">
     <div class="form-row">
         <div class="form-field full-width">
-            <div class="consent-checkbox">
-                <input type="checkbox" id="consent" name="consent" required>
-                <label for="consent">I consent to the collection and processing of my personal data in accordance with the Data Privacy Act. I understand that this information will be used solely for the purpose of registration and job matching services.</label>
-            </div>
-        </div>
+        <div class="consent-checkbox">
+  <input type="checkbox" id="checkbox" class="check" />
+  <label for="checkbox">
+    I consent to the collection and processing of my personal <br> data in accordance with the Data Privacy Act.
+  </label>
+</div>
+
+    
+    </div>  
     </div>
     
     <div class="form-actions">

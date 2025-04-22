@@ -2246,16 +2246,6 @@ body .high-contrast .settings-modal-content {
 }
 
 
-.consent-checkbox input {
-  margin-top: 3px;
-}
-
-.consent-checkbox label {
-  font-size: 14px;
-  line-height: 1.4;
-  color: #555;
-}
-
 .form-actions {
   display: flex;
   gap: 15px;
