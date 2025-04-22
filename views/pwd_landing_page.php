@@ -168,8 +168,14 @@
         <div class="brightness-mode">
             <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
             <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+            <button id="high-contrast-panel" class="toggle-btn hidden">High Contrast</button>
         </div>
     </div>
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
     <div class="controls-section">
         <div class="language-selection">
             <h6><i class="fas fa-language"></i> Language</h6>
@@ -197,13 +203,7 @@
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#home" class="section-link" data-section="home">Home</a></li>
-                        <li><a href="#about" class="section-link" data-section="about">About Us</a></li>
-                        <li><a href="#jobs" class="section-link" data-section="jobs">Job Listings</a></li>
-                        <li><a href="../views/pwd_registration.php">Registration</a></li>
-                    </ul>
+                  
                 </div>
                 
                 <div class="footer-section">
@@ -279,7 +279,7 @@
                 <div class="brightness-mode">
                     <button id="normal-mode-modal" class="toggle-btn active">Normal</button>
                     <button id="dark-mode-modal" class="toggle-btn">Dark</button>
-                    <button id="high-contrast-modal" class="toggle-btn">High Contrast</button>
+                    <button id="high-contrast-modal" class="toggle-btn hidden">High Contrast</button>
                 </div>
             </div>
             <button id="tts-toggle-modal">Enable TTS on Hover</button>
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get language buttons
     const englishButton = document.getElementById('english-mode');
     const tagalogButton = document.getElementById('tagalog-mode');
-    
+
     // Language translations for the landing page
     const translations = {
         english: {
@@ -538,14 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
             viewDetails: "Tingnan ang Detalye",
             daysAgo: "araw na ang nakalipas",
             
-            // Footer
-            footerTagline: "Lumilikha ng pantay na oportunidad sa trabaho para sa lahat.",
-            quickLinks: "Madaliang mga Link",
-            contactUs: "Makipag-ugnay sa Amin",
-            allRightsReserved: "Lahat ng karapatan ay nakalaan.",
-            termsOfService: "Mga Tuntunin ng Serbisyo",
-            privacyPolicy: "Patakaran sa Privacy",
-            accessibilityStatement: "Pahayag sa Accessibility",
+        
             
             // Accessibility Panel
             accessibility: "Accessibility",
@@ -592,8 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.testimonial h3').textContent = translations[language].testimonialTitle;
         document.querySelector('.testimonial blockquote').textContent = translations[language].testimonialQuote;
         document.querySelector('.testimonial cite').textContent = translations[language].testimonialCite;
-        document.querySelector('.cta p').textContent = translations[language].ctaText;
-        document.querySelector('.cta .btn').textContent = translations[language].joinUsNow;
+   
         
         // Update jobs section text
         document.querySelector('#jobs h2').textContent = translations[language].jobWallTitle;
@@ -611,44 +603,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#page-number').textContent = `${translations[language].page} ${pageNumber}`;
         document.querySelector('#next-btn').textContent = translations[language].next;
         
-        // Update footer text
-        document.querySelector('.footer-section p').textContent = translations[language].footerTagline;
-        document.querySelectorAll('.footer-section h3')[1].textContent = translations[language].quickLinks;
-        document.querySelectorAll('.footer-section h3')[2].textContent = translations[language].contactUs;
+
         
-        const footerLinks = document.querySelectorAll('.footer-section ul li a');
-        footerLinks[0].textContent = translations[language].home;
-        footerLinks[1].textContent = translations[language].aboutUs;
-        footerLinks[2].textContent = translations[language].jobWall;
-        footerLinks[3].textContent = translations[language].pwdRegistration;
+ 
         
-        const copyrightText = document.querySelector('.footer-bottom p').textContent;
-        const yearMatch = copyrightText.match(/\d{4}/);
-        if (yearMatch) {
-            const year = yearMatch[0];
-            document.querySelector('.footer-bottom p').textContent = `© ${year} DisabilityToAbility. ${translations[language].allRightsReserved}`;
-        }
+       
+
+  
         
-        const footerBottomLinks = document.querySelectorAll('.footer-links a');
-        footerBottomLinks[0].textContent = translations[language].termsOfService;
-        footerBottomLinks[1].textContent = translations[language].privacyPolicy;
-        footerBottomLinks[2].textContent = translations[language].accessibilityStatement;
-        
-        // Update accessibility panel
-        document.querySelector('.accessibility-controls h5').textContent = translations[language].accessibility;
-        document.querySelector('#normal-mode-panel').textContent = translations[language].normalMode;
-        document.querySelector('#dark-mode-panel').textContent = translations[language].darkMode;
-        document.querySelector('#high-contrast-panel').textContent = translations[language].highContrastMode;
-        document.querySelector('.language-selection h6').textContent = translations[language].language;
-        
-        const ttsButton = document.querySelector('#tts-toggle-panel');
-        if (localStorage.getItem('ttsEnabled') === 'true') {
-            ttsButton.textContent = translations[language].disableTTS;
-        } else {
-            ttsButton.textContent = translations[language].enableTTS;
-        }
-        
-        document.querySelector('#reset-all-panel').textContent = translations[language].resetAll;
         
         // Also update job cards if they exist
         updateJobCardTranslations(language);

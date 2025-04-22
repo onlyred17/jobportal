@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../css/landing_page.css">
 <style>
 
-.registration-container {
+        .registration-container {
   max-width: 600px; /* Reduce the max-width for a narrower container */
   margin: 0 auto;
   background-color: #fff;
@@ -255,13 +255,7 @@
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#home" class="section-link" data-section="home">Home</a></li>
-                        <li><a href="#about" class="section-link" data-section="about">About Us</a></li>
-                        <li><a href="#jobs" class="section-link" data-section="jobs">Job Listings</a></li>
-                        <li><a href="../views/pwd_registration.php">Registration</a></li>
-                    </ul>
+                 
                 </div>
                 
                 <div class="footer-section">
@@ -301,8 +295,14 @@
         <div class="brightness-mode">
             <button id="normal-mode-panel" class="toggle-btn active">Normal</button>
             <button id="dark-mode-panel" class="toggle-btn">Dark</button>
+            <button id="high-contrast-panel" class="toggle-btn hidden">High Contrast</button>
         </div>
     </div>
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
     <div class="controls-section">
         <div class="language-selection">
             <h6><i class="fas fa-language"></i> Language</h6>
@@ -334,31 +334,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Language translations for the PWD registration page
     const translations = {
         english: {
-            // Header/Navigation
-            home: "Home",
-            aboutUs: "About Us",
-            jobWall: "Job Wall",
-            pwdRegistration: "PWD Registration",
-            
             // Accessibility Panel
-            accessibility: "Accessibility",
-            normalMode: "Normal",
-            darkMode: "Dark",
-            highContrastMode: "High Contrast",
-            language: "Language",
-            enableTTS: "Enable TTS on Hover",
-            disableTTS: "Disable TTS on Hover",
-            resetAll: "Reset All",
-            close: "Close",
-            
-            // Footer
-            footerTagline: "Creating equal employment opportunities for all.",
-            quickLinks: "Quick Links",
-            contactUs: "Contact Us",
-            allRightsReserved: "All rights reserved.",
-            termsOfService: "Terms of Service",
-            privacyPolicy: "Privacy Policy",
-            accessibilityStatement: "Accessibility Statement",
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Dark',
+            highContrastMode: 'High Contrast',
+            enableTTS: 'Enable TTS on Hover',
+            disableTTS: 'Disable TTS on Hover',
+            resetAll: 'Reset All',
+            language: 'Language',
             
             // PWD Registration Form
             pwdRegistrationTitle: 'PWD ID Registration',
@@ -386,31 +370,15 @@ document.addEventListener('DOMContentLoaded', () => {
             supportContact: 'For assistance, please contact our support team at support@disabilitytoability.com or call (02) 8123-4567.'
         },
         tagalog: {
-            // Header/Navigation
-            home: "Home",
-            aboutUs: "Tungkol sa Amin",
-            jobWall: "Job Wall",
-            pwdRegistration: "Rehistro ng PWD",
-            
             // Accessibility Panel
-            accessibility: "Accessibility",
-            normalMode: "Normal",
-            darkMode: "Madilim",
-            highContrastMode: "Mataas na Kontrast",
-            language: "Wika",
-            enableTTS: "Paganahin ang TTS sa Hover",
-            disableTTS: "Huwag Paganahin ang TTS sa Hover",
-            resetAll: "I-reset Lahat",
-            close: "Isara",
-            
-            // Footer
-            footerTagline: "Lumilikha ng pantay na oportunidad sa trabaho para sa lahat.",
-            quickLinks: "Madaliang mga Link",
-            contactUs: "Makipag-ugnay sa Amin",
-            allRightsReserved: "Lahat ng karapatan ay nakalaan.",
-            termsOfService: "Mga Tuntunin ng Serbisyo",
-            privacyPolicy: "Patakaran sa Privacy",
-            accessibilityStatement: "Pahayag sa Accessibility",
+            accessibilityTitle: 'Accessibility',
+            normalMode: 'Normal',
+            darkMode: 'Madilim',
+            highContrastMode: 'Mataas na Kontrast',
+            enableTTS: 'Paganahin ang TTS sa Hover',
+            disableTTS: 'Huwag Paganahin ang TTS sa Hover',
+            resetAll: 'I-reset Lahat',
+            language: 'Wika',
             
             // PWD Registration Form
             pwdRegistrationTitle: 'Rehistro ng PWD ID',
@@ -439,72 +407,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Current language (default to stored language or English)
-    let currentLanguage = localStorage.getItem('selectedLanguage') || 'english';
+    // Current language (default to English)
+    let currentLanguage = 'english';
     
     // Function to update text based on current language
     function updateLanguage(language) {
-        // Store the selected language in localStorage to maintain across pages
-        localStorage.setItem('selectedLanguage', language);
         currentLanguage = language;
         
-        // Update navigation text
-        document.querySelectorAll('.nav-link[data-section="home"]').forEach(el => el.textContent = translations[language].home);
-        document.querySelectorAll('.nav-link[data-section="about"]').forEach(el => el.textContent = translations[language].aboutUs);
-        document.querySelectorAll('.nav-link[data-section="jobs"]').forEach(el => el.textContent = translations[language].jobWall);
-        document.querySelectorAll('a[href="../views/pwd_registration.php"]').forEach(el => el.textContent = translations[language].pwdRegistration);
-        
-        // Update accessibility panel
-        document.querySelector('.accessibility-controls h5').textContent = translations[language].accessibility;
-        document.querySelector('#normal-mode-panel').textContent = translations[language].normalMode;
-        document.querySelector('#dark-mode-panel').textContent = translations[language].darkMode;
-        document.querySelector('#high-contrast-panel').textContent = translations[language].highContrastMode;
-        document.querySelector('.language-selection h6').textContent = translations[language].language;
-        
-        const ttsButton = document.querySelector('#tts-toggle-panel');
-        if (ttsButton) {
-            if (localStorage.getItem('ttsEnabled') === 'true') {
-                ttsButton.textContent = translations[language].disableTTS;
-            } else {
-                ttsButton.textContent = translations[language].enableTTS;
-            }
-        }
-        
-        document.querySelector('#reset-all-panel').textContent = translations[language].resetAll;
-        
-        // Update footer text
-        document.querySelector('.footer-section p').textContent = translations[language].footerTagline;
-        document.querySelectorAll('.footer-section h3')[1].textContent = translations[language].quickLinks;
-        document.querySelectorAll('.footer-section h3')[2].textContent = translations[language].contactUs;
-        
-        const footerLinks = document.querySelectorAll('.footer-section ul li a');
-        footerLinks[0].textContent = translations[language].home;
-        footerLinks[1].textContent = translations[language].aboutUs;
-        footerLinks[2].textContent = translations[language].jobWall;
-        footerLinks[3].textContent = translations[language].pwdRegistration;
-        
-        const copyrightText = document.querySelector('.footer-bottom p').textContent;
-        const yearMatch = copyrightText.match(/\d{4}/);
-        if (yearMatch) {
-            const year = yearMatch[0];
-            document.querySelector('.footer-bottom p').textContent = `© ${year} DisabilityToAbility. ${translations[language].allRightsReserved}`;
-        }
-        
-        const footerBottomLinks = document.querySelectorAll('.footer-links a');
-        footerBottomLinks[0].textContent = translations[language].termsOfService;
-        footerBottomLinks[1].textContent = translations[language].privacyPolicy;
-        footerBottomLinks[2].textContent = translations[language].accessibilityStatement;
-        
         // Update PWD registration form text
-        const pwdTitle = document.querySelector('.registration-container h2');
-        if (pwdTitle) {
-            pwdTitle.textContent = translations[language].pwdRegistrationTitle;
-        }
-        
-        const registrationIntro = document.querySelector('.registration-intro');
-        if (registrationIntro) {
-            registrationIntro.textContent = translations[language].pwdRegistrationIntro;
-        }
+        document.querySelector('.registration-container h2').textContent = translations[language].pwdRegistrationTitle;
+        document.querySelector('.registration-intro').textContent = translations[language].pwdRegistrationIntro;
         
         document.querySelectorAll('label[for="full-name"]').forEach(label => label.textContent = translations[language].fullName);
         document.querySelectorAll('label[for="birthdate"]').forEach(label => label.textContent = translations[language].dateOfBirth);
@@ -516,46 +428,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('label[for="proof-of-pwd"]').forEach(label => label.textContent = translations[language].proofOfPWD);
         document.querySelectorAll('label[for="valid-id"]').forEach(label => label.textContent = translations[language].validID);
         
-        const consentCheckbox = document.querySelector('.consent-checkbox label');
-        if (consentCheckbox) {
-            consentCheckbox.textContent = translations[language].consentText;
-        }
+        document.querySelector('.consent-checkbox label').textContent = translations[language].consentText;
         
-        const resetBtn = document.querySelector('.form-actions button[type="reset"]');
-        const submitBtn = document.querySelector('.form-actions button[type="submit"]');
-        const viewBtn = document.querySelector('.form-actions button[type="button"]');
+        document.querySelector('.form-actions button[type="reset"]').textContent = translations[language].resetForm;
+        document.querySelector('.form-actions button[type="submit"]').textContent = translations[language].submitRegistration;
+        document.querySelector('.form-actions button[type="button"]').textContent = translations[language].viewStatus;
         
-        if (resetBtn) resetBtn.textContent = translations[language].resetForm;
-        if (submitBtn) submitBtn.textContent = translations[language].submitRegistration;
-        if (viewBtn) viewBtn.textContent = translations[language].viewStatus;
-        
-        const infoTitle = document.querySelector('.registration-info h3');
-        if (infoTitle) {
-            infoTitle.textContent = translations[language].registrationProcessTitle;
-        }
+        document.querySelector('.registration-info h3').textContent = translations[language].registrationProcessTitle;
         
         const processList = document.querySelector('.registration-info ol');
-        if (processList) {
-            processList.innerHTML = '';
-            translations[language].registrationProcessSteps.forEach(step => {
-                const li = document.createElement('li');
-                li.textContent = step;
-                processList.appendChild(li);
-            });
-        }
-        
-        const supportInfo = document.querySelector('.registration-info p');
-        if (supportInfo) {
-            supportInfo.textContent = translations[language].supportContact;
-        }
-    }
-    
-    // Function to set active language button
-    function setActiveLanguageButton(button) {
-        document.querySelectorAll('.language-selection .toggle-btn').forEach(btn => {
-            btn.classList.remove('active');
+        processList.innerHTML = '';
+        translations[language].registrationProcessSteps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            processList.appendChild(li);
         });
-        button.classList.add('active');
+        
+        document.querySelector('.registration-info p').textContent = translations[language].supportContact;
     }
     
     // Add event listeners to language buttons
@@ -569,97 +458,17 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveLanguageButton(this);
     });
     
-    // Initialize the page with the stored or default language
-    const initialLanguage = localStorage.getItem('selectedLanguage') || 'english';
-    updateLanguage(initialLanguage);
-    
-    // Set the correct active button based on stored language
-    if (initialLanguage === 'english') {
-        setActiveLanguageButton(englishButton);
-    } else {
-        setActiveLanguageButton(tagalogButton);
+    // Function to set active language button
+    function setActiveLanguageButton(button) {
+        document.querySelectorAll('.language-selection .toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
     }
+    
+    // Initialize the page with the default language (English)
+    updateLanguage(currentLanguage);
 });
-// Add to the end of your existing <script> tag or in registration.js
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Mode toggle buttons
-    const normalModeBtn = document.getElementById('normal-mode-panel');
-    const darkModeBtn = document.getElementById('dark-mode-panel');
-    const highContrastBtn = document.getElementById('high-contrast-panel');
-    
-    // Get registration container
-    const registrationContainer = document.querySelector('.registration-container');
-    const body = document.getElementById('body-element');
-    
-    // Function to apply normal mode
-    function applyNormalMode() {
-        // Remove any mode classes
-        body.classList.remove('dark-mode', 'high-contrast-mode');
-        registrationContainer.classList.remove('dark-mode', 'high-contrast-mode');
-        
-        // Set active button
-        normalModeBtn.classList.add('active');
-        darkModeBtn.classList.remove('active');
-        highContrastBtn.classList.remove('active');
-        
-        // Save mode preference
-        localStorage.setItem('displayMode', 'normal');
-    }
-    
-    // Function to apply dark mode
-    function applyDarkMode() {
-        // Remove other mode classes
-        body.classList.remove('high-contrast-mode');
-        registrationContainer.classList.remove('high-contrast-mode');
-        
-        // Add dark mode class
-        body.classList.add('dark-mode');
-        registrationContainer.classList.add('dark-mode');
-        
-        // Set active button
-        normalModeBtn.classList.remove('active');
-        darkModeBtn.classList.add('active');
-        highContrastBtn.classList.remove('active');
-        
-        // Save mode preference
-        localStorage.setItem('displayMode', 'dark');
-    }
-    
-    // Function to apply high contrast mode
-    function applyHighContrastMode() {
-        // Remove other mode classes
-        body.classList.remove('dark-mode');
-        registrationContainer.classList.remove('dark-mode');
-        
-        // Add high contrast mode class
-        body.classList.add('high-contrast-mode');
-        registrationContainer.classList.add('high-contrast-mode');
-        
-        // Set active button
-        normalModeBtn.classList.remove('active');
-        darkModeBtn.classList.remove('active');
-        highContrastBtn.classList.add('active');
-        
-        // Save mode preference
-        localStorage.setItem('displayMode', 'high-contrast');
-    }
-    
-    // Add event listeners to mode buttons
-    normalModeBtn.addEventListener('click', applyNormalMode);
-    darkModeBtn.addEventListener('click', applyDarkMode);
-    highContrastBtn.addEventListener('click', applyHighContrastMode);
-    
-    // Load saved mode preference on page load
-    const savedMode = localStorage.getItem('displayMode');
-    if (savedMode === 'dark') {
-        applyDarkMode();
-    } else if (savedMode === 'high-contrast') {
-        applyHighContrastMode();
-    } else {
-        applyNormalMode(); // Default to normal mode
-    }
-});
 </script>
-
 </html>

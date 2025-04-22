@@ -2396,10 +2396,10 @@ body .high-contrast .settings-modal-content {
   transition: all 0.2s;
 }
 
-.language-selection .toggle-btn.active  {
-  background: #4a6ee0 !important;
-  color: white !important;
-  border-color: #4a6ee0 !important;
+.language-selection .toggle-btn.active {
+  background: #4a6ee0;
+  color: white;
+  border-color: #4a6ee0;
 }
 
 /* For the dark mode */
@@ -2408,15 +2408,15 @@ body .high-contrast .settings-modal-content {
 }
 
 .dark-mode .language-selection .toggle-btn {
-  background: #333 !important;
-  border-color: #444 !important;
+  background: #333;
+  border-color: #444;
   color: #eee;
 }
 
 .dark-mode .language-selection .toggle-btn.active {
-  background: #4a6ee0 !important;
-  color: white !important;
-  border-color: #3050b5 !important;
+  background: #4a6ee0;
+  color: white;
+  border-color: #3050b5;
 }
 
 /* For high contrast mode */
