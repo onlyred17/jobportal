@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('capstone_project@example.com', 'PWD Job Portal');
+            $mail->setFrom('pwdportal@gmail.com', 'PWD Job Portal');
             $mail->isHTML(true);
             $mail->Subject = 'New Job Opportunity: ' . $jobTitle;
             $mail->Body = "<h3>New Job Posted</h3>

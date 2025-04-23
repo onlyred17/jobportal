@@ -51,137 +51,151 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="../css/company_table.css" rel="stylesheet">
     
     <style>
-        :root {
-            --primary-color: #4e73df;
-            --secondary-color: #f8f9fc;
-            --success-color: #1cc88a;
-            --warning-color: #f6c23e;
-            --danger-color: #e74a3b;
-            --info-color: #36b9cc;
-            --dark-color: #5a5c69;
-        }
-        
-        body {
-            background-color: #f8f9fc;
-            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-              /* Main Content */
+      :root {
+    --primary-color: #4e73df;
+    --secondary-color: #f8f9fc;
+    --success-color: #1cc88a;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --info-color: #36b9cc;
+    --dark-color: #5a5c69;
+}
+
+body {
+    background-color: var(--secondary-color);
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Content */
 .main-content {
     margin-left: 280px;
     margin-top: 90px;
     padding: 2rem;
-    transition: margin-left 0.3s;
+    transition: margin-left 0.3s ease;
     min-height: 100vh;
 }
-    
-        
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-            }
-        }
-        
-        .card {
-            border: none;
-            border-radius: 0.35rem;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        }
-        
-        .card-header {
-            background-color: #f8f9fc;
-            border-bottom: 1px solid #e3e6f0;
-            padding: 1rem 1.25rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .status-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: .85rem;
-            font-weight: 600;
-            text-transform: uppercase;
 
-        }
-        
-        .status-pending {
-            background-color: rgba(246, 194, 62, 0.1);
-            color: var(--warning-color);
-        }
-        
-        .status-approved {
-            background-color: rgba(28, 200, 138, 0.1);
-            color: var(--success-color);
-        }
-        
-        .status-rejected {
-            background-color: rgba(231, 74, 59, 0.1);
-            color: var(--danger-color);
-        }
-        
-        .status-for-printing, .status-for-release {
-            background-color: rgba(78, 115, 223, 0.1);
-            color: var(--primary-color);
-        }
-        
-        .status-released {
-            background-color: rgba(54, 185, 204, 0.1);
-            color: var(--info-color);
-        }
-        
-        .date-filter-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .date-filter-container label {
-            margin-right: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .date-filter-container input {
-            margin-right: 0.5rem;
-        }
-        
-        .date-range-filter {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .action-btns button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .action-btns button i {
-            margin-right: 0.25rem;
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-        
-        .iframe-container {
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-        }
-        
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
+    background-color: #fff;
+}
+
+/* Card Header */
+.card-header {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid #e3e6f0;
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: rgba(246, 194, 62, 0.1);
+    color: var(--warning-color);
+}
+
+.status-approved {
+    background-color: rgba(28, 200, 138, 0.1);
+    color: var(--success-color);
+}
+
+.status-rejected {
+    background-color: rgba(231, 74, 59, 0.1);
+    color: var(--danger-color);
+}
+
+.status-for-printing,
+.status-for-release {
+    background-color: rgba(78, 115, 223, 0.1);
+    color: var(--primary-color);
+}
+
+.status-released {
+    background-color: rgba(54, 185, 204, 0.1);
+    color: var(--info-color);
+}
+
+/* Date Filter */
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.date-filter-container label {
+    font-weight: 600;
+}
+
+/* Date Range Filter */
+.date-range-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Action Buttons */
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btns button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btns button i {
+    margin-right: 0.25rem;
+}
+
+/* Table Responsive */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Iframe Container */
+.iframe-container {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.1);
+    margin-top: 1rem;
+}
+
+.iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
     </style>
 </head>
 <body>
@@ -263,7 +277,9 @@ include '../include/sidebar.php';
                                 <th>Disability Type</th>
                                 <th>Status</th>
                                 <th>Proof of PWD</th>
-                                <th>Valid ID</th>
+                                <th>Type Of Valid ID</th>
+                                <th>Valid Front ID</th>
+                                <th>Valid Back ID</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -307,12 +323,24 @@ include '../include/sidebar.php';
                                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#proofModal<?php echo $pwd['id']; ?>">
                                             <i class="fas fa-file-medical me-1"></i> View Proof
                                         </button>
+                                            <!-- Valid ID Type -->
+        <td class="align-middle">
+            <span class="valid-id-type">
+                <?php echo htmlspecialchars($pwd['valid_id_type']); ?>
+            </span>
+        </td>
                                     </td>
                                     <td class="align-middle">
                                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#validIdModal<?php echo $pwd['id']; ?>">
-                                            <i class="fas fa-id-card me-1"></i> View ID
+                                            <i class="fas fa-id-card me-1"></i> View front
                                         </button>
                                     </td>
+                                    <td class="align-middle">
+    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#backIdModal<?php echo $pwd['id']; ?>">
+        <i class="fas fa-id-card me-1"></i> View Back
+    </button>
+</td>
+
                                     <td class="align-middle action-btns">
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateStatusModal<?php echo $pwd['id']; ?>">
                                             <i class="fas fa-edit me-1"></i> Update
@@ -326,7 +354,7 @@ include '../include/sidebar.php';
                                         <div class="modal-content">
                                             <div class="modal-header bg-primary text-white">
                                                 <h5 class="modal-title" id="validIdModalLabel">
-                                                    <i class="fas fa-id-card me-2"></i> Valid ID
+                                                    <i class="fas fa-id-card me-2"></i> Front of Valid ID
                                                 </h5>
                                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
@@ -338,6 +366,24 @@ include '../include/sidebar.php';
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Back of Valid ID Modal -->
+<div class="modal fade" id="backIdModal<?php echo $pwd['id']; ?>" tabindex="-1" aria-labelledby="backIdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="backIdModalLabel">
+                    <i class="fas fa-id-card me-2"></i> Back of Valid ID
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="iframe-container">
+                    <iframe src="<?php echo htmlspecialchars($pwd['valid_id_back']); ?>"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                                 <!-- Proof of PWD Modal -->
                                 <div class="modal fade" id="proofModal<?php echo $pwd['id']; ?>" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">

@@ -328,49 +328,70 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('accessibility-toggle').addEventListener('click', function() {
     document.getElementById('accessibility-controls').classList.toggle('active');
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const savedMode = localStorage.getItem('displayMode');
 
+    if (savedMode === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+        setActiveButton(document.getElementById('dark-mode-panel'));
+    } else if (savedMode === 'high-contrast') {
+        document.body.classList.add('high-contrast');
+        setActiveButton(document.getElementById('high-contrast-panel'));
+    } else {
+        setActiveButton(document.getElementById('normal-mode-panel'));
+    }
+});
 document.addEventListener('DOMContentLoaded', () => {
 
     // Function to handle font size changes
     function handleFontSizeChange(increaseButton, decreaseButton, fontSizeValue, step = 10) {
-        let fontSize = 100;
-
+        let fontSize = parseInt(localStorage.getItem('fontSize')) || 100;
+        document.documentElement.style.fontSize = fontSize + '%';
+        fontSizeValue.textContent = fontSize + '%';
+        
         increaseButton.addEventListener('click', function () {
             if (fontSize < 150) {
                 fontSize += step;
+                localStorage.setItem('fontSize', fontSize);
                 fontSizeValue.textContent = fontSize + '%';
                 document.documentElement.style.fontSize = fontSize + '%';
             }
         });
-
+        
         decreaseButton.addEventListener('click', function () {
             if (fontSize > 70) {
                 fontSize -= step;
+                localStorage.setItem('fontSize', fontSize);
                 fontSizeValue.textContent = fontSize + '%';
                 document.documentElement.style.fontSize = fontSize + '%';
             }
         });
+        
     }
 
     // Function to handle mode changes
     function handleModeChange(normalModeButton, darkModeButton, highContrastButton) {
         normalModeButton.addEventListener('click', function () {
             document.body.classList.remove('dark-mode', 'high-contrast');
+            localStorage.setItem('displayMode', 'normal');
             setActiveButton(this);
         });
-
+    
         darkModeButton.addEventListener('click', function () {
             document.body.classList.remove('high-contrast');
             document.body.classList.add('dark-mode');
+            localStorage.setItem('displayMode', 'dark-mode');
             setActiveButton(this);
         });
-
+    
         highContrastButton.addEventListener('click', function () {
             document.body.classList.remove('dark-mode');
             document.body.classList.add('high-contrast');
+            localStorage.setItem('displayMode', 'high-contrast');
             setActiveButton(this);
         });
     }
+    
 
     // Function to reset all settings
     function handleReset(resetButton, fontSizeValue, normalModeButton) {
@@ -380,6 +401,9 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSizeValue.textContent = fontSize + '%';
             document.documentElement.style.fontSize = fontSize + '%';
             setActiveButton(normalModeButton);
+            localStorage.removeItem('fontSize');
+localStorage.setItem('displayMode', 'normal');
+
         });
     }
 
@@ -450,6 +474,56 @@ document.addEventListener('DOMContentLoaded', () => {
             window.speechSynthesis.cancel();
         }, { once: true });
     }
+    function formatPHNumber(input) {
+        // Remove all non-digit characters
+        let digits = input.replace(/\D/g, '');
+      
+        // Ensure the number starts with '9' after +63
+        if (digits.startsWith('09')) {
+          digits = digits.slice(1); // Remove leading 0
+        } else if (!digits.startsWith('9')) {
+          return 'Invalid PH number';
+        }
+      
+        // Add +63 prefix
+        const formatted = '+63' + digits;
+      
+        // Validate final length (should be 13 characters: +63 and 10 digits)
+        if (formatted.length !== 13) {
+          return 'Invalid PH number';
+        }
+      
+        return formatted;
+      }
+      
+      // Examples
+      console.log(formatPHNumber('09171234567')); // ➜ +639171234567
+      console.log(formatPHNumber('9171234567'));  // ➜ +639171234567
+      console.log(formatPHNumber('+639171234567')); // ➜ +639171234567
+      console.log(formatPHNumber('8123456789')); // ➜ Invalid PH number
+      
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const contactNumberInput = document.getElementById('contact-number');
+    
+    // Pre-fill the input with +63
+    contactNumberInput.value = '+63';
+    
+    contactNumberInput.addEventListener('focus', function() {
+        // If the input field is focused, move the cursor after +63
+        if (contactNumberInput.value === '+63') {
+            contactNumberInput.setSelectionRange(4, 4);
+        }
+    });
+    
+    contactNumberInput.addEventListener('input', function() {
+        // Ensure the value always starts with +63
+        if (!contactNumberInput.value.startsWith('+63')) {
+            contactNumberInput.value = '+63';
+        }
+    });
+});
+
+
 
 

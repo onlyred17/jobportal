@@ -157,9 +157,11 @@
                         <input type="date" id="birthdate" name="birthdate" required>
                     </div>
                     <div class="form-field">
-                        <label for="contact-number">Contact Number <span class="required">*</span></label>
-                        <input type="tel" id="contact-number" name="contact_number" placeholder="Enter your phone number" required>
-                    </div>
+    <label for="contact-number">Contact Number <span class="required">*</span></label>
+    <input type="tel" id="contact-number" name="contact_number" placeholder="Enter your phone number" maxlength="13" required>
+</div>
+
+
                 </div>
                 
                 <div class="form-row">
@@ -207,12 +209,43 @@
                 </div>
                 
                 <div class="form-row">
-                    <div class="form-field full-width">
-                        <label for="valid-id">Valid ID <span class="required">*</span></label>
-                        <input type="file" id="valid-id" name="valid_id" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <p class="form-hint">Upload a clear copy of any government-issued ID (PDF, JPG, PNG formats accepted)</p>
-                    </div>
-                </div>
+    <div class="form-field full-width">
+        <label for="valid-id-type">Valid ID Type <span class="required">*</span></label>
+        <select id="valid-id-type" name="valid_id_type" required>
+            <option value="" disabled selected>Select a Valid ID</option>
+            <option value="SSS">SSS (Social Security System)</option>
+            <option value="Barangay">Barangay ID</option>
+            <option value="Driver-License">Driver's License</option>
+            <option value="Passport">Passport</option>
+            <option value="Voter-ID">Voter's ID</option>
+            <option value="PhilHealth">PhilHealth ID</option>
+            <option value="TIN">TIN (Taxpayer Identification Number)</option>
+            <option value="Senior-Citizen">Senior Citizen ID</option>
+            <option value="PWD">PWD ID</option>
+            <option value="Postal">Postal ID</option>
+            <option value="UMID">UMID (Unified Multi-purpose ID)</option>
+        </select>
+        <p class="form-hint">Please select the type of valid government-issued ID you will upload.</p>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-field full-width">
+        <label for="valid-id-front">Valid ID (Front) <span class="required">*</span></label>
+        <input type="file" id="valid-id-front" name="valid_id1" accept=".pdf,.jpg,.jpeg,.png" required>
+        <p class="form-hint">Upload a clear copy of the front side of your selected government-issued ID (PDF, JPG, PNG formats accepted).</p>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-field full-width">
+        <label for="valid-id-back">Valid ID (Back) <span class="required">*</span></label>
+        <input type="file" id="valid-id-back" name="valid_id2" accept=".pdf,.jpg,.jpeg,.png" required>
+        <p class="form-hint">Upload a clear copy of the back side of your selected government-issued ID (PDF, JPG, PNG formats accepted).</p>
+    </div>
+</div>
+
+
             </div>
             
             <div class="form-group">
@@ -348,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const translations = {
         english: {
              // Header/Navigation
-             home: "Home",
+            home: "Home",
             aboutUs: "About Us",
             jobWall: "Job Wall",
             pwdRegistration: "PWD Registration",
@@ -372,7 +405,9 @@ document.addEventListener('DOMContentLoaded', () => {
             completeAddress: 'Complete Address',
             disabilityType: 'Type of Disability',
             proofOfPWD: 'Proof of PWD',
-            validID: 'Valid ID',
+            idtype: 'Valid ID Type',
+            validID1: 'Valid ID (Front)',
+            validID2: 'Valid ID (Back)',
             consentText: 'I consent to the collection and processing of my personal data in accordance with the Data Privacy Act.',
             resetForm: 'Reset Form',
             submitRegistration: 'Submit Registration',
@@ -414,7 +449,9 @@ document.addEventListener('DOMContentLoaded', () => {
             completeAddress: 'Kumpletong Address',
             disabilityType: 'Uri ng Kapansanan',
             proofOfPWD: 'Patunay ng PWD',
-            validID: 'Balidong ID',
+            idtype: 'Uri ng ID',
+            validID1: 'Balidong ID (Harap)',
+            validID2: 'Balidong ID (Likod)',
             consentText: 'Ako ay sumasang-ayon sa koleksyon at pagproseso ng aking personal na data alinsunod sa Data Privacy Act.',
             resetForm: 'I-reset ang Form',
             submitRegistration: 'Isumite ang Rehistro',
@@ -436,8 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to update text based on current language
     function updateLanguage(language) {
+        localStorage.setItem('selectedLanguage', language);
         currentLanguage = language;
-        
+
            // Update navigation text
         document.querySelectorAll('a[href="../views/pwd_landing_page.php#home"]').forEach(el => el.textContent = translations[language].home);
         document.querySelectorAll('a[href="../views/pwd_landing_page.php#about"]').forEach(el => el.textContent = translations[language].aboutUs);
@@ -454,9 +492,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('label[for="address"]').forEach(label => label.textContent = translations[language].completeAddress);
         
         document.querySelectorAll('label[for="disability-type"]').forEach(label => label.textContent = translations[language].disabilityType);
-        document.querySelectorAll('label[for="proof-of-pwd"]').forEach(label => label.textContent = translations[language].proofOfPWD);
-        document.querySelectorAll('label[for="valid-id"]').forEach(label => label.textContent = translations[language].validID);
-        
+        document.querySelectorAll('label[for="proof-of-pwd"]').forEach(label => label.textContent = translations[language].proofOfPWD);        
+        document.querySelectorAll('label[for="valid-id-type"]').forEach(label => label.textContent = translations[language].idtype);
+        document.querySelectorAll('label[for="valid-id-front"]').forEach(label => label.textContent = translations[language].validID1);
+        document.querySelectorAll('label[for="valid-id-back"]').forEach(label => label.textContent = translations[language].validID2);
+
         document.querySelector('.consent-checkbox label').textContent = translations[language].consentText;
         
         document.querySelector('.form-actions button[type="reset"]').textContent = translations[language].resetForm;
@@ -475,7 +515,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.querySelector('.registration-info p').textContent = translations[language].supportContact;
     }
-    
+        // Initialize the page with the stored or default language
+    const initialLanguage = localStorage.getItem('selectedLanguage') || 'english';
+    updateLanguage(initialLanguage);
     // Add event listeners to language buttons
     englishButton.addEventListener('click', function() {
         updateLanguage('english');
