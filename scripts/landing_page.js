@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.style.fontSize = fontSize + '%';
             setActiveButton(normalModeButton);
             localStorage.removeItem('fontSize');
-localStorage.setItem('displayMode', 'normal');
+            localStorage.setItem('displayMode', 'normal');
 
         });
     }

@@ -264,7 +264,10 @@ html, body {
                         <label for="password" class="form-label">Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Log In</button>
-                 
+                    <div class="forgot-password">
+  <a href="view_staff_forgot_password.php">Forgot Password?</a>
+</div>
+
                  
                 </form>
             </div>
