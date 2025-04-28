@@ -181,6 +181,9 @@ include '../include/sidebar.php';
         <div class="action-btns">
             
         </div>
+        <a href="../views/view_staff_company_table.php?"  class="btn btn-success">
+        <i class="fas fa-building"></i>
+        </a>
     </div>
 
 

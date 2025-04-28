@@ -306,12 +306,30 @@ window.onclick = function(event) {
     }
 }
 
-// Function to format the date
+// Function to calculate and display how many days passed
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const postedDate = new Date(dateString);
+    const today = new Date();
+    
+    // Calculate the difference in time
+    const diffTime = today - postedDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+
+    // If the difference is negative, it means the date is in the future
+    if (diffDays < 0) {
+        return "In the future"; // Or handle it however you'd like
+    }
+
+    // Return the result as "X days ago"
+    if (diffDays === 0) {
+        return "Today";
+    } else if (diffDays === 1) {
+        return "1 day ago";
+    } else {
+        return `${diffDays} days ago`;
+    }
 }
+
 
 // Toggle visibility of pagination buttons based on current page
 function togglePaginationButtons() {

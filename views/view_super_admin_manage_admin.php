@@ -14,7 +14,7 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Admin</title>
+    <title>Manage PDAO</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -77,7 +77,7 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include '../include/sidebar.php'; ?>
 
 <div class="main-content">
-    <h1 class="h3 text-dark">Manage Admin</h1>
+    <h1 class="h3 text-dark">Manage PDAO</h1>
 
     <!-- Session Message Display -->
     <?php if (isset($_SESSION['message'])): ?>
@@ -94,10 +94,10 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h6 class="text-primary">Admin List</h6>
-            <!-- Add Admin Button -->
+            <h6 class="text-primary">PDAO List</h6>
+            <!-- Add PDAO Button -->
             <button class="btn btn-success btn-sm add-admin-btn" data-bs-toggle="modal" data-bs-target="#addAdminModal">
-                <i class="fas fa-plus"></i> Add Admin
+                <i class="fas fa-plus"></i> Add PDAO
             </button>
         </div>
         <div class="card-body">
@@ -148,7 +148,7 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title"><i class="fas fa-user-plus"></i> Add Admin</h5>
+                <h5 class="modal-title"><i class="fas fa-user-plus"></i> Add PDAO</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
@@ -174,7 +174,7 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Add Admin
+                        <i class="fas fa-save"></i> Add PDAO
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i> Cancel
@@ -186,12 +186,12 @@ $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 
-<!-- Update Admin Modal -->
+<!-- Update PDAO Modal -->
 <div class="modal fade" id="updateAdminModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update Admin Status</h5>
+                <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update PDAO Status</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form action="../controllers/super_admin_update_admin.php" method="POST">

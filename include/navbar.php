@@ -20,14 +20,7 @@ $employerName = trim("$firstName $lastName");
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dark_mode.css">
     <style>
-        /* Temporary CSS for debugging */
-        .notification-bar {
-            border: 2px solid red;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  
     </style>
 </head>
 <body>

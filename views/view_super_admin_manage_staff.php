@@ -14,7 +14,7 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Staff</title>
+    <title>Manage PESO</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -91,7 +91,7 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include '../include/sidebar.php'; ?>
 
 <div class="main-content">
-    <h1 class="h3 text-dark">Manage Staff</h1>
+    <h1 class="h3 text-dark">Manage PESO</h1>
 
     <!-- Session Message Display -->
     <?php if (isset($_SESSION['message'])): ?>
@@ -108,10 +108,10 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="card shadow">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h6 class="text-primary">Staff List</h6>
+            <h6 class="text-primary">PESO List</h6>
             <!-- Add Staff Button -->
             <button class="btn btn-success btn-sm add-staff-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
-                <i class="fas fa-plus"></i> Add Staff
+                <i class="fas fa-plus"></i> Add PESO
             </button>
         </div>
         <div class="card-body">
@@ -163,7 +163,7 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title"><i class="fas fa-user-plus"></i> Add Staff</h5>
+                <h5 class="modal-title"><i class="fas fa-user-plus"></i> Add PESO</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
@@ -189,7 +189,7 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Add Staff
+                        <i class="fas fa-save"></i> Add PESO
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i> Cancel
@@ -206,7 +206,7 @@ $staff_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update Staff Status</h5>
+                <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update PESO Status</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form action="../controllers/super_admin_update_staff.php" method="POST">

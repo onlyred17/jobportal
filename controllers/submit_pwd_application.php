@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 var_dump($_FILES);
 
 require '../vendor/autoload.php'; // Load PHPMailer
@@ -76,23 +77,26 @@ if (isset($valid_id_back_result["error"])) {
 $valid_id_back = $valid_id_back_result["success"];
 
 try {
-    // Check if email already exists
+    // Check if email already exists and get its status
     $check_email = $conn->prepare("SELECT * FROM pwd_registration WHERE email = ?");
     $check_email->execute([$email]);
+    $existing_record = $check_email->fetch(PDO::FETCH_ASSOC);
 
-    if ($check_email->rowCount() > 0) {
-        header("Location: ../views/pwd_registration.php?message=Email is already registered!");
+    if ($existing_record) {
+        // If the status is not 'Rejected', prevent re-application
+        if ($existing_record['status'] != 'Rejected') {
+            header("Location: ../views/pwd_registration.php?message=This email is already registered.");
+            exit();
+        }
+    }
+
+    // Validate full contact number format: +639xxxxxxxxx
+    $contact_number = trim($contact_number); // Remove extra spaces
+
+    if (!preg_match('/^\+639\d{9}$/', $contact_number)) {
+        header("Location: ../views/pwd_registration.php?message=Invalid contact number! Must start with +639 and be followed by 9 digits.");
         exit();
     }
-// Validate full contact number format: +639xxxxxxxxx
-$contact_number = trim($contact_number); // Remove extra spaces
-
-if (!preg_match('/^\+639\d{9}$/', $contact_number)) {
-    header("Location: ../views/pwd_registration.php?message=Invalid contact number! Must start with +639 and be followed by 9 digits.");
-    exit();
-}
-
-
 
     // Generate a unique Application ID
     $application_id = generateApplicationID($conn);

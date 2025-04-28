@@ -221,7 +221,6 @@
             <option value="PhilHealth">PhilHealth ID</option>
             <option value="TIN">TIN (Taxpayer Identification Number)</option>
             <option value="Senior-Citizen">Senior Citizen ID</option>
-            <option value="PWD">PWD ID</option>
             <option value="Postal">Postal ID</option>
             <option value="UMID">UMID (Unified Multi-purpose ID)</option>
         </select>

@@ -15,11 +15,13 @@ $lastName = $_SESSION['last_name'] ?? 'Unknown';
 $date_from = $_GET['date_from'] ?? '';
 $date_to = $_GET['date_to'] ?? '';
 $searchQuery = $_GET['search'] ?? '';
+$statusFilter = $_GET['status'] ?? ''; // Get the status filter
 
-// Fetch filtered data from the database using PDO
+// Start building the query
 $query = "SELECT full_name, address, disability_type, status, created_at FROM pwd_registration WHERE status IN ('pending', 'approved', 'rejected', 'for printing', 'for release', 'released', 'rejected')";
 $params = [];
 
+// Add filter for date range if provided
 if (!empty($date_from)) {
     $query .= " AND DATE(created_at) >= :date_from";
     $params[':date_from'] = $date_from;
@@ -28,9 +30,17 @@ if (!empty($date_to)) {
     $query .= " AND DATE(created_at) <= :date_to";
     $params[':date_to'] = $date_to;
 }
+
+// Add filter for search query if provided
 if (!empty($searchQuery)) {
     $query .= " AND (full_name LIKE :search OR address LIKE :search OR disability_type LIKE :search OR status LIKE :search)";
     $params[':search'] = "%$searchQuery%";
+}
+
+// Add filter for status if provided
+if (!empty($statusFilter)) {
+    $query .= " AND status = :status";
+    $params[':status'] = $statusFilter;
 }
 
 $query .= " ORDER BY full_name ASC";

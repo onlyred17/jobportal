@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - PWD Portal</title>
+    <title>PDAO Login - PWD Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -231,27 +231,25 @@ html, body {
         <div class="login-container">
             <div class="info-panel">
                 <div class="info-content">
-                    <h2>Welcome Back to the <span class="highlight">PWD Portal</span>!</h2>
+                    <h2>Welcome Back to the <span class="highlight">PDAO Login Page</span>!</h2>
                     <p class="subtext">
-                        Log in to manage your job postings, track applications, and oversee portal operations.
+                    <p>Log in to track pwd id applications, and oversee registered PWD.</p>
                     </p>
                     <div class="benefits">
-                        <ul>
-                            <li><i class="fas fa-user-shield"></i> Access the admin dashboard</li>
-                            <li><i class="fas fa-briefcase"></i> Manage all job postings</li>
-                            <li><i class="fas fa-users-cog"></i> Manage users and staff</li>
-                        </ul>
+                    <ul>
+    <li><i class="fas fa-user-shield"></i> Access the PDAO dashboard</li>
+    <li><i class="fas fa-id-card"></i> Manage PWD registration</li>
+    <li><i class="fas fa-address-book"></i> Manage registered PWDs</li>
+    <li><i class="fas fa-clipboard-list"></i> View audit logs</li>
+</ul>
+
                     </div>
-                    <div class="support">
-                        <p>
-                            Need help? Contact us at <a href="mailto:support@pwdportal.com">support@pwdportal.com</a>.
-                        </p>
-                    </div>
+                
                 </div>
             </div>
 
             <div class="login-card">
-                <h2><i class="fas fa-sign-in-alt"></i> Admin Login</h2>
+                <h2><i class="fas fa-sign-in-alt"></i> PDAO Login</h2>
                 <form id="loginForm" method="POST" action="../controllers/admin_login.php">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" name="email" placeholder=" " required>

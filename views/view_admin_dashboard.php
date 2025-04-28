@@ -43,7 +43,7 @@ include '../controllers/fetch_all_activities.php';
     </div>
     <div class="metric-card">
         <div class="text">
-            <h3>Total Staff</h3>
+            <h3>Total PESO</h3>
             <p><?php echo $admin_stats['total_staff']; ?></p>
         </div>
         <div class="icon">
@@ -52,7 +52,7 @@ include '../controllers/fetch_all_activities.php';
     </div>
     <div class="metric-card">
         <div class="text">
-            <h3>Active Staff</h3>
+            <h3>Active PESO</h3>
             <p><?php echo $admin_stats['active_staff']; ?></p>
         </div>
         <div class="icon">

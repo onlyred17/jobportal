@@ -231,27 +231,22 @@ html, body {
         <div class="login-container">
             <div class="info-panel">
                 <div class="info-content">
-                    <h2>Welcome Back to the <span class="highlight">PWD Portal</span>!</h2>
+                    <h2>Welcome Back to the <span class="highlight">Super Admin Login</span>!</h2>
                     <p class="subtext">
-                        Log in to manage your job postings, track applications, and oversee portal operations.
+                        Log in to manage PESO and PDAO accounts.
                     </p>
                     <div class="benefits">
                         <ul>
-                            <li><i class="fas fa-user-shield"></i> Access the super_admin dashboard</li>
-                            <li><i class="fas fa-briefcase"></i> Manage all job postings</li>
-                            <li><i class="fas fa-users-cog"></i> Manage users and staff</li>
+                            <li><i class="fas fa-user-shield"></i> Access the Super Admin dashboard</li>
+                            <li><i class="fas fa-users-cog"></i> Manage PESO and PDAO</li>
                         </ul>
                     </div>
-                    <div class="support">
-                        <p>
-                            Need help? Contact us at <a href="mailto:support@pwdportal.com">support@pwdportal.com</a>.
-                        </p>
-                    </div>
+                
                 </div>
             </div>
 
             <div class="login-card">
-                <h2><i class="fas fa-sign-in-alt"></i> Super Amin Login</h2>
+                <h2><i class="fas fa-sign-in-alt"></i> Super Admin Login</h2>
                 <form id="loginForm" method="POST" action="../controllers/super_admin_login.php">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" name="email" placeholder=" " required>

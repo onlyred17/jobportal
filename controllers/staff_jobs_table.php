@@ -20,15 +20,20 @@ $statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
 $query = "SELECT * FROM jobs WHERE 1=1";
 $params = [];
 
+// Filter by date range
 if (!empty($startDate) && !empty($endDate)) {
     $query .= " AND posted_date BETWEEN :start_date AND :end_date";
     $params[':start_date'] = $startDate;
     $params[':end_date'] = $endDate;
 }
 
-if (!empty($statusFilter)) {
+// Filter by status (only Open and Closed)
+if (!empty($statusFilter) && in_array($statusFilter, ['Open', 'Closed'])) {
     $query .= " AND status = :status";
     $params[':status'] = $statusFilter;
+} else {
+    // To show both Open and Closed statuses, apply an OR condition
+    $query .= " AND status IN ('Open', 'Closed')";
 }
 
 // Ensure sorting from latest to old by posted_date DESC

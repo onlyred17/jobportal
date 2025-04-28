@@ -64,10 +64,15 @@ include '../include/sidebar.php';
 
         <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-    <h6 class="m-0 font-weight-bold text-primary">Audit Logs</h6>
-    <a href="../controllers/generate_super_admin_audit_report.php" class="btn btn-danger"target="_blank">
-        <i class="fas fa-download" ></i> Generate Report
+        <h6 class="m-0 font-weight-bold text-primary">Audit Logs</h6>
+<div class="d-flex gap-2"> <!-- Add a container with flexbox -->
+    <button id="generateExcelButton" class="btn btn-success">
+        <i class="fas fa-file-excel"></i> Generate Excel
+    </button>
+    <a href="../controllers/generate_audit_report.php" class="btn btn-danger" target="_blank">
+        <i class="fas fa-download"></i> Generate PDF
     </a>
+</div>
 </div>
 
             <div class="card-body">
@@ -171,6 +176,24 @@ $(document).ready(function() {
         $('#logUserType').text($(this).data('usertype'));
     });
 });
+document.getElementById('generateExcelButton').addEventListener('click', function () {
+    // Make an AJAX request to trigger the PHP script for generating the Excel file
+    fetch('../controllers/generate_audit_report_excel.php', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '../controllers/generate_audit_report_excel.php'; // Redirect to download the file
+        } else {
+            alert("Failed to generate the Excel file.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while generating the Excel file.");
+    });
+});
+   
 </script>
 
 

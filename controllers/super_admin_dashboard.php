@@ -11,7 +11,7 @@ if (!isset($_SESSION['super_admin_id'])) {
 $super_admin_id = $_SESSION['super_admin_id'];
 
 // Fetch total staff
-$stmt = $conn->prepare("SELECT COUNT(*) as total_staff FROM staff WHERE status = 'active'");
+$stmt = $conn->prepare("SELECT COUNT(*) as total_staff FROM staff");
 $stmt->execute();
 $staff_stats = $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -382,33 +382,51 @@ function renderRecentJobCards(jobs) {
         const jobCard = document.createElement('div');
         jobCard.classList.add('recent-job-card');
         
-        // Calculate days ago
-        const postedDate = new Date(job.posted_date);
-        const today = new Date();
-        const diffTime = Math.abs(today - postedDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+// Calculate days ago
+const postedDate = new Date(job.posted_date);
+const today = new Date();
+
+// Calculate the difference in time (milliseconds)
+const diffTime = today - postedDate;
+
+// Convert milliseconds to days
+const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Use Math.floor() to avoid rounding up
+
+// Display the result
+let displayDate = "";
+if (diffDays < 0) {
+    console.log("Date is in the future"); // Handle future date if needed
+} else if (diffDays === 0) {
+    displayDate = "Posted Today"; // Display "Posted Today" if the job was posted today
+} else if (diffDays === 1) {
+    displayDate = "1 day ago"; // Display "1 day ago" if the job was posted 1 day ago
+} else {
+    displayDate = `${diffDays} days ago`; // Display the difference if it's more than 1 day ago
+}
+
         
         jobCard.innerHTML = `
-            <span class="recent-tag">New</span>
-            <div class="job-header">
-                <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
-                <div class="job-title-container">
-                    <h3>${job.title}</h3>
-                    <p class="company-name">${job.company_name}</p>
-                </div>
-            </div>
-            <div class="job-content">
-                <p>${job.description.substring(0, 100)}${job.description.length > 100 ? '...' : ''}</p>
-                <div class="tags">
-                    <span class="tag"><i class="fas fa-briefcase"></i> ${job.job_type}</span>
-                    <span class="tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
-                </div>
-                <div class="job-footer">
-                    <span class="job-date"><i class="fas fa-calendar-alt"></i> ${diffDays} days ago</span>
-                    <button class="btn-view-details" data-job-index="${index}">View Details</button>
-                </div>
-            </div>
-        `;
+       <span class="recent-tag">New</span>
+    <div class="job-header">
+        <img src="${job.company_logo || '../images/default-company.png'}" alt="Company Logo" class="company-logo">
+        <div class="job-title-container">
+            <h3>${job.title}</h3>
+            <p class="company-name">${job.company_name}</p>
+        </div>
+    </div>
+    <div class="job-content">
+        <p>${job.description.substring(0, 100)}${job.description.length > 100 ? '...' : ''}</p>
+        <div class="tags">
+            <span class="tag"><i class="fas fa-briefcase"></i> ${job.job_type}</span>
+            <span class="tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+        </div>
+        <div class="job-footer">
+            <span class="job-date"><i class="fas fa-calendar-alt"></i> ${displayDate}</span>
+            <button class="btn-view-details" data-job-index="${index}">View Details</button>
+        </div>
+    </div>
+`;
+
         
         recentJobsContainer.appendChild(jobCard);
     });
@@ -602,14 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const pageNumber = pageNumberText.match(/\d+/)[0];
         document.querySelector('#page-number').textContent = `${translations[language].page} ${pageNumber}`;
         document.querySelector('#next-btn').textContent = translations[language].next;
-        
-
-        
- 
-        
-       
-
-  
         
         
         // Also update job cards if they exist

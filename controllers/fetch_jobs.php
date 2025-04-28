@@ -10,6 +10,7 @@ $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
 
 // Build the query with optional filters
 $query = "SELECT * FROM jobs WHERE 
+          status = 'OPEN' AND 
           (title LIKE :search OR 
            location LIKE :search OR 
            job_type LIKE :search OR 
@@ -43,6 +44,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the total number of jobs for pagination
 $totalQuery = "SELECT COUNT(*) FROM jobs WHERE 
+               status = 'OPEN' AND
                (title LIKE :search OR 
                 location LIKE :search OR 
                 job_type LIKE :search OR 

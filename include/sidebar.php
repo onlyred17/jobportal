@@ -54,7 +54,6 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
             <img src="../images/<?php echo $profilePic; ?>" alt="Profile Picture" class="sidebar-profile-pic">
             <div class="profile-details">
                 <span class="profile-name1"><?php echo $firstName . ' ' . $lastName; ?></span>
-                <div class="profile-role"><?php echo ucfirst($userType); ?></div>
             </div>
         </div>
     </div>
@@ -76,11 +75,11 @@ $userType = $_SESSION['usertype'] ?? 'staff'; // Default to 'staff'
             <li class="module">
                 <a href="#" onclick="toggleModule('staff-user-management-menu')"><i class="fas fa-users"></i> User Management</a>
                 <ul class="sub-menu" id="staff-user-management-menu">
-                    <li><a href="../views/view_super_admin_manage_staff.php"><i class="fas fa-user"></i> Staff Table</a></li>
-                    <li><a href="../views/view_super_admin_manage_admin.php"><i class="fas fa-user-shield"></i> Admin Table</a></li>
+                    <li><a href="../views/view_super_admin_manage_staff.php"><i class="fas fa-user"></i> PESO Table</a></li>
+                    <li><a href="../views/view_super_admin_manage_admin.php"><i class="fas fa-user-shield"></i> PDAO Table</a></li>
                 </ul>
             </li>
-            <li><a href="../views/view_super_admin_edit_profile.php"><i class="fas fa-user-edit"></i> Edit Profile</a></li>
+            <li><a href="../views/view_super_admin_edit_profile.php"><i class="fas fa-user-edit"></i>Profile</a></li>
             <li class="module">
                 <a href="#" onclick="toggleModule('settings-menu')"><i class="fas fa-cogs"></i> Configuration</a>
                 <ul class="sub-menu" id="settings-menu">

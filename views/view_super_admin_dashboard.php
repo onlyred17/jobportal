@@ -42,7 +42,7 @@ if (!isset($_SESSION['super_admin_id'])) {
                 <div class="metrics">
                     <div class="metric-card">
                         <div class="text">
-                            <h3>Total Staff</h3>
+                            <h3>Total PESO</h3>
                             <p><?php echo $super_admin_stats['total_staff']; ?></p>
                         </div>
                         <div class="icon">
@@ -51,7 +51,7 @@ if (!isset($_SESSION['super_admin_id'])) {
                     </div>
                     <div class="metric-card">
                         <div class="text">
-                            <h3>Total Admins</h3>
+                            <h3>Total PDAO</h3>
                             <p><?php echo $super_admin_stats['total_admins']; ?></p>
                         </div>
                         <div class="icon">

@@ -158,91 +158,92 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         
         <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">PWD List</h6>
         <div class="d-flex gap-2">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPwdModal">
-    <i class="fas fa-plus me-1"></i> Add PWD
-</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPwdModal">
+                <i class="fas fa-plus me-1"></i> Add PWD
+            </button>
 
             <a href="../controllers/generate_manage_pwd_report.php" 
                id="generateReportBtn" class="btn btn-danger" target="_blank">
-                <i class="fas fa-file-pdf me-1"></i> Generate Report
+                <i class="fas fa-file-pdf me-1"></i> Generate PDF
             </a>
-        </div>
 
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="pwdTable" class="table table-striped table-hover" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Address</th>
-                                <th>Contact</th>
-                                <th>Email</th>
-                                <th>Birthdate</th>
-                                <th>Disability Type</th>
-                                
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($pwd_registrations as $pwd): ?>
-                                <tr>
-                                    <td class="align-middle font-weight-bold"><?php echo htmlspecialchars($pwd['full_name']); ?></td>
-                                    <td class="align-middle">
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                            <span><?php echo htmlspecialchars($pwd['address']); ?></span>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-phone text-primary me-2"></i>
-                                            <span><?php echo htmlspecialchars($pwd['contact_number']); ?></span>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-envelope text-primary me-2"></i>
-                                            <span><?php echo htmlspecialchars($pwd['email']); ?></span>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <div class="d-flex align-items-center">
-                                            <i class="fas fa-calendar-alt text-primary me-2"></i>
-                                            <span><?php echo htmlspecialchars($pwd['birthdate']); ?></span>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <span class="disability-badge">
-                                            <?php echo htmlspecialchars($pwd['disability_type']); ?>
-                                        </span>
-                                    </td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-info btn-sm view-btn" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#viewModal"
-                                                data-id="<?php echo $pwd['id']; ?>"
-                                                data-name="<?php echo htmlspecialchars($pwd['full_name']); ?>"
-                                                data-address="<?php echo htmlspecialchars($pwd['address']); ?>"
-                                                data-contact="<?php echo htmlspecialchars($pwd['contact_number']); ?>"
-                                                data-email="<?php echo htmlspecialchars($pwd['email']); ?>"
-                                                data-birthdate="<?php echo htmlspecialchars($pwd['birthdate']); ?>"
-                                                data-disability="<?php echo htmlspecialchars($pwd['disability_type']); ?>">
-                                            <i class="fas fa-eye me-1"></i> View
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <button id="generateExcelButton" class="btn btn-success">
+                <i class="fas fa-file-excel"></i> Generate Excel
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="pwdTable" class="table table-striped table-hover" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Birthdate</th>
+                        <th>Disability Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($pwd_registrations as $pwd): ?>
+                        <tr>
+                            <td class="align-middle font-weight-bold"><?php echo htmlspecialchars($pwd['full_name']); ?></td>
+                            <td class="align-middle">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                    <span><?php echo htmlspecialchars($pwd['address']); ?></span>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-phone text-primary me-2"></i>
+                                    <span><?php echo htmlspecialchars($pwd['contact_number']); ?></span>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-envelope text-primary me-2"></i>
+                                    <span><?php echo htmlspecialchars($pwd['email']); ?></span>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-calendar-alt text-primary me-2"></i>
+                                    <span><?php echo htmlspecialchars($pwd['birthdate']); ?></span>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <span class="disability-badge">
+                                    <?php echo htmlspecialchars($pwd['disability_type']); ?>
+                                </span>
+                            </td>
+                            <td class="align-middle">
+                                <button class="btn btn-info btn-sm view-btn" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#viewModal"
+                                        data-id="<?php echo $pwd['id']; ?>"
+                                        data-name="<?php echo htmlspecialchars($pwd['full_name']); ?>"
+                                        data-address="<?php echo htmlspecialchars($pwd['address']); ?>"
+                                        data-contact="<?php echo htmlspecialchars($pwd['contact_number']); ?>"
+                                        data-email="<?php echo htmlspecialchars($pwd['email']); ?>"
+                                        data-birthdate="<?php echo htmlspecialchars($pwd['birthdate']); ?>"
+                                        data-disability="<?php echo htmlspecialchars($pwd['disability_type']); ?>">
+                                    <i class="fas fa-eye me-1"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 
 <!-- View Details Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -303,9 +304,7 @@ $pwd_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-1"></i> Close
                 </button>
-                <button type="button" class="btn btn-primary" id="printDetails">
-                    <i class="fas fa-print me-1"></i> Print Details
-                </button>
+               
             </div>
         </div>
     </div>
@@ -487,6 +486,24 @@ pwdTable.on('search.dt', function() {
 // Trigger the update initially to set the correct URL
 updateGenerateReportUrl();
     });
+    document.getElementById('generateExcelButton').addEventListener('click', function () {
+    // Make an AJAX request to trigger the PHP script for generating the Excel file
+    fetch('../controllers/generate_pwd_report_excel.php', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '../controllers/generate_pwd_report_excel.php'; // Redirect to download the file
+        } else {
+            alert("Failed to generate the Excel file.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while generating the Excel file.");
+    });
+});
+   
 </script>
 
 </body

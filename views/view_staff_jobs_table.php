@@ -110,6 +110,11 @@ session_start();
             color: var(--danger-color);
         }
         
+        .status-archived {
+            background-color: rgba(90, 92, 105, 0.1);
+            color: var(--dark-color);
+        }
+        
         .action-btns {
             display: flex;
             gap: 0.5rem;
@@ -191,15 +196,15 @@ include '../include/sidebar.php';
             <div class="card-body">
             <form method="GET" action="">
                     <div class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="start_date" class="form-label">Start Date</label>
                             <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo htmlspecialchars($startDate); ?>" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="end_date" class="form-label">End Date</label>
                             <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo htmlspecialchars($endDate); ?>" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select">
                                 <option value="" <?php echo $statusFilter === '' ? 'selected' : ''; ?>>All</option>
@@ -207,24 +212,33 @@ include '../include/sidebar.php';
                                 <option value="Closed" <?php echo $statusFilter === 'Closed' ? 'selected' : ''; ?>>Closed</option>
                             </select>
                         </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-filter me-1"></i> Apply Filter
+                            </button>
+                        </div>
                     </div>
+                    <div class="d-flex justify-content-center">
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-filter me-1"></i> Apply Filter
-                        </button>
                         <a href="../controllers/generate_jobs_report.php?start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>&status=<?php echo $statusFilter; ?>&search=" 
    id="generateReportBtn" class="btn btn-danger" target="_blank">
-   <i class="fas fa-file-pdf"></i> Generate Report
+   <i class="fas fa-file-pdf"></i> Generate PDF
 </a>
+<button id="generateExcelButton" class="btn btn-success">
+   <i class="fas fa-file-excel"></i> Generate Excel
+</button>
 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postJobModal">
-            <i class="fas fa-plus me-1"></i> Post Job
-        </button>
+   <i class="fas fa-plus me-1"></i> Post Job
+</button>
+<a href="../views/archived_jobs.php" class="btn btn-danger">
+   <i class="fas fa-trash me-1"></i>
+</a>
                     </div>
                     
                 </form>
             </div>
         </div>
-        
+        </div>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Job Listings</h6>
@@ -245,7 +259,15 @@ include '../include/sidebar.php';
                             <?php
                             foreach ($jobs as $job) {
                                 $status = strtolower($job['status']);
-                                $statusClass = $status === 'open' ? 'status-open' : 'status-closed';
+                                $statusClass = '';
+                                
+                                if ($status === 'open') {
+                                    $statusClass = 'status-open';
+                                } elseif ($status === 'closed') {
+                                    $statusClass = 'status-closed';
+                                } elseif ($status === 'archived') {
+                                    $statusClass = 'status-archived';
+                                }
                                 
                                 echo "<tr>
                                         <td>" . htmlspecialchars($job['company_name']) . "</td>
@@ -259,6 +281,9 @@ include '../include/sidebar.php';
                                             <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#confirmModal' data-job-id='" . $job['id'] . "' data-status='Open'>
                                                 <i class='fas fa-lock-open me-1'></i> Open
                                             </button>
+                                            <button class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal' data-job-id='" . $job['id'] . "'>
+                                                <i class='fas fa-archive me-1'></i> Archive
+                                            </button>
                                         </td>
                                     </tr>";
                             }
@@ -271,7 +296,7 @@ include '../include/sidebar.php';
     </div>
 </div>
 
-<!-- Modal for Confirmation -->
+<!-- Modal for Status Confirmation -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -296,6 +321,33 @@ include '../include/sidebar.php';
         </div>
     </div>
 </div>
+
+<!-- Modal for Archiving -->
+<div class="modal fade" id="archiveModal" tabindex="-1" aria-labelledby="archiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="archiveModalLabel">Archive Job Listing</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <i class="fas fa-archive fa-3x text-secondary mb-3"></i>
+                    <p>Are you sure you want to archive this job listing? Archived jobs will be moved to the archive section.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Cancel
+                </button>
+                <a href="#" id="archiveButton" class="btn btn-secondary">
+                    <i class="fas fa-archive me-1"></i> Archive
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Post Job Modal -->
 <div class="modal fade" id="postJobModal" tabindex="-1" aria-labelledby="postJobModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -373,6 +425,7 @@ include '../include/sidebar.php';
         </div>
     </div>
 </div>
+
 <!-- Feedback Modal -->
 <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -390,17 +443,10 @@ include '../include/sidebar.php';
 </div>
 
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     // Initialize modals once
-    const postJobModal = new bootstrap.Modal(document.getElementById('postJobModal'), {
-        backdrop: 'static',
-        keyboard: true
-    });
+    const postJobModal = new bootstrap.Modal(document.getElementById('postJobModal'));
     
     // Handle post job button click
     const postJobButton = document.querySelector('button[data-bs-target="#postJobModal"]');
@@ -443,7 +489,7 @@ include '../include/sidebar.php';
         },
     });
 
-    // Handle confirm modal
+    // Handle status confirm modal
     const confirmModal = document.getElementById('confirmModal');
     confirmModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget; // Button that triggered the modal
@@ -468,15 +514,27 @@ include '../include/sidebar.php';
         confirmButton.href = `../controllers/update_job_status.php?id=${jobId}&status=${status}`;
     });
     
-    // Also add the backdrop fix for the confirm modal
-    confirmModal.addEventListener('hidden.bs.modal', function() {
-        const backdrops = document.getElementsByClassName('modal-backdrop');
-        for (let backdrop of backdrops) {
-            backdrop.remove();
-        }
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
+    // Handle archive modal
+    const archiveModal = document.getElementById('archiveModal');
+    archiveModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const jobId = button.getAttribute('data-job-id');
+        
+        const archiveButton = document.getElementById('archiveButton');
+        archiveButton.href = `../controllers/archieved_jobs.php?id=${jobId}`;
+    });
+    
+    // Fix modal backdrop issues
+    [confirmModal, archiveModal].forEach(modal => {
+        modal.addEventListener('hidden.bs.modal', function() {
+            const backdrops = document.getElementsByClassName('modal-backdrop');
+            for (let backdrop of backdrops) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
     });
       
     // Update the Generate Report button with the current search term
@@ -531,7 +589,25 @@ include '../include/sidebar.php';
         });
     }
 });
+document.getElementById('generateExcelButton').addEventListener('click', function (e) {
+    e.preventDefault();
+    // Make an AJAX request to trigger the PHP script for generating the Excel file
+    fetch('../controllers/generate_jobs_report_excel.php', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '../controllers/generate_jobs_report_excel.php'; // Redirect to download the file
+        } else {
+            alert("Failed to generate the Excel file.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while generating the Excel file.");
+    });
+});
+
 </script>
 </body>
 </html>
-

@@ -11,6 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'] ?? null;
     $status = $_POST['status'] ?? '';
+    $rejection_reason = isset($_POST['rejection_reason']) ? $_POST['rejection_reason'] : null;
 
     // Define valid statuses
     $valid_statuses = ['Approved', 'Rejected', 'For Printing', 'For Release', 'Released'];
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Fetch full name before updating
-        $query = "SELECT full_name, address, contact_number, email, birthdate, disability_type FROM pwd_registration WHERE id = :id";
+        $query = "SELECT full_name, address, contact_number, email, birthdate, disability_type, reason FROM pwd_registration WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -39,9 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $disability_type = $pwd['disability_type'];
 
             // Update status in the database
-            $updateQuery = "UPDATE pwd_registration SET status = :status WHERE id = :id";
+            $updateQuery = "UPDATE pwd_registration SET status = :status, reason = :reason WHERE id = :id";
             $stmt = $conn->prepare($updateQuery);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':reason', $rejection_reason, PDO::PARAM_STR); // Bind the rejection reason
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
@@ -59,32 +61,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $insertStmt->execute();
                 }
 
-                // Send email notification using PHPMailer and Brevo SMTP
-                $mail = new PHPMailer(true);
-                try {
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp-relay.brevo.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'jaredsonvicente1771@gmail.com'; // Your Brevo sender email
-                    $mail->Password = 'kWV40qgL9B7DGT5P'; // Your Brevo SMTP API Key
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+                // Send email notification ONLY when status is Rejected
+                if ($status === 'Rejected') {
+                    $mail = new PHPMailer(true);
+                    try {
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp-relay.brevo.com'; // SMTP server for Brevo (formerly Sendinblue)
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'jaredsonvicente1771@gmail.com'; // Your Brevo sender email
+                        $mail->Password = 'kWV40qgL9B7DGT5P'; // Your Brevo SMTP API Key
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->Port = 587;
 
-                    $mail->setFrom('pwdportal@gmail.com', 'PWD Registration');
-                    $mail->addAddress($email, $full_name);
+                        $mail->setFrom('pwdportal@gmail.com', 'PWD Registration');
+                        $mail->addAddress($email, $full_name);
 
-                    $mail->isHTML(true);
-                    $mail->Subject = 'PWD ID Status Update';
-                    $mail->Body = "
-                        <p>Hello <strong>$full_name</strong>,</p>
-                        <p>Your PWD ID status has been updated to: <strong>$status</strong>.</p>
-                        <p>Thank you for your patience.<br><br>Best regards,<br>PWD Registration Team</p>
-                    ";
+                        $mail->isHTML(true);
+                        $mail->Subject = 'PWD ID Status Update - Rejected';
+                        $mail->Body = "
+                            <p>Hello <strong>$full_name</strong>,</p>
+                            <p>Your PWD ID status has been updated to: <strong>Rejected</strong>.</p>
+                            <p>Reason: <strong>$rejection_reason</strong></p>
+                            <p>If you have any questions or concerns, please contact us.<br><br>Best regards,<br>PWD Registration Team</p>
+                        ";
 
-                    $mail->send();
-                } catch (Exception $e) {
-                    error_log("Email sending failed: " . $mail->ErrorInfo);
-                    $_SESSION['message'] = ['type' => 'danger', 'text' => 'Failed to send email notification.'];
+                        // Send the email
+                        if (!$mail->send()) {
+                            throw new Exception("Mailer Error: " . $mail->ErrorInfo);
+                        }
+                    } catch (Exception $e) {
+                        error_log("Email sending failed: " . $mail->ErrorInfo);
+                        $_SESSION['message'] = ['type' => 'danger', 'text' => 'Failed to send email notification.'];
+                    }
                 }
 
                 // Log the action in the audit log

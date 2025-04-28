@@ -179,14 +179,18 @@ include '../include/sidebar.php';
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">Companies</h6>
         <div class="action-btns">
-            <a href="../controllers/generate_company_report.php?search=" id="generateReportBtn" class="btn btn-danger">
-                <i class="fas fa-file-pdf me-1"></i> Generate Report
+        <button id="generateExcelButton" class="btn btn-success">
+   <i class="fas fa-file-excel"></i> Generate Excel
+</button>
+            <a href="../controllers/generate_company_report.php?search=" id="generateReportBtn" class="btn btn-danger" target="_blank">
+                <i class="fas fa-file-pdf me-1"></i> Generate PDF
             </a>
+        
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
                 <i class="fas fa-plus-circle me-1"></i> Add Company
             </button>
             <a href="../views/view_staff_company_archieved.php?"  class="btn btn-warning">
-                <i class="fas fa-archive me-1"></i> Archive
+                <i class="fas fa-archive me-1"></i>
             </a>
         </div>
     </div>
@@ -501,6 +505,24 @@ include '../include/sidebar.php';
     tooltipTriggerList.forEach(function(tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl);
     });
+    document.getElementById('generateExcelButton').addEventListener('click', function () {
+    // Make an AJAX request to trigger the PHP script for generating the Excel file
+    fetch('../controllers/generate_company_report_excel.php', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '../controllers/generate_company_report_excel.php'; // Redirect to download the file
+        } else {
+            alert("Failed to generate the Excel file.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while generating the Excel file.");
+    });
+});
+
 </script>
 
 </body>

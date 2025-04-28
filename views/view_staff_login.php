@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Login - PWD Portal</title>
+    <title>PESO Login - PWD Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -232,28 +232,25 @@ html, body {
                   <!-- Info Panel -->
             <div class="info-panel">
                 <div class="info-content">
-                    <h2>Welcome Back to the <span class="highlight">PWD Portal</span>!</h2>
+                    <h2>Welcome Back to the <span class="highlight">PESO Login Page</span>!</h2>
                     <p class="subtext">
-                        Log in to manage your job postings, track applications, and connect with talented professionals.
+                        Log in to manage your job postings, update PWD ID registrations
                     </p>
                     <div class="benefits">
-                        <ul>
-                            <li><i class="fas fa-users"></i> Access your staff dashboard</li>
-                            <li><i class="fas fa-briefcase"></i> Manage job postings</li>
-                            <li><i class="fas fa-chart-line"></i> Track application analytics</li>
-                        </ul>
+                    <ul>
+    <li><i class="fas fa-users"></i> Access your PESO dashboard</li>
+    <li><i class="fas fa-briefcase"></i> Manage job postings</li>
+    <li><i class="fas fa-building"></i> Manage companies</li>
+</ul>
+
                     </div>
-                    <div class="support">
-                        <p>
-                            Need help? Contact us at <a href="mailto:support@pwdportal.com">support@pwdportal.com</a>.
-                        </p>
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- Login Form -->
             <div class="login-card">
-                <h2><i class="fas fa-sign-in-alt"></i> Staff Login</h2>
+                <h2><i class="fas fa-sign-in-alt"></i> PESO Login</h2>
                 <form id="loginForm" method="POST" action="../controllers/staff_login.php">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" name="email" placeholder=" " required>

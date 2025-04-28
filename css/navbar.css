@@ -243,3 +243,63 @@
     color: #555;
 }
 
+/* Add a subtle animation for the notification badge */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .notification-count.has-notifications {
+    display: block;
+    animation: pulse 2s infinite;
+  }
+  
+  /* Add a modern header to the dropdown */
+  .notification-header {
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e1e1e1;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .notification-header .mark-all-read {
+    color: #007bff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  /* Empty state styling */
+  .empty-notifications {
+    padding: 30px 15px;
+    text-align: center;
+    color: #6c757d;
+  }
+  
+  /* Add timestamp styling */
+  .notification-time {
+    font-size: 11px;
+    color: #6c757d;
+    margin-top: 5px;
+  }
+  
+  /* Add a subtle entrance animation */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .notification-dropdown.show {
+    animation: fadeInDown 0.3s ease-out forwards;
+  }

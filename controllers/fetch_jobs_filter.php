@@ -2,7 +2,6 @@
 // Database connection details
 include '..//include/db_conn.php'; // Include the database connection file
 
-
 // Get parameters from the request
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1
 $limit = 4; // Limit of jobs per page
@@ -12,6 +11,7 @@ $job_type = isset($_GET['job_type']) ? $_GET['job_type'] : '';
 
 // Build the query with optional filters and ORDER BY
 $query = "SELECT * FROM jobs WHERE 
+          status = 'OPEN' AND 
           (title LIKE :search OR 
            location LIKE :search OR 
            job_type LIKE :search OR 
@@ -40,6 +40,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the total number of jobs for pagination
 $totalQuery = "SELECT COUNT(*) FROM jobs WHERE 
+               status = 'OPEN' AND
                (title LIKE :search OR 
                 location LIKE :search OR 
                 job_type LIKE :search OR 
